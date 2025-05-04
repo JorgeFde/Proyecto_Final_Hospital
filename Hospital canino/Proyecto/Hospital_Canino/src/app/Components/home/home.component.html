@@ -1,31 +1,93 @@
 <div style="width: 100%; height: 100%;">
-    <!--Nav Bar-->
-    <div style="width: 100%; height: 130px; overflow-x: auto;">
-        <mat-toolbar style="background-color: white; padding: 0; margin: 0; height: 100%;">
-            <!--<span style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: larger; color: #0E2B53; margin-left: 10px; user-select: none; cursor: default;"> Hospital Canino PetsHome</span>-->
-            <img src="assets/logo.png" alt="Logo" style="width: 190px; height: 100%;">
-            <span class="options-spacer"></span>
-            <button
-              style="color: #0E2B53; background-color: transparent; font-weight: bold; font-size: medium; border: none; width: 100px; height: 60px; margin-right: 1%; cursor: pointer; user-select: none;">Inicio</button>
-              <button
-              style="color: #0E2B53; background-color: transparent; font-weight: bold; font-size: medium; border: none; width: 100px; height: 60px; margin-right: 1%; cursor: pointer; user-select: none;">Contacto</button>
-            <button
-              style="color: white; background-color: red; font-weight: bold; font-size: medium; border: none; width: 200px; height: 60px; margin-right: 1%; border-radius: 5px; cursor: pointer; user-select: none;">Crear Reporte</button>
-          </mat-toolbar>
+  <!--Nav Bar-->
+  <div style="width: 100%; height: 130px; overflow-x: auto;">
+    <mat-toolbar style="background-color: white; padding: 0; margin: 0; height: 100%;">
+      <img src="assets/logo.png" alt="Logo" style="width: 190px; height: 100%;">
+      <span
+        style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: larger; color: #0E2B53; margin-left: 10px; user-select: none; cursor: default;">Bienvenidos</span>
+      <span class="options-spacer"></span>
+      <button
+        style="color: #0E2B53; background-color: transparent; font-weight: bold; font-size: medium; border: none; width: 100px; height: 60px; margin-right: 1%; cursor: pointer; user-select: none;">Inicio</button>
+      <button
+        style="color: white; background-color: red; font-weight: bold; font-size: medium; border: none; width: 200px; height: 60px; margin-right: 1%; border-radius: 5px; cursor: pointer; user-select: none;">Crear
+        Reporte</button>
+    </mat-toolbar>
+  </div>
+  <!--Banners de fotos-->
+  <div style="width: 100%; height: 800px; background-color: white; display: flex;">
+    <div
+      style="height: 100%; width: 40%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <label style="display: block; color: #EA3323; font-size: 18px; margin-left: 18px; font-weight: bold;">
+        EN PETSHOME CUIDAMOS DE ELLOS
+      </label>
+      <label style="display: block; color: #172950; font-size: 60px; margin-left: 20px; font-weight: bold;">
+        CONTAMOS CON
+      </label>
+      <label [@fade]="animationState"
+        style="display: block; color: #172950; font-size: 60px; margin-left: 20px; font-weight: bold;">
+        {{ images[currentIndex].text }}
+      </label>
     </div>
-    <!--Banners de fotos-->
-    <div style="width: 100%; height: 600px; background-color: rgb(32, 45, 167);">
+    <div style="height: 100%; width: 60%;">
+      <!-- Imagen de fondo -->
+      <img [@fade]="animationState" [src]="images[currentIndex].src" style="
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          -webkit-mask-image: radial-gradient(ellipse closest-side at center, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+          mask-image: radial-gradient(ellipse closest-side at center, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+          mask-mode: alpha;
+          -webkit-mask-mode: alpha;
+        " />
     </div>
-    <!--Acerca de nosotros-->
-    <div style="width: 100%; height: 500px; background-color: rgb(96, 102, 152);">
+  </div>
+  <!--Acerca de nosotros-->
+  <div style="width: 100%; height: 500px; display: flex;">
+    <div style="height: 100%; width: 40%;">
+      <img src="assets/images/acerca de nosotros.jpeg" style="
+          width: 90%;
+          height: 100%;
+          object-fit: cover;
+          margin-left: 5%;
+          margin-right: 5%;
+        " />
     </div>
-    <!--Patrocinadores-->
-    <div style="width: 100%; height: 80px; background-color: rgb(31, 42, 146);">
+    <div
+      style="height: 100%; width: 60%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <label style="display: block; color: #172950; font-size: 30px; margin-left: 25px; font-weight: bold;">
+        Acerca de Nosotros – PetsHome
+      </label>
+      <label style="display: block; color: #172950; font-size: 17px; margin: 30px; font-weight: bold; margin-top: 20px;">
+        ¡Bienvenidos a PetsHome!
+        Somos un hospital veterinario con más de 20 años de experiencia comprometidos con el cuidado y bienestar de tus
+        mascotas. Nos encontramos en Boca del Río, Veracruz, y atendemos con pasión y dedicación a pacientes de todo el
+        estado.
+
+        En PetsHome entendemos que las mascotas no solo son compañeros, sino parte esencial de la familia. Con el paso
+        del tiempo, hemos visto cómo el vínculo entre las personas y sus animales de compañía se ha vuelto más profundo,
+        y eso nos impulsa a ofrecer una atención médica integral, humana y especializada.
+
+        Contamos con un equipo profesional altamente capacitado y tecnología de vanguardia para garantizar diagnósticos
+        precisos y tratamientos efectivos. Nuestro objetivo es ayudarte a preservar la salud de tu mascota para que
+        puedas disfrutar de una vida larga y feliz a su lado.
+
+        Gracias por visitarnos. Esperamos que encuentres en nuestra página la información que necesitas para cuidar
+        mejor a tu compañero de vida.
+        En PetsHome, trabajamos cada día para asegurarnos de que la salud de tu mascota siga en buenas manos.
+      </label>
     </div>
-    <!--Agradecimientos-->
-    <div style="width: 100%; height: 500px; background-color: rgb(96, 102, 152);">
+  </div>
+  <!--Patrocinadores-->
+  <div style="width: 100%; height: 80px; background-color: rgb(31, 42, 146);">
+  </div>
+  <!--Agradecimientos-->
+  <div style="width: 100%; height: 500px; background-color: rgb(62, 73, 175); display: flex;">
+    <div
+      style="height: 100%; width: 40%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: antiquewhite;">
+
     </div>
-    <!--Contacto-->
-    <div style="width: 100%; height: 500px; background-color: rgb(16, 25, 113);">
+    <div style="height: 100%; width: 60%; background-color: #172950;">
+
     </div>
+  </div>
 </div>
