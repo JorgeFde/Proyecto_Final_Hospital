@@ -51,7 +51,10 @@ export class HomeComponent {
       }, 700); // mismo tiempo que la animación (1s)
     }, 6000); // duración total por imagen (2s visible + 1s fade)
   }
-  goToDash() {
+  goToLogin() {
     this.router.navigate(['/Login']);
+  }
+  goToReport() {
+    this.router.navigate(['Report'])
   }
 }
