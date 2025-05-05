@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 @Component({
   selector: 'app-home',
   imports: [MatToolbar, CommonModule],
@@ -16,6 +18,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class HomeComponent {
+  // Esto se agrega para ocupar las rutas 
+  private router = inject(Router);
   // arreglo de imagenes para animaciones con textos
   images = [
     { src: 'assets/images/banner1.jpg', text: 'QUIRÓFANO' },
@@ -46,5 +50,9 @@ export class HomeComponent {
         this.animationState = 'visible';
       }, 700); // mismo tiempo que la animación (1s)
     }, 6000); // duración total por imagen (2s visible + 1s fade)
+  }
+  goToDash() {
+    console.log("hola")
+    this.router.navigate(['/Dashboard']);
   }
 }
