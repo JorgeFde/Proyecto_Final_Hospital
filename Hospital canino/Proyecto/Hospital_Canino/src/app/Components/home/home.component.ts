@@ -14,7 +14,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       transition('visible <=> hidden', animate('1s ease-in-out')),
     ])
   ]
-
 })
 export class HomeComponent {
   // arreglo de imagenes para animaciones con textos
@@ -22,6 +21,15 @@ export class HomeComponent {
     { src: 'assets/images/banner1.jpg', text: 'QUIRÓFANO' },
     { src: 'assets/images/banner2.jpg', text: 'CARDIOLOGIA' },
     { src: 'assets/images/banner3.jpg', text: 'LABORATORIO' }
+  ];
+  imagesSponsors: string[] = [
+    'assets/images/banner1.jpg',
+    'assets/images/banner2.jpg',
+    'assets/images/banner3.jpg',
+    'assets/images/banner1.jpg',
+    'assets/images/banner2.jpg',
+    'assets/images/banner3.jpg',
+    'assets/images/banner1.jpg'
   ];
   currentIndex = 0;
   animationState: 'visible' | 'hidden' = 'visible';
