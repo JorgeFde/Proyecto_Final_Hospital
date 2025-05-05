@@ -23,13 +23,13 @@ export class HomeComponent {
     { src: 'assets/images/banner3.jpg', text: 'LABORATORIO' }
   ];
   imagesSponsors: string[] = [
-    'assets/images/banner1.jpg',
-    'assets/images/banner2.jpg',
-    'assets/images/banner3.jpg',
-    'assets/images/banner1.jpg',
-    'assets/images/banner2.jpg',
-    'assets/images/banner3.jpg',
-    'assets/images/banner1.jpg'
+    'assets/IMGSponsors/sponsor1.webp',
+    'assets/IMGSponsors/sponsor2.png',
+    'assets/IMGSponsors/sponsor3.webp',
+    'assets/IMGSponsors/sponsor4.png',
+    'assets/IMGSponsors/sponsor5.png',
+    'assets/IMGSponsors/sponsor6.webp',
+    'assets/IMGSponsors/sponsor7.webp'
   ];
   currentIndex = 0;
   animationState: 'visible' | 'hidden' = 'visible';
