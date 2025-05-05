@@ -1,0 +1,40 @@
+<div class="cuadro-centrado">
+    <div class="cuadro">
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 1%; padding: 0%;">
+            <label style="width: 100%; height: 100%; margin: 0%; padding: 0%; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-large; font-weight: bold; color: rgba(0, 0, 0, 0.75);">PetsHome</label>
+        </div>
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 0%; padding: 0%;">
+            <img src="assets/logo.png" alt="logoApp" style="width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;">
+        </div>
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 0%; padding: 0%;">
+            <label style="width: 100%; height: 100%; margin: 0%; padding: 0%; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-large; font-weight: bold; color: #0E2B53;">Bienvenido</label>
+        </div>
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 0%; padding: 0%;">
+            <label style="width: 100%; height: 100%; margin: 0%; padding: 0%; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size:medium; color: #459AC1; font-weight: bold;">Login</label>
+        </div>
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 1%; padding: 0%;">
+            <input type="email" id="email" [(ngModel)]="email" placeholder="Correo" required style="width: 98%; height: 30px; border-radius: 5px; background-color: transparent; border: 1px solid #459AC1; box-shadow: none; outline: none;">
+        </div>
+        <div style="justify-content: center; align-items: center; display: flex; margin-top: 1%; padding: 0%;">
+            <input type="text" id="password" [(ngModel)]="password" placeholder="Contraseña" required style="width: 98%; height: 30px; border-radius: 5px; background-color: transparent1; border: 1px solid #459AC1; box-shadow: none; outline: none;">
+            <!--para ponerle el secure text se debe de poner de tipo password-->
+        </div>
+        <div style="justify-content: right; align-items: right; display: flex; margin-right: 1%; margin-top: 0.5%; padding: 0%;">
+            <button (click)="submit()" style="color: #459AC1; background-color: transparent; border-width: 0px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: small; text-align: right; width: 30%; height: 20px;">Olvide mi contraseña</button>
+        </div>
+        <div style="
+          width: 100%;
+          position: absolute;
+          bottom: 50px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          justify-content: center;
+          align-items: center;">
+            <button (click)="submit()" style="width: 90%; height: 50px; border-width: 0px; border-color: transparent; border-radius: 25px; background-color: #0E2B53; color: white; font-weight: bold; font-size: large;">Iniciar sesion</button>
+        </div>
+    </div>
+  </div>

@@ -52,7 +52,6 @@ export class HomeComponent {
     }, 6000); // duración total por imagen (2s visible + 1s fade)
   }
   goToDash() {
-    console.log("hola")
-    this.router.navigate(['/Dashboard']);
+    this.router.navigate(['/Login']);
   }
 }

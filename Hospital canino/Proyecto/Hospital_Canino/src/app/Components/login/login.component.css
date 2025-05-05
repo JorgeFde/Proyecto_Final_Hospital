@@ -1,0 +1,24 @@
+.cuadro-centrado {
+    position: relative; /* Esto es clave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa de la pantalla */
+    background-color: white;
+    overflow-x: hidden;
+  }
+  .cuadro {
+    width: 80%;
+    height: 80%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .contentImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
