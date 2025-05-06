@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 @Component({
   selector: 'app-home',
   imports: [MatToolbar, CommonModule],
@@ -14,14 +16,24 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       transition('visible <=> hidden', animate('1s ease-in-out')),
     ])
   ]
-
 })
 export class HomeComponent {
+  // Esto se agrega para ocupar las rutas 
+  private router = inject(Router);
   // arreglo de imagenes para animaciones con textos
   images = [
     { src: 'assets/images/banner1.jpg', text: 'QUIRÓFANO' },
     { src: 'assets/images/banner2.jpg', text: 'CARDIOLOGIA' },
     { src: 'assets/images/banner3.jpg', text: 'LABORATORIO' }
+  ];
+  imagesSponsors: string[] = [
+    'assets/IMGSponsors/sponsor1.webp',
+    'assets/IMGSponsors/sponsor2.png',
+    'assets/IMGSponsors/sponsor3.webp',
+    'assets/IMGSponsors/sponsor4.png',
+    'assets/IMGSponsors/sponsor5.png',
+    'assets/IMGSponsors/sponsor6.webp',
+    'assets/IMGSponsors/sponsor7.webp'
   ];
   currentIndex = 0;
   animationState: 'visible' | 'hidden' = 'visible';
@@ -38,5 +50,11 @@ export class HomeComponent {
         this.animationState = 'visible';
       }, 700); // mismo tiempo que la animación (1s)
     }, 6000); // duración total por imagen (2s visible + 1s fade)
+  }
+  goToLogin() {
+    this.router.navigate(['/Login']);
+  }
+  goToReport() {
+    this.router.navigate(['Report'])
   }
 }

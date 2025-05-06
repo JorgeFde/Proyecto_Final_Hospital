@@ -1,0 +1,50 @@
+/* Container principal */
+.containerPrimary {
+    width: 100%;
+    height: 100%;
+  }
+  /* Nav Bar*/
+  .containerNavBar {
+    width: 100%;
+    height: 130px;
+    overflow-x: auto;
+  }
+  .matToolbarNav {
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  .logoNavBar {
+    width: 190px;
+    height: 100%;
+    object-fit:contain;
+  }
+  .titleHome {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: larger;
+    color: #0e2b53;
+    margin-left: 10px;
+    user-select: none;
+    cursor: default;
+  }
+  /* options-spacer es para la nav bar */
+  .options-spacer {
+    flex: 1 1 auto;
+  }
+  .buttonsOptions {
+    color: #0e2b53;
+    font-weight: bold;
+    font-size: medium;
+    border: none;
+    width: 130px;
+    height: 60px;
+    margin-right: 1%;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+  }
+  .buttonsOptions:hover {
+    transform: scale(1.3); /* Aumenta el tamaño al 110% */
+  }

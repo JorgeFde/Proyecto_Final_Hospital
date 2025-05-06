@@ -1,63 +1,45 @@
-<div style="width: 100%; height: 100%;">
+<div class="containerPrimary">
   <!--Nav Bar-->
-  <div style="width: 100%; height: 130px; overflow-x: auto;">
-    <mat-toolbar style="background-color: white; padding: 0; margin: 0; height: 100%;">
-      <img src="assets/logo.png" alt="Logo" style="width: 190px; height: 100%;">
-      <span
-        style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: larger; color: #0E2B53; margin-left: 10px; user-select: none; cursor: default;">Bienvenidos</span>
+  <div class="containerNavBar">
+    <mat-toolbar class="matToolbarNav">
+      <img src="assets/logo.png" alt="Logo" class="logoNavBar">
+      <span class="titleHome">Bienvenidos</span>
       <span class="options-spacer"></span>
-      <button
-        style="color: #0E2B53; background-color: transparent; font-weight: bold; font-size: medium; border: none; width: 100px; height: 60px; margin-right: 1%; cursor: pointer; user-select: none;">Inicio</button>
-      <button
-        style="color: white; background-color: red; font-weight: bold; font-size: medium; border: none; width: 200px; height: 60px; margin-right: 1%; border-radius: 5px; cursor: pointer; user-select: none;">Crear
+      <button class="buttonsOptions" (click)="goToLogin()">Iniciar sesión</button>
+      <button class="buttonReport" (click)="goToReport()">Crear
         Reporte</button>
     </mat-toolbar>
   </div>
-  <!--Banners de fotos-->
-  <div style="width: 100%; height: 800px; background-color: white; display: flex;">
-    <div
-      style="height: 100%; width: 40%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <label style="display: block; color: #EA3323; font-size: 18px; margin-left: 18px; font-weight: bold;">
+  <!--Banners-->
+  <div class="bannerContainer">
+    <div class="bannerText">
+      <label class="titleBanner">
         EN PETSHOME CUIDAMOS DE ELLOS
       </label>
-      <label style="display: block; color: #172950; font-size: 60px; margin-left: 20px; font-weight: bold;">
+      <label class="subtitleBanner">
         CONTAMOS CON
       </label>
       <label [@fade]="animationState"
-        style="display: block; color: #172950; font-size: 60px; margin-left: 20px; font-weight: bold;">
+        class="textAnimationBanner">
         {{ images[currentIndex].text }}
       </label>
     </div>
-    <div style="height: 100%; width: 60%;">
+    <div class="imageContentBanner">
       <!-- Imagen de fondo -->
-      <img [@fade]="animationState" [src]="images[currentIndex].src" style="
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          -webkit-mask-image: radial-gradient(ellipse closest-side at center, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
-          mask-image: radial-gradient(ellipse closest-side at center, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
-          mask-mode: alpha;
-          -webkit-mask-mode: alpha;
-        " />
+      <img [@fade]="animationState" [src]="images[currentIndex].src" class="imageBanner" />
     </div>
   </div>
   <!--Acerca de nosotros-->
-  <div style="width: 100%; height: 500px; display: flex;">
-    <div style="height: 100%; width: 40%;">
-      <img src="assets/images/acerca de nosotros.jpeg" style="
-          width: 90%;
-          height: 100%;
-          object-fit: cover;
-          margin-left: 5%;
-          margin-right: 5%;
-        " />
+  <div class="containerAcerca">
+    <div class="containerImageAcerca">
+      <img src="assets/images/acerca de nosotros.jpg" class="imageAcerca" />
     </div>
-    <div
-      style="height: 100%; width: 60%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <label style="display: block; color: #172950; font-size: 30px; margin-left: 25px; font-weight: bold;">
+    <div class="containerTextAcerca">
+      <label class="titleTextAcerca">
         Acerca de Nosotros – PetsHome
       </label>
-      <label style="display: block; color: #172950; font-size: 17px; margin: 30px; font-weight: bold; margin-top: 20px;">
+      <label
+        class="textAcerca">
         ¡Bienvenidos a PetsHome!
         Somos un hospital veterinario con más de 20 años de experiencia comprometidos con el cuidado y bienestar de tus
         mascotas. Nos encontramos en Boca del Río, Veracruz, y atendemos con pasión y dedicación a pacientes de todo el
@@ -78,16 +60,44 @@
     </div>
   </div>
   <!--Patrocinadores-->
-  <div style="width: 100%; height: 80px; background-color: rgb(31, 42, 146);">
+  <div class="containerSliderInfinito">
+    <div class="slider">
+      <div class="slider-track">
+        <div class="slide" *ngFor="let image of imagesSponsors">
+          <img class="imageSlider" [src]="image" alt="Imagen del slider">
+        </div>
+        <div class="slide" *ngFor="let image of imagesSponsors">
+          <img class="imageSlider" [src]="image" alt="Imagen del slider">
+        </div>
+      </div>
+    </div>
   </div>
   <!--Agradecimientos-->
-  <div style="width: 100%; height: 500px; background-color: rgb(62, 73, 175); display: flex;">
-    <div
-      style="height: 100%; width: 40%; justify-content: center; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: antiquewhite;">
+  <div class="containerAgradecimiento">
+    <div class="containerTextAgradecimiento">
+      <label class="titleAgradecimiento">
+        🐾 ¡Gracias por visitarnos en PetsHome! 🐾
+      </label>
+      <label class="textAgradecimiento">
+        En PetsHome, nos llena de alegría saber que te has tomado el tiempo de conocer más sobre nuestro hospital
+        veterinario. Cada visita a nuestra página es una muestra de confianza que valoramos profundamente.
 
+        Nos apasiona cuidar de quienes más amas: tus mascotas. Por eso, trabajamos con dedicación, cariño y
+        profesionalismo para brindarles la atención que merecen en cada etapa de su vida.
+
+        Si tienes alguna pregunta, necesitas agendar una cita o simplemente quieres conocer más sobre nuestros
+        servicios, no dudes en contactarnos. ¡Será un placer acompañarte en el bienestar de tu compañero de cuatro
+        patas!
+      </label>
+      <label class="subTitleAgradecieminto">
+        Gracias por confiar en PetsHome
+      </label>
+      <label class="subTitleAgradecimientoFinal">
+        Tu hogar de cuidado veterinario.
+      </label>
     </div>
-    <div style="height: 100%; width: 60%; background-color: #2f994f;">
-
+    <div class="containerImage">
+      <img src="assets/logoSinFondo.png" class="imageAgradecimiento" />
     </div>
   </div>
 </div>
