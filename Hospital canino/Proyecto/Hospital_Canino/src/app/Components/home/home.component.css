@@ -18,6 +18,7 @@
 .logoNavBar {
   width: 190px;
   height: 100%;
+  object-fit:contain;
 }
 .titleHome {
   font-family: Arial, Helvetica, sans-serif;
@@ -31,21 +32,6 @@
 /* options-spacer es para la nav bar */
 .options-spacer {
   flex: 1 1 auto;
-}
-.buttonsOptionsHome {
-  color: #0e2b53;
-  font-weight: bold;
-  font-size: medium;
-  border: none;
-  width: 80px;
-  height: 60px;
-  margin-right: 0%;
-  cursor: pointer;
-  user-select: none;
-  background-color: transparent;
-}
-.buttonsOptionsHome:hover {
-  transform: scale(1.5); /* Aumenta el tamaño al 110% */
 }
 .buttonsOptions {
   color: #0e2b53;

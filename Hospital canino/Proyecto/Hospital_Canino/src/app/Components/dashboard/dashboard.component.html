@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<div class="containerPrimary" style="overflow-y: hidden;">
+    <!--Nav Bar-->
+    <div class="containerNavBar">
+        <mat-toolbar class="matToolbarNav">
+            <img src="assets/logo.png" alt="Logo" class="logoNavBar">
+            <span class="titleHome">Bienvenido</span>
+            <span class="options-spacer"></span>
+            <button mat-icon-button style="color: red;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="blue">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                        d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 2 2zm6-6V9c0-3.07-1.63-5.64-4.5-6.32V2.5a1.5 1.5 0 00-3 0v.18C7.63 3.36 6 5.92 6 9v7l-2 2v1h16v-1l-2-2z" />
+                </svg>
+            </button>
+        </mat-toolbar>
+    </div>
+    <div style="height: 100vh; width: 100%; display: flex; flex-direction: column;">
+        <!-- ACTIVO -->
+        <div [style.flex]="isOpen === 'activos' ? '0.825' : '0 0 auto'" style="width: 100%; display: flex; flex-direction: column; transition: flex 0.3s;">
+          <div style="background-color: aquamarine; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px;">
+            <span>Incidencias Activas</span>
+            <button (click)="toggle('activos')">{{ isOpen === 'activos' ? 'Cerrar' : 'Abrir' }}</button>
+          </div>
+          <div *ngIf="isOpen === 'activos'" style="background-color: rgb(188, 109, 109); flex: 1; overflow: auto;">
+            <!--Content incidencias activos-->
+            Contenido de Activos
+          </div>
+        </div>
+        <!-- PENDIENTES -->
+        <div [style.flex]="isOpen === 'pendientes' ? '0.825' : '0 0 auto'" style="width: 100%; display: flex; flex-direction: column; transition: flex 0.3s;">
+          <div style="background-color: aquamarine; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px;">
+            <span>Incidencias Pendientes</span>
+            <button (click)="toggle('pendientes')">{{ isOpen === 'pendientes' ? 'Cerrar' : 'Abrir' }}</button>
+          </div>
+          <div *ngIf="isOpen === 'pendientes'" style="background-color: rgb(44, 42, 165); flex: 1; overflow: auto;">
+            <!--Content incidencias pendientes-->
+            Contenido de Pendientes
+          </div>
+        </div>
+        <!-- COMPLETOS -->
+        <div [style.flex]="isOpen === 'completos' ? '0.825' : '0 0 auto'" style="width: 100%; display: flex; flex-direction: column; transition: flex 0.3s;">
+          <div style="background-color: aquamarine; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px;">
+            <span>Incidencias Completas</span>
+            <button (click)="toggle('completos')">{{ isOpen === 'completos' ? 'Cerrar' : 'Abrir' }}</button>
+          </div>
+          <div *ngIf="isOpen === 'completos'" style="background-color: rgb(42, 165, 118); flex: 1; overflow: auto;">
+            <!--Content incidencias completos-->
+            Contenido de Completos
+          </div>
+        </div>
+      </div>
+</div>
