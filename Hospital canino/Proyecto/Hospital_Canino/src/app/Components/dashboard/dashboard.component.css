@@ -1,3 +1,8 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Evita scroll general */
+}
 /* Container principal */
 .containerPrimary {
   width: 100%;
@@ -62,6 +67,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
 }
 /*Bugs active*/
 .bugsActive {
@@ -73,6 +79,7 @@
   margin-left: 5px;
   margin-bottom: 3px;
   border-radius: 10px;
+  overflow-y: hidden;
 }
 .bugsActive:hover {
   background-color: red;
@@ -106,13 +113,15 @@
 .contentBugsActive {
   background-color: rgb(188, 109, 109);
   flex: 1;
-  overflow: auto;
+  overflow: hidden; /* evita scroll externo */
+  display: flex;
+  flex-direction: column;
 }
 .detailsContent {
-  width: 99%;
+  width: 100%;
   height: 100%;
-  margin: auto;
   background-color: aquamarine;
+  overflow-y: auto;
 }
 .arrow {
   margin-right: 20px;

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
-import { NgIf } from '@angular/common';
-import { NgClass } from '@angular/common';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { NotificationsComponent } from "../notifications/notifications.component";
 @Component({
   selector: 'app-dashboard',
-  imports: [MatToolbar, NgIf, NgClass, NotificationsComponent],
+  imports: [MatToolbar, NgIf, NgClass, NgFor, NotificationsComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -16,6 +15,23 @@ export class DashboardComponent {
   isActiveAnimation: boolean = false
   intervalId: any;
   bellAnimating: boolean = false;
+  datos = [
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+    { nombre: 'producto1', precio: 25, existencia: 10 },
+  ];
   ngOnInit() {
     this.setupNotificationAnimationLoop();
   }
@@ -52,6 +68,10 @@ export class DashboardComponent {
   // termina animacion de campana
   // cerrar sesion
   toggleLogOut() {
-
+    console.log("Cerrar sesion")
+  }
+  // Go To Details
+  goToDetails() {
+    console.log("ir al detalle")
   }
 }
