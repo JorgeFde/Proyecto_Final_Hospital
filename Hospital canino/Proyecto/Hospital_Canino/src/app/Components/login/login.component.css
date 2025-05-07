@@ -1,24 +1,137 @@
-.cuadro-centrado {
-  position: relative;
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Asegura que el envoltorio y la app ocupen toda la pantalla */
+html, body, app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo general y centrado total */
+.page-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #0e2b53, #459ac1);
-  overflow-x: hidden;
+  background-color: #deeaf7;
 }
-  .cuadro {
-    width: 80%;
-    height: 80%;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 #ffffff22;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.143);
-  }
-  .contentImage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
+/* Fondo general */
+body {
+  background-color: #f0f4f8;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor general */
+.login-container {
+  display: flex;
+  width: 900px;
+  height: 500px;
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Panel izquierdo */
+.left-panel {
+  width: 50%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.brand-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Panel derecho */
+.right-panel {
+  width: 50%;
+  background-color: #0E2B53;
+  color: white;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right-panel h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+/*apartado acceso*/
+.subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #cce6ff;
+  margin-bottom: 30px;
+}
+
+/*correo/contraseña*/
+form input {
+  width: 100%;
+  padding: 12px 20px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+}
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 25px;
+}
+/*Olvide mi contraseña*/
+.forgot-btn {
+  background: none;
+  border: none;
+  color: #cce6ff;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/*boton iniciar sesion*/
+.login-btn {
+  width: 50%;
+  padding: 12px;
+  background-color: #dd1515da;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/*Cambio de color al pasar el cursor en iniciar sesion*/
+.login-btn:hover {
+  background-color: #da5f5f;
+}
