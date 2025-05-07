@@ -13,7 +13,7 @@
       <button class="logOUT" (click)="toggleLogOut()">Cerrar sesion</button>
     </mat-toolbar>
   </div>
-  <div class="ContentIncidencias">
+  <div class="contentIncidencias">
     <!-- ACTIVO -->
     <div [style.flex]="isOpen === 'activos' ? '0.891' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
@@ -32,38 +32,21 @@
         <button mat-icon-button (click)="toggle('activos')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'activos'" class="contentBugsActive">
-        <!--Content incidencias activos-->
+        <!--Content incidencias activos--> 
+        <div style="background-color: blueviolet; height: 50px; width: 100%;">
+          <!--Barra de filtro-->
+        </div>
+        <!--Items de detalle incidencias-->
         <div class="detailsContent">
-          <!--Falta poner la barra de filtrado-->
          <!--Inicio del ngFor-->
-          <div *ngFor="let persona of datos" style="width: 100%; height: 50px; position: relative; margin: 10px;">
+          <div *ngFor="let persona of datos" style="width: 99%; height: 100px; position: relative; margin: 10px;">
             <!-- Div rojo arriba del item -->
             <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;">
-              <button (click)="goToDetails()" style="width: 100%; height: 100%; background-color: blue; border: none; cursor: pointer;"></button>
+              <button (click)="goToDetails()" style="width: 100%; height: 100%; background-color: transparent; border: none; cursor: pointer;"></button>
             </div>
             <!-- Contenido (oculto debajo del div rojo) -->
-            <div style="width: 100%; height: 24px; display: flex; position: relative; z-index: 0;">
-              <div style="height: 100%; width: 50%;">
-                <label
-                  style="padding-left: 10px; display: flex; align-items: center; font-weight: bold;">Nombre:</label>
-              </div>
-              <div style="height: 100%; width: 50%;">
-                <label
-                  style="padding-right: 10px; display: flex; align-items: center; justify-content: flex-end; font-weight: bold;">Precio:</label>
-              </div>
-            </div>
-            <!--Body-->
-            <div style="width: 100%; height: 24px; display: flex; position: relative; z-index: 0;">
-              <div style="width: 50%;">
-                <label style="padding-left: 10px; display: flex; align-items: center;">
-                  {{ persona.nombre }}
-                </label>
-              </div>
-              <div style="width: 50%;">
-                <label style="padding-right: 10px; display: flex; align-items: center; justify-content: flex-end;">
-                  ${{ persona.precio }}
-                </label>
-              </div>
+            <div style="background-color: brown; width: 100%; height: 100%; border-radius: 20px;">
+              <!--Aqui va el contenido del las incidencias-->
             </div>
             <!-- Línea divisoria -->
             <div style="background-color: rgba(152, 152, 152, 0.672); width: 97%; height: 1px; margin: 0 auto; position: relative; z-index: 0;"></div>

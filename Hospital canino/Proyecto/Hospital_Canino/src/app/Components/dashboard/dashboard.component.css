@@ -62,7 +62,7 @@ html, body {
 .buttonNotification:hover {
   transform: scale(1.3);
 }
-.ContentIncidencias {
+.contentIncidencias {
   height: 100vh;
   width: 100%;
   display: flex;
@@ -111,7 +111,7 @@ html, body {
   background-color: transparent;
 }
 .contentBugsActive {
-  background-color: rgb(188, 109, 109);
+  background-color: white;
   flex: 1;
   overflow: hidden; /* evita scroll externo */
   display: flex;
@@ -120,7 +120,6 @@ html, body {
 .detailsContent {
   width: 100%;
   height: 100%;
-  background-color: aquamarine;
   overflow-y: auto;
 }
 .arrow {
