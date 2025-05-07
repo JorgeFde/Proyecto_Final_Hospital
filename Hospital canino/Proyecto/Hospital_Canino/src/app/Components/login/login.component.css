@@ -70,7 +70,7 @@ body {
 /* Panel derecho */
 .right-panel {
   width: 50%;
-  background-color: #0E2B53;
+  background-color: #0365ed;
   color: white;
   padding: 50px 40px;
   display: flex;
@@ -107,15 +107,6 @@ form input {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 25px;
-}
-/*Olvide mi contraseña*/
-.forgot-btn {
-  background: none;
-  border: none;
-  color: #cce6ff;
-  font-size: 13px;
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 /*boton iniciar sesion*/
