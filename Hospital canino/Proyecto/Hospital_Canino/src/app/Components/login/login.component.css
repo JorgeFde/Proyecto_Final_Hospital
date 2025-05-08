@@ -19,12 +19,10 @@ html, body, app-root {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #deeaf7;
 }
 
 /* Fondo general */
 body {
-  background-color: #f0f4f8;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -134,4 +132,19 @@ form input {
 /*Cambio de color al pasar el cursor en iniciar sesion*/
 .login-btn:hover {
   background-color: #da5f5f;
+}
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; 
 }
