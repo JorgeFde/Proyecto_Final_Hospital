@@ -54,13 +54,12 @@
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
           <!--Inicio del ngFor-->
-          <div *ngFor="let persona of datos" style="width: 99%; position: relative; margin: 10px auto;">
+          <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
             <!-- Botón invisible que cubre toda la tarjeta -->
-            <button (click)="goToDetails()"
-              style="position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;">
+            <button (click)="goToDetails()" class="buttonGoDetails">
             </button>
             <!-- Contenido visual (tarjeta) -->
-            <div class="tarjeta-incidencia" style="position: relative; z-index: 1;">
+            <div class="tarjeta-incidencia">
               <h2>Incidencia: Error de agenda</h2>
               <div class="info"><strong>Status:</strong> Activa</div>
               <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
@@ -117,13 +116,11 @@
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
             <!--Inicio del ngFor-->
-            <div *ngFor="let persona of datos" style="width: 99%; position: relative; margin: 10px auto;">
+            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
               <!-- Botón invisible que cubre toda la tarjeta -->
-              <button (click)="goToDetails()"
-                style="position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;">
-              </button>
+              <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <!-- Contenido visual (tarjeta) -->
-              <div class="tarjeta-incidencia" style="position: relative; z-index: 1;">
+              <div class="tarjeta-incidencia">
                 <h2>Incidencia: Error de agenda</h2>
                 <div class="info"><strong>Status:</strong> Pendiente</div>
                 <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
@@ -179,9 +176,9 @@
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let persona of datos" style="width: 99%; position: relative; margin: 10px auto;">
-              <button (click)="goToDetails()" style="position: absolute; inset: 0; z-index: 2; background: transparent; border: none; cursor: pointer;"></button>
-              <div class="tarjeta-incidencia" style="position: relative; z-index: 1;">
+            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+              <div class="tarjeta-incidencia">
                 <h2>Incidencia: Error de agenda</h2>
                 <div class="info"><strong>Status:</strong> Cerrado</div>
                 <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
