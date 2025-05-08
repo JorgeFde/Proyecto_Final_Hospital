@@ -1,50 +1,288 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Evita scroll general */
+}
 /* Container principal */
 .containerPrimary {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+}
+/* Nav Bar*/
+.containerNavBar {
+  width: 100%;
+  height: 90px;
+  overflow-x: auto;
+}
+.matToolbarNav {
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+.logoNavBar {
+  width: 100px;
+  height: 100%;
+  object-fit: contain;
+}
+.titleHome {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: larger;
+  color: #0e2b53;
+  margin-left: 0px;
+  user-select: none;
+  cursor: default;
+}
+/* options-spacer es para la nav bar */
+.options-spacer {
+  flex: 1 1 auto;
+}
+.buttonsOptions {
+  color: #0e2b53;
+  font-weight: bold;
+  font-size: medium;
+  border: none;
+  width: 130px;
+  height: 60px;
+  margin-right: 1%;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+}
+.buttonsOptions:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+}
+.buttonNotification {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.buttonNotification:hover {
+  transform: scale(1.3);
+}
+.contentIncidencias {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+/*Bugs active*/
+.bugsActive {
+  width: 99.4%;
+  display: flex;
+  flex-direction: column;
+  transition: flex 0.3s;
+  background-color: #0e2b53;
+  margin-left: 5px;
+  margin-bottom: 3px;
+  border-radius: 10px;
+  overflow-y: hidden;
+}
+.bugsDone {
+  width: 99.4%;
+  display: flex;
+  flex-direction: column;
+  transition: flex 0.3s;
+  background-color: #0e2b53;
+  margin-left: 5px;
+  border-radius: 10px;
+}
+.headerBugsActive {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buttonBugActive {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+.contentBugsActive {
+  background-color: white;
+  flex: 1;
+  overflow: hidden; /* evita scroll externo */
+  display: flex;
+  flex-direction: column;
+}
+.detailsContent {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.arrow {
+  margin-right: 20px;
+}
+span {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: larger;
+  color: white;
+}
+/*Animacion de campana*/
+@keyframes bell-shake {
+  0% {
+    transform: rotate(0);
   }
-  /* Nav Bar*/
-  .containerNavBar {
-    width: 100%;
-    height: 130px;
-    overflow-x: auto;
+  20% {
+    transform: rotate(-15deg);
   }
-  .matToolbarNav {
-    background-color: white;
-    padding: 0;
-    margin: 0;
-    height: 100%;
+  40% {
+    transform: rotate(10deg);
   }
-  .logoNavBar {
-    width: 190px;
-    height: 100%;
-    object-fit:contain;
+  60% {
+    transform: rotate(-10deg);
   }
-  .titleHome {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: larger;
-    color: #0e2b53;
-    margin-left: 10px;
-    user-select: none;
-    cursor: default;
+  80% {
+    transform: rotate(5deg);
   }
-  /* options-spacer es para la nav bar */
-  .options-spacer {
-    flex: 1 1 auto;
+  100% {
+    transform: rotate(0);
   }
-  .buttonsOptions {
-    color: #0e2b53;
-    font-weight: bold;
-    font-size: medium;
-    border: none;
-    width: 130px;
-    height: 60px;
-    margin-right: 1%;
-    cursor: pointer;
-    user-select: none;
-    background-color: transparent;
-  }
-  .buttonsOptions:hover {
-    transform: scale(1.3); /* Aumenta el tamaño al 110% */
-  }
+}
+.bell-shaking {
+  animation: bell-shake 0.8s ease-in-out infinite;
+  transform-origin: top center;
+}
+/*Panel de notificaciones*/
+.panelNotifications {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 40%;
+  background-color: #0e2b53a0;
+  color: white;
+  z-index: 1000;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+}
+.footer-button {
+  position: absolute;
+  width: 97%;
+  height: 30px;
+  border: none;
+  background-color: #172950;
+  color: white;
+  font-weight: bold;
+  font-size: 100%;
+  border-radius: 20px;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+.titleNotifications {
+  font-weight: bold;
+  font-size: larger;
+  margin: 10px;
+}
+.footer-button:hover {
+  background-color: red;
+}
+.componentNotifications {
+  width: 100%;
+  height: 100%;
+}
+/*Cierre de sesion*/
+.logOUT {
+  background-color: red;
+  color: white;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-left: 10px;
+  font-weight: bolder;
+  font-size: 70%;
+}
+.logOUT:hover {
+  transform: scale(1.2);
+}
+/*Filtro de busqueda */
+.filtro-barra {
+  background-color: #0e2b53;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  gap: 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #fff5;
+}
+.filtro-barra label {
+  font-weight: bold;
+}
+.filtro-barra input,
+.filtro-barra select,
+.filtro-barra button {
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+}
+.filtro-barra input,
+.filtro-barra select {
+  min-width: 140px;
+  cursor: pointer;  
+}
+.filtro-barra button {
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  border: none;
+}
+.filtro-barra button:hover {
+  background-color: red;
+}
+/*Tarjetas de incidencias*/
+.tarjeta-incidencia {
+  background-color: white;
+  width: 96%;
+  margin: 20px auto;
+  padding: 20px;
+  color: #0e2b53;
+  border-radius: 20px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 10px rgba(7, 52, 149, 0.348);
+  position: relative; z-index: 1;
+}
+.tarjeta-incidencia h2 {
+  margin-top: 0;
+  font-size: 20px;
+  border-bottom: 1px solid #0e2b53;
+  padding-bottom: 5px;
+}
+.info {
+  margin-bottom: 10px;
+}
+.info strong {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+.descripcion {
+  background-color: #1449923d;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+  white-space: pre-line;
+}
+.contentDivGeneralTarjeta {
+  width: 99%; position: relative; margin: 10px auto;
+}
+.buttonGoDetails {
+  position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;
+}

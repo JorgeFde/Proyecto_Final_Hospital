@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './chat-report-client.component.css'
 })
 export class ChatReportClientComponent {
-
+  loaded = false;
+  ngOnInit() {
+    setTimeout(() => {
+      this.loaded = true;
+    }, 1); // o usar ngAfterViewInit para mayor precisión
+  }
 }
