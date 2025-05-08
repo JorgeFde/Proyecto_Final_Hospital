@@ -81,9 +81,6 @@ html, body {
   border-radius: 10px;
   overflow-y: hidden;
 }
-.bugsActive:hover {
-  background-color: red;
-}
 .bugsDone {
   width: 99.4%;
   display: flex;
@@ -92,9 +89,6 @@ html, body {
   background-color: #0e2b53;
   margin-left: 5px;
   border-radius: 10px;
-}
-.bugsDone:hover {
-  background-color: red;
 }
 .headerBugsActive {
   height: 50px;
@@ -193,7 +187,6 @@ span {
 .componentNotifications {
   width: 100%;
   height: 100%;
-  background-color: aqua;
 }
 /*Cierre de sesion*/
 .logOUT {
@@ -209,4 +202,80 @@ span {
 }
 .logOUT:hover {
   transform: scale(1.2);
+}
+/*Filtro de busqueda */
+.filtro-barra {
+  background-color: #0e2b53;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  gap: 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #fff5;
+}
+.filtro-barra label {
+  font-weight: bold;
+}
+.filtro-barra input,
+.filtro-barra select,
+.filtro-barra button {
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+}
+.filtro-barra input,
+.filtro-barra select {
+  min-width: 140px;
+  cursor: pointer;  
+}
+.filtro-barra button {
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  border: none;
+}
+.filtro-barra button:hover {
+  background-color: red;
+}
+/*Tarjetas de incidencias*/
+.tarjeta-incidencia {
+  background-color: white;
+  width: 96%;
+  margin: 20px auto;
+  padding: 20px;
+  color: #0e2b53;
+  border-radius: 20px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 10px rgba(7, 52, 149, 0.348);
+}
+.tarjeta-incidencia h2 {
+  margin-top: 0;
+  font-size: 20px;
+  border-bottom: 1px solid #0e2b53;
+  padding-bottom: 5px;
+}
+.info {
+  margin-bottom: 10px;
+}
+.info strong {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+.descripcion {
+  background-color: #1449923d;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+  white-space: pre-line;
 }

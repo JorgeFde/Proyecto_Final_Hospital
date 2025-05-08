@@ -9,7 +9,7 @@ import { NotificationsComponent } from "../notifications/notifications.component
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  isOpen: 'activos' | 'pendientes' | 'completos' | null = null;
+  isOpen: 'activos' | 'pendientes' | 'cerrados' | null = null;
   panelVisible: boolean = false;
   isNotification: boolean = false;
   isActiveAnimation: boolean = false
@@ -38,7 +38,7 @@ export class DashboardComponent {
   ngOnDestroy() {
     clearInterval(this.intervalId);
   }
-  toggle(panel: 'activos' | 'pendientes' | 'completos') {
+  toggle(panel: 'activos' | 'pendientes' | 'cerrados') {
     this.isOpen = this.isOpen === panel ? null : panel;
   }
   // panel de notificaciones
