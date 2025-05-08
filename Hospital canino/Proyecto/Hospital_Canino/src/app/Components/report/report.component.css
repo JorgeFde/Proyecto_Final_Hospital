@@ -1,0 +1,128 @@
+/* Fondo completo parte de atras */
+.register-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #bedeff;
+}
+
+/* Contenedor principal */
+.register-container {
+  display: flex;
+  width: 90%;
+  max-width: 1000px;
+  background-color: #223e66; /* Azul oscuro */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+/* imagen logo */
+.register-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #223e66; /* Asegura color igual */
+  padding: 40px;
+}
+
+/* Imagen circular */
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #006ef5;
+}
+
+/* formulario */
+.register-content {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Alineado al inicio horizontal */
+}
+
+/* Logo y encabezado */
+.logo {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #eea9a9;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0 0 20px 0;
+}
+
+/* separacion formulario */
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+/* Inputs y selects */
+input[type="text"], select {
+  flex: 1;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  resize: none;
+  vertical-align: top;
+}
+
+/* selector de motivo */
+select {
+  background-color: #a82727;
+  color: rgb(255, 255, 255);
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+/* Botones */
+.create-btn, .folio-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/*boton enviar reporte*/
+.create-btn {
+  background-color: #a82727;
+  color: white;
+  border: none;
+}
+
+/*marco boton folio*/
+.folio-btn {
+  background-color: transparent;
+  border: 2px solid #8c7d7e;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/*animacion pasando el cursor*/
+.folio-btn:hover {
+  background-color: #a82727;
+  color: white;
+}
