@@ -1,18 +1,24 @@
-<div class="page-wrapper">
- <div class="login-container">
-    <div class="left-panel">
-      <h1 class="brand-title">PetsHome</h1>
-      <img src="assets/logo.png" alt="Logo App" class="logo">
-     </div>
-  
-    <div class="right-panel">
-      <h2>¡Bienvenido!</h2>
-      <p class="subtitle">Acceso</p>
-      <form (ngSubmit)="submit()">
-        <input type="email" placeholder="Correo" [(ngModel)]="email" name="email" required />
-        <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
-        <button type="submit" class="login-btn">Iniciar sesión</button>
-      </form>
+<div class="background-container">
+  <!-- Imagen de fondo -->
+  <img src="assets/images/FondoHuella1.jpg" alt="Fondo" class="background-image" />
+
+  <!-- Contenido sobre la imagen -->
+  <div class="page-wrapper">
+    <div class="login-container">
+      <div class="left-panel">
+        <h1 class="brand-title">PetsHome</h1>
+        <img src="assets/logo.png" alt="Logo App" class="logo" />
+      </div>
+
+      <div class="right-panel">
+        <h2>¡Bienvenido!</h2>
+        <p class="subtitle">Acceso</p>
+        <form (ngSubmit)="submit()">
+          <input type="email" placeholder="Correo" [(ngModel)]="email" name="email" required />
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
+          <button type="submit" class="login-btn">Iniciar sesión</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
