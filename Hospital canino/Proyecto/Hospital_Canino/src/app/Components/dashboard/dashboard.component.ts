@@ -11,7 +11,7 @@ import { NotificationsComponent } from "../notifications/notifications.component
 export class DashboardComponent {
   isOpen: 'activos' | 'pendientes' | 'cerrados' | null = null;
   panelVisible: boolean = false;
-  isNotification: boolean = false;
+  isNotification: boolean = true;
   isActiveAnimation: boolean = false
   intervalId: any;
   bellAnimating: boolean = false;
