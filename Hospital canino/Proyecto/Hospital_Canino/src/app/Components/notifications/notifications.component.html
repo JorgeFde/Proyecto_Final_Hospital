@@ -1,15 +1,12 @@
-<div class="wrapper">
-    <p class="titulo">Este es el componente de notificaciones</p>
-  
-    <div class="notificacion-container">
-      <div class="logo-container">
-        <img src="assets/logo.png" alt="Hospital Canino PetsHome" />
-      </div>
-  
-      <div class="input-container">
-        <p class="texto-notificacion">Medicamento: NexGard Spectra 75mg</p>
-        <p class="texto-notificacion">Quedan solo 10 unidades disponibles en el inventario.</p>
-      </div>
+<div class="containerPrimary">
+  <div *ngFor="let notification of notifications" class="notificacion-container">
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Hospital Canino PetsHome" />
+    </div>
+    <div class="input-container">
+      <label class="title">Medicamento: NexGard Spectra 75mg</label>
+      <mat-divider></mat-divider>
+      <label class="descript">Quedan solo 10 unidades disponibles en el inventario.</label>
     </div>
   </div>
-  
+</div>

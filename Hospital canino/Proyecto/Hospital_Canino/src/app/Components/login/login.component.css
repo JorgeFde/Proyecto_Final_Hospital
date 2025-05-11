@@ -120,7 +120,7 @@ form input {
 .login-btn {
   width: 50%;
   padding: 12px;
-  background-color: #dd1515da;
+  background-color: red;
   color: white;
   border: none;
   border-radius: 30px;

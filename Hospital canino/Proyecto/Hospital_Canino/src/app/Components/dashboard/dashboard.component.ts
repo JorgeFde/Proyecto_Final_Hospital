@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { NotificationsComponent } from "../notifications/notifications.component";
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 @Component({
   selector: 'app-dashboard',
   imports: [MatToolbar, NgIf, NgClass, NgFor, NotificationsComponent],
@@ -9,7 +11,9 @@ import { NotificationsComponent } from "../notifications/notifications.component
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  isOpen: 'activos' | 'pendientes' | 'cerrados' | null = null;
+  // Esto se agrega para ocupar las rutas 
+  private router = inject(Router);
+  isOpen: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion' | null = null;
   panelVisible: boolean = false;
   isNotification: boolean = true;
   isActiveAnimation: boolean = false
@@ -38,7 +42,7 @@ export class DashboardComponent {
   ngOnDestroy() {
     clearInterval(this.intervalId);
   }
-  toggle(panel: 'activos' | 'pendientes' | 'cerrados') {
+  toggle(panel: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion') {
     this.isOpen = this.isOpen === panel ? null : panel;
   }
   // panel de notificaciones
@@ -68,10 +72,10 @@ export class DashboardComponent {
   // termina animacion de campana
   // cerrar sesion
   toggleLogOut() {
-    console.log("Cerrar sesion")
+    this.router.navigate(['Home'])
   }
   // Go To Details
   goToDetails() {
-    console.log("ir al detalle")
+    this.router.navigate(['DetailsReport'])
   }
 }

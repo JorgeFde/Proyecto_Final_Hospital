@@ -18,23 +18,23 @@
   </div>
   <div class="contentIncidencias">
     <!-- ACTIVO -->
-    <div [style.flex]="isOpen === 'activos' ? '0.86' : '0 0 auto'" class="bugsActive">
+    <div [style.flex]="isOpen === 'revision' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
-        <span>Incidencias Activas</span>
-        <svg class="arrow" *ngIf="isOpen === 'activos'" xmlns="http://www.w3.org/2000/svg" height="40"
+        <span>Incidencias en revisión</span>
+        <svg class="arrow" *ngIf="isOpen === 'revision'" xmlns="http://www.w3.org/2000/svg" height="40"
           viewBox="0 0 24 24" width="40" fill="white">
           <!-- Triángulo hacia arriba -->
           <path d="M7 14l5-5 5 5z" />
         </svg>
-        <svg class="arrow" *ngIf="isOpen != 'activos'" xmlns="http://www.w3.org/2000/svg" height="40"
+        <svg class="arrow" *ngIf="isOpen != 'revision'" xmlns="http://www.w3.org/2000/svg" height="40"
           viewBox="0 0 24 24" width="40" fill="white">
           <!-- Triángulo hacia abajo -->
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('activos')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggle('revision')" class="buttonBugActive"></button>
       </div>
-      <div *ngIf="isOpen === 'activos'" class="contentBugsActive">
+      <div *ngIf="isOpen === 'revision'" class="contentBugsActive">
         <!--Content incidencias activos-->
         <div class="filtro-barra">
           <!--Barra de filtros-->
@@ -81,7 +81,7 @@
     <!-- PENDIENTES -->
     <div [style.flex]="isOpen === 'pendientes' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
-        <span>Incidencias Pendientes</span>
+        <span>Incidencias pendientes</span>
         <svg class="arrow" *ngIf="isOpen === 'pendientes'" xmlns="http://www.w3.org/2000/svg" height="40"
           viewBox="0 0 24 24" width="40" fill="white">
           <!-- Triángulo hacia arriba -->
@@ -143,7 +143,7 @@
     <!-- Cerrados -->
     <div [style.flex]="isOpen === 'cerrados' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
-        <span>Incidencias Cerrados</span>
+        <span>Incidencias cerrados</span>
         <svg class="arrow" *ngIf="isOpen === 'cerrados'" xmlns="http://www.w3.org/2000/svg" height="40"
           viewBox="0 0 24 24" width="40" fill="white">
           <!-- Triángulo hacia arriba -->
@@ -158,6 +158,62 @@
         <button mat-icon-button (click)="toggle('cerrados')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerrados'" class="contentBugsActive">
+        <div class="detailsContent">
+          <!-- Filtro se mantendrá visible -->
+          <div class="filtro-barra">
+            <label>Filtrar por:</label>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha">
+            <label for="hora">Hora</label>
+            <input type="time" id="hora">
+            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
+            <label for="motivo">Motivo</label>
+            <select id="motivo">
+              <option value="agenda">Incluir todas las incidencias</option>
+              <option value="agenda">Filtrar por incidencia de agenda</option>
+              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            </select>
+          </div>
+          <!-- Lista scrollable -->
+          <div class="detailsContent">
+            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+              <div class="tarjeta-incidencia">
+                <h2>Incidencia: Error de agenda</h2>
+                <div class="info"><strong>Status:</strong> Cerrado</div>
+                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
+                <div class="info"><strong>Hora:</strong> 14:30</div>
+                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
+                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
+                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
+                <div class="descripcion">
+                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Termina Cerrados-->
+    <!-- Cerrados sin contestacion -->
+    <div [style.flex]="isOpen === 'cerradosSinContestacion' ? '0.86' : '0 0 auto'" class="bugsActive">
+      <div class="headerBugsActive">
+        <span>Incidencias cerrados sin contestación</span>
+        <svg class="arrow" *ngIf="isOpen === 'cerradosSinContestacion'" xmlns="http://www.w3.org/2000/svg" height="40"
+          viewBox="0 0 24 24" width="40" fill="white">
+          <!-- Triángulo hacia arriba -->
+          <path d="M7 14l5-5 5 5z" />
+        </svg>
+        <svg class="arrow" *ngIf="isOpen != 'cerradosSinContestacion'" xmlns="http://www.w3.org/2000/svg" height="40"
+          viewBox="0 0 24 24" width="40" fill="white">
+          <!-- Triángulo hacia abajo -->
+          <path d="M7 10l5 5 5-5z" />
+        </svg>
+        <!-- Botón invisible sobre todo el div -->
+        <button mat-icon-button (click)="toggle('cerradosSinContestacion')" class="buttonBugActive"></button>
+      </div>
+      <div *ngIf="isOpen === 'cerradosSinContestacion'" class="contentBugsActive">
         <div class="detailsContent">
           <!-- Filtro se mantendrá visible -->
           <div class="filtro-barra">
