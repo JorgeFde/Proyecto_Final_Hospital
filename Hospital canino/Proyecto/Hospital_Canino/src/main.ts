@@ -9,13 +9,12 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 // Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyA5rq-sXrEXbu6IsBLqgxYKH1JhIpUCy7U",
-  authDomain: "petshome-66b13.firebaseapp.com",
-  projectId: "petshome-66b13",
-  storageBucket: "petshome-66b13.appspot.com",  // ⚠️ corregido: terminaba en ".app" y debería ser ".appspot.com"
-  messagingSenderId: "719590596672",
-  appId: "1:719590596672:web:5caf97b876aab3a59b7fa5",
-  measurementId: "G-KH5ZC185BE"
+  apiKey: "AIzaSyBkwI3XmGYNdolSMBoJFqNTGhfM4RTPd_Y",
+  authDomain: "hospital-canino-frontend.firebaseapp.com",
+  projectId: "hospital-canino-frontend",
+  storageBucket: "hospital-canino-frontend.firebasestorage.app",
+  messagingSenderId: "440021040783",
+  appId: "1:440021040783:web:cd55cd3f4787f8ece13afa"
 };
 // Configuración para bootstrapApplication
 bootstrapApplication(AppComponent, {
