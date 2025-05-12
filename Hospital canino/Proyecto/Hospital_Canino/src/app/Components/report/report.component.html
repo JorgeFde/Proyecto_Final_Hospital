@@ -1,39 +1,47 @@
-<div class="register-wrapper">
-  <div class="register-container">
+<div class="background-container">
+  <!-- Imagen de fondo -->
+  <img src="assets/images/FondoHuella1.jpg" alt="Fondo" class="background-image" />
 
-    <div class="register-image">
-      <img src="assets/logo.png" alt="Mascota" class="avatar" />
-    </div>
+  <!-- Contenido principal -->
+  <div class="register-wrapper">
+    <div class="register-container">
 
-    <!-- Formulario -->
-    <div class="register-content">
-      <div class="logo">PetsHome</div>
-      <h2>Reportar Algún Problema</h2>
+      <!-- Imagen -->
+      <div class="register-image">
+        <img src="assets/logo.png" alt="Mascota" class="avatar" />
+      </div>
 
-      <div class="form-row">
-        <label for="motivo">Motivo de visita:</label>
-        <select id="motivo">
-          <option>Seleccione un motivo</option>
-          <option value="consulta">Consulta</option>
+      <!-- Contenido del formulario -->
+      <div class="register-content">
+        <div class="logo">PetsHome</div>
+        <h2>Reportar Algún Problema</h2>
+
+        <div class="form-row column">
+          <label for="motivo">Motivo de visita:</label>
+          <select id="motivo">
+            <option>Seleccione un motivo</option>
+            <option value="consulta">Consulta</option>
             <option value="Urgencia">Urgencia</option>
             <option value="reclamo">Reclamo</option>
             <option value="otros">Otros</option>
-        </select>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <input type="text" placeholder="Ingresa tu Nombre" />
+          <input type="text" placeholder="Ingresa tus Apellidos" />
+        </div>
+
+        <div class="form-row">
+          <textarea rows="4" placeholder="Descripción"></textarea>
+        </div>
       </div>
 
-      
-      <div class="form-row">
-        <input type="text" placeholder="Ingresa tu Nombre" />
-        <input type="text" placeholder="Ingresa tus Apellidos" />
+      <div class="button-row">
+        <button class="create-btn">Enviar Reporte</button>
+        <button class="folio-btn">Ya tengo un folio</button>
       </div>
 
-      <div class="form-row">
-        <textarea rows="4" placeholder="Descripción"></textarea>
-      </div>
-
-      <button class="create-btn">Enviar Reporte</button>
-      <button class="folio-btn">Ya tengo un folio</button>
     </div>
-       
   </div>
 </div>
