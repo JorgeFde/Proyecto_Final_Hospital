@@ -58,9 +58,28 @@ html, body {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  position: relative;
 }
 .buttonNotification:hover {
   transform: scale(1.3);
+}
+.notification-count {
+  position: absolute;
+  top: 0px;
+  right: 2px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  min-width: 18px;       /* Asegura un ancho mínimo */
+  height: 18px;           /* Altura fija para círculo */
+  display: flex;          /* Centra el texto */
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;         /* Ligero padding horizontal */
+  line-height: 1;
+  box-sizing: border-box; /* Incluye padding en el tamaño */
 }
 .contentIncidencias {
   height: 100vh;
@@ -199,8 +218,24 @@ span {
   margin-left: 10px;
   font-weight: bolder;
   font-size: 70%;
+  cursor: pointer;
 }
 .logOUT:hover {
+  transform: scale(1.2);
+}
+.insidents {
+  background-color: transparent;
+  color: #0e2b53;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-left: 10px;
+  font-weight: bolder;
+  font-size: 70%;
+  cursor: pointer;
+}
+.insidents:hover {
   transform: scale(1.2);
 }
 /*Filtro de busqueda */
