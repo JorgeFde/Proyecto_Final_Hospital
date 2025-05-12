@@ -6,6 +6,7 @@ import { ReportComponent } from './Components/report/report.component';
 import { ChatReportClientComponent } from './Components/chat-report-client/chat-report-client.component';
 import { DetailsReportComponent } from './Components/details-report/details-report.component';
 import { ChatReportAdminComponent } from './Components/chat-report-admin/chat-report-admin.component';
+import { ReasonsForIncidentListComponent } from './Components/reasons-for-incident-list/reasons-for-incident-list.component';
 export const routes: Routes = [
     // se declaran las rutas
     { path: 'Home', component: HomeComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'Report', component: ReportComponent },
     { path: 'ChatReport', component: ChatReportClientComponent },
     { path: 'Dashboard', component: DashboardComponent },
+    { path: 'ReasonsForIncidentList', component: ReasonsForIncidentListComponent },
     { path: 'DetailsReport', component: DetailsReportComponent },
     { path: 'Chat', component: ChatReportAdminComponent },
     { path: '', redirectTo: 'Home', pathMatch: 'full'}

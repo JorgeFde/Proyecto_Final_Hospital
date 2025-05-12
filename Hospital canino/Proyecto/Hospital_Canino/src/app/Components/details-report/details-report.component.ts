@@ -15,7 +15,7 @@ export class DetailsReportComponent {
   nombre: string = '';
   email: string = '';
   mensaje: string = '';
-  titleEmail: string = '';
+  titleEmail: string = 'Falta de agregar el titulo';
   constructor(private emailService: EmailService) {}
   // Funcion para enviar al formulario
   enviarFormulario() {

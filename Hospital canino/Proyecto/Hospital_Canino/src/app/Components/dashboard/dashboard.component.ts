@@ -36,6 +36,7 @@ export class DashboardComponent {
     { nombre: 'producto1', precio: 25, existencia: 10 },
     { nombre: 'producto1', precio: 25, existencia: 10 },
   ];
+  notifications = ["Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4"]
   ngOnInit() {
     this.setupNotificationAnimationLoop();
   }
@@ -77,5 +78,8 @@ export class DashboardComponent {
   // Go To Details
   goToDetails() {
     this.router.navigate(['DetailsReport'])
+  }
+  toggIncident() {
+    this.router.navigate(['ReasonsForIncidentList'])
   }
 }
