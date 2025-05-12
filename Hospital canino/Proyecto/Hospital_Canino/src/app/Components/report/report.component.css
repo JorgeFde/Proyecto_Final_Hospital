@@ -1,32 +1,62 @@
-/* Fondo completo parte de atras */
+/* Fondo general de la página con imagen */
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /*imagen detrás del contenido */
+}
+
+/* centrar el contenido */
 .register-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;         
+  box-sizing: border-box; 
+  width: 100vw;
   height: 100vh;
-  background-color: #bedeff;
 }
+
 
 /* Contenedor principal */
 .register-container {
-  display: flex;
   width: 90%;
-  max-width: 1000px;
-  background-color: #223e66; /* Azul oscuro */
-  border-radius: 15px;
-  overflow: hidden;
+  height: 90vh;
+  max-width: 1250px;
+  background-color: #223e66;
+  border-radius: 30px;
+  padding: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 1; /* Asegura que esté por encima de la imagen */
 }
 
-/* imagen logo */
-.register-image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #223e66; /* Asegura color igual */
-  padding: 40px;
+/* Logo PestHome */
+.logo {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 20px 0;
+  text-align: center;
 }
 
 /* Imagen circular */
@@ -35,48 +65,52 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #006ef5;
+  border: none;
+  margin-bottom: 20px;
 }
 
-/* formulario */
+/* Contenido del formulario */
 .register-content {
-  flex: 1;
-  padding: 40px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; /* Alineado al inicio horizontal */
+  align-items: stretch;
 }
 
-/* Logo y encabezado */
-.logo {
-  font-weight: bold;
-  font-size: 1.6rem;
-  color: #eea9a9;
-  margin-bottom: 10px;
-}
-
-h2 {
-  margin: 0 0 20px 0;
-}
-
-/* separacion formulario */
+/* Fila del formulario con inputs lado a lado */
 .form-row {
   display: flex;
   gap: 15px;
   margin-bottom: 15px;
   width: 100%;
+  flex-wrap: wrap; /*se acomoda en pantallas pequeñas */
 }
 
-/* Inputs y selects */
-input[type="text"], select {
+/* Hace que label y select estén en columna */
+.form-row.column {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Motivo de visita:" */
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+/* Inputs y select */
+input[type="text"],
+select {
   flex: 1;
   padding: 12px;
   border-radius: 25px;
   border: none;
   font-size: 1rem;
+  min-width: 200px;
 }
 
+/*descripccion*/
 textarea {
   width: 100%;
   padding: 12px;
@@ -85,18 +119,25 @@ textarea {
   font-size: 1rem;
   resize: none;
   vertical-align: top;
-}
-
-/* selector de motivo */
-select {
-  background-color: #a82727;
-  color: rgb(255, 255, 255);
   margin-bottom: 15px;
-  cursor: pointer;
 }
 
-/* Botones */
-.create-btn, .folio-btn {
+/* seleccionador de motivo*/
+select {
+  width: 100%; 
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  box-sizing: border-box; 
+}
+
+/* Estilo de botones */
+.create-btn,
+.folio-btn {
   width: 100%;
   padding: 12px;
   border-radius: 25px;
@@ -104,25 +145,40 @@ select {
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 1rem;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/*boton enviar reporte*/
+/* Botón de "Enviar Reporte" */
 .create-btn {
-  background-color: #a82727;
+  background-color: red;
   color: white;
   border: none;
 }
 
-/*marco boton folio*/
 .folio-btn {
-  background-color: transparent;
-  border: 2px solid #8c7d7e;
-  color: white;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: white;
+  color: rgb(37, 60, 178);
+  border: none;
 }
 
-/*animacion pasando el cursor*/
 .folio-btn:hover {
-  background-color: #a82727;
+  background-color: red;
   color: white;
+}
+
+/*Botones alineados horizontalmente*/
+.button-row {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button-row button {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
 }
