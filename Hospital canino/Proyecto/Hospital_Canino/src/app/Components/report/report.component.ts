@@ -10,7 +10,8 @@ import {
   getDocs,
   addDoc,
 } from '@angular/fire/firestore';
-import { ControlIncidenciasService, ControlIncidencia } from '../../Services/getControlIncident.service'
+import { ControlIncidenciasService } from '../../Services/getControlIncident.service'
+import { ControlIncidencia } from '../../Interfaces/ControlIncidenciaModel';
 @Component({
   selector: 'app-report',
   imports: [FormsModule, NgIf, NgForOf],
@@ -30,9 +31,11 @@ export class ReportComponent {
   ngOnInit() {
     this.controlService.getControlIncidencias().subscribe(data => {
       this.incidencias = data;
+      this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
     });
   }
   // Funcion para enviar reporte
+  // obtener la fecha
   formatDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
     const monthNames = [
@@ -53,6 +56,7 @@ export class ReportComponent {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
+  // obtener el formato de tiempo
   formatTime(date: Date): string {
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -61,12 +65,13 @@ export class ReportComponent {
     hours = hours % 12 || 12;
     return `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
   }
+  // Obtener el folio de 5 digitos
   generateFolio(): string {
     const timestamp = Date.now().toString();
     const hash = Array.from(timestamp).reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return (hash % 100000).toString().padStart(5, '0');
   }
-  
+  // Enviar Reporte 
   async sendReport() {
     this.isLoading = true;
     if (
@@ -143,6 +148,7 @@ export class ReportComponent {
       this.isLoading = false;
     }
   }
+  // alerta de success
   createSuccessAlert(folio: string) {
     Swal.fire({
       title: `Reporte creado correctamente, Tu folio es: <strong>${folio}</strong><br>Recuerda guardar tu folio.`,
@@ -151,6 +157,7 @@ export class ReportComponent {
       confirmButtonColor: "#3085d6",
     });
   }
+  // alerta de error
   createErrorAlert(message: string) {
     Swal.fire({
       icon: 'error',
@@ -159,7 +166,12 @@ export class ReportComponent {
       confirmButtonColor: "#3085d6",
     });
   }
+  // resent form 
   resetForm() {
+    this.controlService.getControlIncidencias().subscribe(data => {
+      this.incidencias = data;
+      this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
+    });
     this.name = '';
     this.lastName = '';
     this.description = '';
