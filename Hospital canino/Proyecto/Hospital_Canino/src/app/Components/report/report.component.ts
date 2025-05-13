@@ -154,7 +154,7 @@ export class ReportComponent {
       title: `Reporte creado correctamente, Tu folio es: <strong>${folio}</strong><br>Recuerda guardar tu folio.`,
       icon: 'success',
       draggable: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#0e2b53",
     });
   }
   // alerta de error
@@ -163,7 +163,7 @@ export class ReportComponent {
       icon: 'error',
       title: 'Ocurrio un error...',
       text: message,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#0e2b53",
     });
   }
   // resent form 

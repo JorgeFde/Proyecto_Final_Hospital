@@ -13,6 +13,14 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  constructor() {
+    // Redirige al dashboard si ya está logueado
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/Dashboard']);
+      }
+    });
+  }
   // variables 
   email: string = '';
   password: string = '';
@@ -53,7 +61,7 @@ export class LoginComponent {
         icon: 'error',
         title: 'Ocurrio un error...',
         text: message,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0e2b53",
       });
     }
     // resent form 

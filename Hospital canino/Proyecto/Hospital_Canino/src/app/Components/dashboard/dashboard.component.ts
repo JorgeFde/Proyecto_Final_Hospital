@@ -4,6 +4,8 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
 import { NotificationsComponent } from "../notifications/notifications.component";
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { AuthService } from '../../Services/auth.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dashboard',
   imports: [MatToolbar, NgIf, NgClass, NgFor, NotificationsComponent],
@@ -13,6 +15,7 @@ import { inject } from '@angular/core';
 export class DashboardComponent {
   // Esto se agrega para ocupar las rutas 
   private router = inject(Router);
+  private authService = inject(AuthService);
   isOpen: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion' | null = null;
   panelVisible: boolean = false;
   isNotification: boolean = true;
@@ -73,13 +76,33 @@ export class DashboardComponent {
   // termina animacion de campana
   // cerrar sesion
   toggleLogOut() {
-    this.router.navigate(['Home'])
+    this.alertLogOut();
+  }
+  alertLogOut() {
+    Swal.fire({
+      icon: "info",
+      html: '¿ Estas seguro que deseas cerrar sesión ?',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonColor: "#0e2b53",
+      cancelButtonColor: "#fa0202",
+      focusConfirm: false,
+      confirmButtonText: 'Cerrar sesión',
+      confirmButtonAriaLabel: "Thumbs up, great!",
+      cancelButtonText: 'Cancelar',
+      cancelButtonAriaLabel: "Thumbs down"
+    }).then((result) => {
+      console.log("este es el result: ", result);
+      if (result.isConfirmed) {
+        this.authService.logout()
+      }
+    }); 
   }
   // Go To Details
   goToDetails() {
-    this.router.navigate(['DetailsReport'])
+    this.router.navigate(['DetailsReport']);
   }
   toggIncident() {
-    this.router.navigate(['ReasonsForIncidentList'])
+    this.router.navigate(['ReasonsForIncidentList']);
   }
 }
