@@ -35,7 +35,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('revision')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('revision')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'revision'" class="contentBugsActive">
         <!--Content incidencias activos-->
@@ -43,16 +43,10 @@
           <label>Filtrar por:</label>
           <label for="fecha">Fecha</label>
           <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-            (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
             name="fecha" />
-         <!-- <label for="hora">Hora</label>
-          <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
-            (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
-            name="hora" />
-          <button (click)="clearHora()">Limpiar Hora</button>
-          <label for="motivo">Tipo de urgencia</label> -->
           <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-            (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
             name="indexMotivoSelect">
             <option value="">Todas las urgencias</option>
             <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
@@ -62,7 +56,7 @@
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
           <!--Inicio del ngFor-->
-          <div *ngFor="let incident of incidentsInRevision" class="contentDivGeneralTarjeta">
+          <div *ngFor="let incident of incidentsInRevisionFilter" class="contentDivGeneralTarjeta">
             <!-- Botón invisible que cubre toda la tarjeta -->
             <button (click)="goToDetails()" class="buttonGoDetails">
             </button>
@@ -100,7 +94,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('pendientes')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('pendientes')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'pendientes'" class="contentBugsActive">
         <!--Content incidencias activos-->
@@ -109,16 +103,10 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="fecha" />
-           <!-- <label for="hora">Hora</label>
-            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
-              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
-              name="hora" />
-            <button (click)="clearHora()">Limpiar Hora</button>
-            <label for="motivo">Tipo de urgencia</label> -->
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="indexMotivoSelect">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
@@ -128,7 +116,7 @@
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
             <!--Inicio del ngFor-->
-            <div *ngFor="let incident of incidentsInPending" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInPendingFilter" class="contentDivGeneralTarjeta">
               <!-- Botón invisible que cubre toda la tarjeta -->
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <!-- Contenido visual (tarjeta) -->
@@ -166,7 +154,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('cerrados')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('cerrados')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerrados'" class="contentBugsActive">
         <div class="detailsContent">
@@ -175,16 +163,10 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="fecha" />
-           <!-- <label for="hora">Hora</label>
-            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
-              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
-              name="hora" />
-            <button (click)="clearHora()">Limpiar Hora</button>
-            <label for="motivo">Tipo de urgencia</label> -->
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="indexMotivoSelect">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
@@ -193,7 +175,7 @@
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let incident of incidentsInDone" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInDoneFilter" class="contentDivGeneralTarjeta">
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
@@ -228,7 +210,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('cerradosSinContestacion')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('cerradosSinContestacion')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerradosSinContestacion'" class="contentBugsActive">
         <div class="detailsContent">
@@ -237,16 +219,10 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="fecha" />
-           <!-- <label for="hora">Hora</label>
-            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
-              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
-              name="hora" />
-            <button (click)="clearHora()">Limpiar Hora</button>
-            <label for="motivo">Tipo de urgencia</label> -->
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
               name="indexMotivoSelect">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
@@ -255,7 +231,7 @@
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let incident of incidentsInFactWithoutAnswer" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter" class="contentDivGeneralTarjeta">
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
@@ -280,6 +256,6 @@
 <!-- Panel flotante a la derecha -->
 <div *ngIf="panelVisible" class="panelNotifications">
   <p class="titleNotifications">Centro de Notificaciones</p>
-  <app-notifications class="componentNotifications"></app-notifications>
+  <app-notifications class="componentNotifications" [notifications]="medicamentsWithOutStock" ></app-notifications>
   <button class="footer-button" mat-button color="accent" (click)="togglePanel()">Cerrar</button>
 </div>
