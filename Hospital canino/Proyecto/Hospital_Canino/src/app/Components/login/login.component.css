@@ -148,3 +148,55 @@ form input {
   object-fit: cover;
   z-index: -1; 
 }
+/*Responsivo*/
+@media (max-width: 1024px) {
+  .login-container {
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+  }
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    height: auto;
+  }
+  .left-panel {
+    padding: 20px;
+  }
+  .right-panel {
+    padding: 30px 20px;
+    text-align: center;
+  }
+  .logo {
+    width: 180px;
+    height: 180px;
+  }
+  .login-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .brand-title {
+    font-size: 24px;
+  }
+  .right-panel h2 {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+  form input {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+  .forgot-btn {
+    font-size: 12px;
+  }
+  .logo {
+    width: 140px;
+    height: 140px;
+  }
+  .login-btn {
+    font-size: 14px;
+  }
+}

@@ -321,3 +321,100 @@ span {
 .buttonGoDetails {
   position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;
 }
+/*Responsivo*/
+@media (max-width: 1024px) {
+  .panelNotifications {
+    width: 60%;
+  }
+  .buttonsOptions {
+    width: 100px;
+    font-size: small;
+  }
+  .filtro-barra {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    font-size: 13px;
+  }
+  .filtro-barra input,
+  .filtro-barra select {
+    min-width: 100px;
+  }
+  .tarjeta-incidencia {
+    width: 98%;
+    padding: 15px;
+  }
+  .info strong {
+    width: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .containerNavBar {
+    height: auto;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+  .logoNavBar {
+    width: 80px;
+  }
+  .titleHome {
+    font-size: medium;
+    margin-left: 10px;
+  }
+  .buttonsOptions {
+    width: auto;
+    font-size: 13px;
+    padding: 8px;
+  }
+  .panelNotifications {
+    width: 80%;
+  }
+  .logOUT,
+  .insidents {
+    font-size: 60%;
+    height: 35px;
+    margin: 5px;
+  }
+  .filtro-barra {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+  .tarjeta-incidencia h2 {
+    font-size: 18px;
+  }
+  .info strong {
+    width: auto;
+  }
+}
+@media (max-width: 480px) {
+  .buttonsOptions,
+  .logOUT,
+  .insidents {
+    font-size: 11px;
+    height: auto;
+    width: auto;
+    padding: 5px;
+    margin: 2px;
+  }
+  .logoNavBar {
+    width: 60px;
+  }
+  .titleHome {
+    font-size: 14px;
+  }
+  .panelNotifications {
+    width: 100%;
+  }
+  .tarjeta-incidencia {
+    width: 95%;
+    padding: 10px;
+  }
+  .descripcion {
+    font-size: 13px;
+  }
+  .footer-button {
+    font-size: 80%;
+    height: 28px;
+  }
+}

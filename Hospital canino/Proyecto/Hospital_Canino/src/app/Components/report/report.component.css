@@ -225,3 +225,52 @@ select {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+/*Responsivo*/
+@media (max-width: 1024px) {
+  .register-container {
+    width: 95%;
+    height: auto;
+    padding: 20px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .button-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .create-btn,
+  .folio-btn,
+  .button-row button {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .register-wrapper {
+    padding: 5px;
+  }
+  .register-container {
+    border-radius: 15px;
+    padding: 15px;
+  }
+  .logo {
+    font-size: 1.3rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  input[type="text"],
+  select,
+  textarea {
+    font-size: 0.9rem;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
