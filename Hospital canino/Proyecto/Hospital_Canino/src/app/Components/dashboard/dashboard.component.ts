@@ -51,12 +51,20 @@ export class DashboardComponent {
   bellAnimating: boolean = false;
   indexMotivoSelect: number = -1;
   medicamentsWithOutStock: MedicamentsModel[] = [];
-  dataIncident: IncidentsModel[] = [];
   prioridadIncidents: PrioridadesIncidentsModel[] = [];
+  // arreglos del incidencia
+  dataIncident: IncidentsModel[] = [];
   incidentsInRevision: IncidentsModel[] = [];
   incidentsInPending: IncidentsModel[] = [];
   incidentsInDone: IncidentsModel[] = [];
   incidentsInFactWithoutAnswer: IncidentsModel[] = [];
+  // filtros
+  filters = {
+    fecha: '',
+    hora: '',
+    tipo: ''
+  }; 
+
   ngOnInit() {
     this.setConfigUI();
   }
@@ -108,10 +116,7 @@ export class DashboardComponent {
         this.incidentsInPending = [];
         this.incidentsInDone = [];
         this.incidentsInFactWithoutAnswer = [];
-
         this.dataIncident = data;
-        console.log('llamada incidencias');
-
         for (let i = 0; i < data.length; i++) {
           switch (data[i].status) {
             case 'En revision':
@@ -152,6 +157,18 @@ export class DashboardComponent {
       }, 1 * 60 * 1000); // cada 1 minutos
     }
   }
+  // filters
+  onMotivoChange(fecha: string, hora: string, tipo: string) {
+    console.log('Fecha:', fecha);
+    console.log('Hora:', hora);
+    console.log('Tipo:', tipo);
+    // Aquí puedes aplicar tu lógica de filtrado
+  }
+  clearFilter() {
+    this.filters.fecha = ''
+    this.filters.tipo = ''
+    this.onMotivoChange('', '', '');
+  }
   triggerShake() {
     // activa animación
     this.bellAnimating = true;
@@ -165,6 +182,7 @@ export class DashboardComponent {
   toggle(
     panel: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion'
   ) {
+    this.indexMotivoSelect = -1;
     this.isOpen = this.isOpen === panel ? null : panel;
   }
   // panel de notificaciones

@@ -12,8 +12,9 @@
           <path
             d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 2 2zm6-6V9c0-3.07-1.63-5.64-4.5-6.32V2.5a1.5 1.5 0 00-3 0v.18C7.63 3.36 6 5.92 6 9v7l-2 2v1h16v-1l-2-2z" />
         </svg>
-        <span class="notification-count" *ngIf="medicamentsWithOutStock.length > 0"> {{ medicamentsWithOutStock.length > 9 ? '+9' : medicamentsWithOutStock.length }}</span>
-      </button>      
+        <span class="notification-count" *ngIf="medicamentsWithOutStock.length > 0"> {{ medicamentsWithOutStock.length >
+          9 ? '+9' : medicamentsWithOutStock.length }}</span>
+      </button>
       <button class="insidents" (click)="toggIncident()">Mis Incidencias</button>
       <button class="logOUT" (click)="toggleLogOut()">Cerrar sesion</button>
     </mat-toolbar>
@@ -39,18 +40,24 @@
       <div *ngIf="isOpen === 'revision'" class="contentBugsActive">
         <!--Content incidencias activos-->
         <div class="filtro-barra">
-          <!--Barra de filtros-->
           <label>Filtrar por:</label>
           <label for="fecha">Fecha</label>
-          <input type="date" id="fecha">
-          <label for="hora">Hora</label>
-          <input type="time" id="hora">
-          <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-          <label for="motivo"> Tipo de urgencia</label>
-          <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
-            <option value=-1>Todas las urgencias</option>
-            <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
+          <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+            (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+            name="fecha" />
+         <!-- <label for="hora">Hora</label>
+          <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
+            (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
+            name="hora" />
+          <button (click)="clearHora()">Limpiar Hora</button>
+          <label for="motivo">Tipo de urgencia</label> -->
+          <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+            (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+            name="indexMotivoSelect">
+            <option value="">Todas las urgencias</option>
+            <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
           </select>
+          <button (click)="clearFilter()">Limpiar filtros</button>
         </div>
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
@@ -77,7 +84,7 @@
         </div>
       </div>
     </div>
-     <!--Termina Activos-->
+    <!--Termina Activos-->
     <!-- PENDIENTES -->
     <div [style.flex]="isOpen === 'pendientes' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
@@ -99,18 +106,24 @@
         <!--Content incidencias activos-->
         <div class="detailsContent">
           <div class="filtro-barra">
-            <!--Barra de filtros-->
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo"> Tipo de urgencia</label>
-            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
-              <option value=-1>Todas las urgencias</option>
-              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="fecha" />
+           <!-- <label for="hora">Hora</label>
+            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
+              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
+              name="hora" />
+            <button (click)="clearHora()">Limpiar Hora</button>
+            <label for="motivo">Tipo de urgencia</label> -->
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="indexMotivoSelect">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
           </div>
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
@@ -137,7 +150,7 @@
         </div>
       </div>
     </div>
-     <!--Termina Pendientes-->
+    <!--Termina Pendientes-->
     <!-- Cerrados -->
     <div [style.flex]="isOpen === 'cerrados' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
@@ -161,15 +174,22 @@
           <div class="filtro-barra">
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo"> Tipo de urgencia</label>
-            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
-              <option value=-1>Todas las urgencias</option>
-              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="fecha" />
+           <!-- <label for="hora">Hora</label>
+            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
+              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
+              name="hora" />
+            <button (click)="clearHora()">Limpiar Hora</button>
+            <label for="motivo">Tipo de urgencia</label> -->
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="indexMotivoSelect">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
@@ -216,15 +236,22 @@
           <div class="filtro-barra">
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo"> Tipo de urgencia</label>
-            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
-              <option value=-1>Todas las urgencias</option>
-              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="fecha" />
+           <!-- <label for="hora">Hora</label>
+            <input type="time" id="hora" [(ngModel)]="filters.revision.hora"
+              (ngModelChange)="onMotivoChange(filters.revision.fecha, filters.revision.hora, filters.revision.tipo)"
+              name="hora" />
+            <button (click)="clearHora()">Limpiar Hora</button>
+            <label for="motivo">Tipo de urgencia</label> -->
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="onMotivoChange(filters.fecha, filters.hora, filters.tipo)"
+              name="indexMotivoSelect">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
