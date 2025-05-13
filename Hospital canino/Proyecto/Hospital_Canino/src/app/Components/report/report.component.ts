@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { NgIf } from '@angular/common';
+import { NgIf, NgForOf } from '@angular/common';
 import {
   Firestore,
   collection,
@@ -13,13 +13,13 @@ import {
 import { ControlIncidenciasService, ControlIncidencia } from '../../Services/getControlIncident.service'
 @Component({
   selector: 'app-report',
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, NgForOf],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css',
 })
 export class ReportComponent {
   constructor(private firestore: Firestore, private controlService: ControlIncidenciasService) {}
-  motivo: string = '';
+  indexMotivo: number = -1;
   name: string = '';
   lastName: string = '';
   description: string = '';
@@ -30,7 +30,6 @@ export class ReportComponent {
   ngOnInit() {
     this.controlService.getControlIncidencias().subscribe(data => {
       this.incidencias = data;
-      console.log('los datos son: ', this.incidencias)
     });
   }
   // Funcion para enviar reporte
@@ -62,10 +61,16 @@ export class ReportComponent {
     hours = hours % 12 || 12;
     return `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
   }
+  generateFolio(): string {
+    const timestamp = Date.now().toString();
+    const hash = Array.from(timestamp).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return (hash % 100000).toString().padStart(5, '0');
+  }
+  
   async sendReport() {
     this.isLoading = true;
     if (
-      this.motivo != '' &&
+      this.indexMotivo != -1 &&
       this.name != '' &&
       this.lastName != '' &&
       this.email != '' &&
@@ -74,8 +79,10 @@ export class ReportComponent {
     ) {
       // no estan vacios los campos
       const nombreCompleto = `${this.name.trim()} ${this.lastName.trim()}`;
-      const motivo = this.motivo.trim().toLowerCase();
+      const motivo = this.incidencias[this.indexMotivo].name
+      const prioridad = this.incidencias[this.indexMotivo].prioridad;
       const email = this.email.trim().toLowerCase();
+      const folio = this.generateFolio();
       const phone = this.phoneNumber.trim();
       const emailRegex = /^[^\s@]+@[^\s@]+\.(com|mx)$/;
       const phoneRegex = /^\d{10}$/;
@@ -108,7 +115,9 @@ export class ReportComponent {
         const dateFormatted = this.formatDate(now);
         const timeFormatted = this.formatTime(now);
         await addDoc(incidenciasRef, {
-          motivo: this.motivo,
+          motivo: motivo,
+          prioridad: prioridad,
+          folio: folio,
           name: nombreCompleto,
           description: this.description,
           email,
@@ -117,7 +126,7 @@ export class ReportComponent {
           date: dateFormatted,
           time: timeFormatted,
         });
-        this.createSuccessAlert();
+        this.createSuccessAlert(folio);
         this.resetForm();
       } catch (error) {
         console.error('Error al enviar reporte:', error);
@@ -134,9 +143,9 @@ export class ReportComponent {
       this.isLoading = false;
     }
   }
-  createSuccessAlert() {
+  createSuccessAlert(folio: string) {
     Swal.fire({
-      title: 'Reporte creado correctamente.',
+      title: `Reporte creado correctamente, Tu folio es: <strong>${folio}</strong><br>Recuerda guardar tu folio.`,
       icon: 'success',
       draggable: true,
       confirmButtonColor: "#3085d6",
@@ -156,6 +165,6 @@ export class ReportComponent {
     this.description = '';
     this.email = '';
     this.phoneNumber = '';
-    this.motivo = '';
+    this.indexMotivo = -1;
   }
 }

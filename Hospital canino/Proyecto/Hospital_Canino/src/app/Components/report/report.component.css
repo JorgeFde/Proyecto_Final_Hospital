@@ -5,7 +5,6 @@
   height: 100vh;
   overflow: hidden;
 }
-
 .background-image {
   position: absolute;
   top: 0;
@@ -15,7 +14,6 @@
   object-fit: cover;
   z-index: -1; /*imagen detrás del contenido */
 }
-
 /* centrar el contenido */
 .register-wrapper {
   display: flex;
@@ -26,8 +24,6 @@
   width: 100vw;
   height: 100vh;
 }
-
-
 /* Contenedor principal */
 .register-container {
   width: 90%;
@@ -44,7 +40,6 @@
   overflow-y: auto;
   z-index: 1; /* Asegura que esté por encima de la imagen */
 }
-
 /* Logo PestHome */
 .logo {
   font-weight: bold;
@@ -53,12 +48,10 @@
   margin-bottom: 10px;
   text-align: center;
 }
-
 h2 {
   margin: 0 0 20px 0;
   text-align: center;
 }
-
 /* Imagen circular */
 .avatar {
   width: 150px;
@@ -127,7 +120,11 @@ select {
   font-size: 1rem;
   min-width: 200px;
 }
-
+.textInput {
+  color: #223e66;
+  font-weight: normal;
+  font-size: medium;
+}
 /*descripccion*/
 textarea {
   width: 100%;
@@ -138,6 +135,9 @@ textarea {
   resize: none;
   vertical-align: top;
   margin-bottom: 15px;
+  color: #223e66;
+  font-weight: normal;
+  font-size: medium;
 }
 
 /* seleccionador de motivo*/
@@ -147,12 +147,11 @@ select {
   border-radius: 25px;
   border: none;
   font-size: 1rem;
-  background-color: red;
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: #223e66;
   cursor: pointer;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
-
 /* Estilo de botones */
 .create-btn,
 .folio-btn {
