@@ -49,7 +49,7 @@
 .logo {
   font-weight: bold;
   font-size: 1.6rem;
-  color: red;
+  color: white;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -85,7 +85,25 @@ h2 {
   width: 100%;
   flex-wrap: wrap; /*se acomoda en pantallas pequeñas */
 }
+.textarea-container {
+  position: relative;
+  width: 100%;
+}
 
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  font-size: 12px;
+  color: #223e66;
+}
 /* Hace que label y select estén en columna */
 .form-row.column {
   flex-direction: column;
@@ -181,4 +199,30 @@ select {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+}
+/*Spinner*/
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #223e66;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

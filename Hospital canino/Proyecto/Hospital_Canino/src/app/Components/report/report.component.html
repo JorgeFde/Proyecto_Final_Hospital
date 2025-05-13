@@ -1,47 +1,65 @@
 <div class="background-container">
   <!-- Imagen de fondo -->
   <img src="assets/images/FondoHuella1.jpg" alt="Fondo" class="background-image" />
-
   <!-- Contenido principal -->
   <div class="register-wrapper">
     <div class="register-container">
-
       <!-- Imagen -->
       <div class="register-image">
         <img src="assets/logo.png" alt="Mascota" class="avatar" />
       </div>
-
-      <!-- Contenido del formulario -->
-      <div class="register-content">
-        <div class="logo">PetsHome</div>
-        <h2>Reportar Algún Problema</h2>
-
-        <div class="form-row column">
-          <label for="motivo">Motivo de visita:</label>
-          <select id="motivo">
-            <option>Seleccione un motivo</option>
-            <option value="consulta">Consulta</option>
-            <option value="Urgencia">Urgencia</option>
-            <option value="reclamo">Reclamo</option>
-            <option value="otros">Otros</option>
-          </select>
+      <form #form="ngForm" (ngSubmit)="sendReport()">
+        <!-- Contenido del formulario -->
+        <div class="register-content">
+          <div class="logo">PetsHome</div>
+          <h2>Reportar Algún Problema</h2>
+          <div class="form-row column">
+            <label for="motivo">Motivo de visita:</label>
+            <select id="motivo" [(ngModel)]="motivo" name="motivo" required>
+              <option value="">Seleccione un motivo</option>
+              <option value="consulta">Consulta</option>
+              <option value="Urgencia">Urgencia</option>
+              <option value="reclamo">Reclamo</option>
+              <option value="otros">Otros</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input type="text" placeholder="Ingresa tu Nombre" id="name" [(ngModel)]="name" name="name" required/>
+            <input type="text" placeholder="Ingresa tus Apellidos" id="lastName" [(ngModel)]="lastName" name="lastName" required />
+          </div>
+          <div class="form-row">
+            <input type="text" placeholder="Ingresa tu correo" id="email" [(ngModel)]="email" name="email" required  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|mx)$"/>
+            <input type="text" placeholder="Ingresa tu numero de telefono" id="phoneNumber" [(ngModel)]="phoneNumber" name="phoneNumber" [attr.maxLength]="10" required pattern="^[0-9]{10}$"/>
+          </div>
+          <div class="form-row">
+            <div class="textarea-container">
+              <textarea
+                rows="4"
+                placeholder="Descripción"
+                id="description"
+                [(ngModel)]="description"
+                name="description"
+                [attr.maxLength]="300"
+                required
+              ></textarea>
+              <div class="char-counter">{{ description?.length || 0 }}/300</div>
+            </div>
+          </div>          
         </div>
-
-        <div class="form-row">
-          <input type="text" placeholder="Ingresa tu Nombre" />
-          <input type="text" placeholder="Ingresa tus Apellidos" />
+        <div class="button-row">
+          <button class="create-btn" type="submit">Enviar Reporte</button>
+          <button class="folio-btn">Ya tengo un folio</button>
         </div>
-
-        <div class="form-row">
-          <textarea rows="4" placeholder="Descripción"></textarea>
-        </div>
-      </div>
-
-      <div class="button-row">
-        <button class="create-btn">Enviar Reporte</button>
-        <button class="folio-btn">Ya tengo un folio</button>
-      </div>
-
+      </form>
     </div>
   </div>
 </div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- Tu botón de enviar desactivado mientras carga -->
+<button [disabled]="isLoading" (click)="sendReport()">
+  {{ isLoading ? 'Enviando...' : 'Enviar Reporte' }}
+</button>
