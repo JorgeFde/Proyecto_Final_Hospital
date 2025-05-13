@@ -10,7 +10,7 @@ import {
   getDocs,
   addDoc,
 } from '@angular/fire/firestore';
-import { Injectable } from '@angular/core';
+import { ControlIncidenciasService, ControlIncidencia } from '../../Services/getControlIncident.service'
 @Component({
   selector: 'app-report',
   imports: [FormsModule, NgIf],
@@ -18,6 +18,7 @@ import { Injectable } from '@angular/core';
   styleUrl: './report.component.css',
 })
 export class ReportComponent {
+  constructor(private firestore: Firestore, private controlService: ControlIncidenciasService) {}
   motivo: string = '';
   name: string = '';
   lastName: string = '';
@@ -25,7 +26,13 @@ export class ReportComponent {
   email: string = '';
   phoneNumber: string = '';
   isLoading: boolean = false;
-  constructor(private firestore: Firestore) {}
+  incidencias: ControlIncidencia[] = [];
+  ngOnInit() {
+    this.controlService.getControlIncidencias().subscribe(data => {
+      this.incidencias = data;
+      console.log('los datos son: ', this.incidencias)
+    });
+  }
   // Funcion para enviar reporte
   formatDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
