@@ -1,63 +1,150 @@
 import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgIf, NgFor, NgClass } from '@angular/common';
-import { NotificationsComponent } from "../notifications/notifications.component";
+import { NotificationsComponent } from '../notifications/notifications.component';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
+import { GetMedicamentsService } from '../../Services/getMedicaments.service';
+import { GetIncidetsServices } from '../../Services/getIncidents.service';
+import { GetPrioridadIncidents } from '../../Services/GetPrioridadesIncidents.service';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
+import { MedicamentsModel } from '../../Interfaces/MedicamentsModel';
+import { PrioridadesIncidentsModel } from '../../Interfaces/PrioridadesIncidentsModel';
+import { IncidentsModel } from '../../Interfaces/incideciasModel';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-dashboard',
-  imports: [MatToolbar, NgIf, NgClass, NgFor, NotificationsComponent],
+  imports: [
+    MatToolbar,
+    NgIf,
+    FormsModule,
+    NgClass,
+    NgFor,
+    NotificationsComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  // Esto se agrega para ocupar las rutas 
+  constructor(
+    private incidentsService: GetIncidetsServices,
+    private medicamentsService: GetMedicamentsService,
+    private prioridatIncidents: GetPrioridadIncidents
+  ) {}
+  // Esto se agrega para ocupar las rutas
   private router = inject(Router);
   private authService = inject(AuthService);
-  isOpen: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion' | null = null;
+  private destroy$ = new Subject<void>();
+  private hasLoadedIncidents = false;
+  isOpen:
+    | 'revision'
+    | 'pendientes'
+    | 'cerrados'
+    | 'cerradosSinContestacion'
+    | null = null;
   panelVisible: boolean = false;
-  isNotification: boolean = true;
-  isActiveAnimation: boolean = false
+  isNotification: boolean = false;
+  isActiveAnimation: boolean = false;
   intervalId: any;
   bellAnimating: boolean = false;
-  datos = [
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-    { nombre: 'producto1', precio: 25, existencia: 10 },
-  ];
-  notifications = ["Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4","Notificacion 1", "notificacion 2", "notificacion 3", "notificacion 4"]
+  indexMotivoSelect: number = -1;
+  medicamentsWithOutStock: MedicamentsModel[] = [];
+  dataIncident: IncidentsModel[] = [];
+  prioridadIncidents: PrioridadesIncidentsModel[] = [];
+  incidentsInRevision: IncidentsModel[] = [];
+  incidentsInPending: IncidentsModel[] = [];
+  incidentsInDone: IncidentsModel[] = [];
+  incidentsInFactWithoutAnswer: IncidentsModel[] = [];
   ngOnInit() {
-    this.setupNotificationAnimationLoop();
+    this.setConfigUI();
   }
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     clearInterval(this.intervalId);
   }
-  toggle(panel: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion') {
-    this.isOpen = this.isOpen === panel ? null : panel;
+  resetArray() {
+    this.medicamentsWithOutStock = [];
+    this.dataIncident = [];
+    this.prioridadIncidents = [];
+    this.incidentsInRevision = [];
+    this.incidentsInPending = [];
+    this.incidentsInDone = [];
+    this.incidentsInFactWithoutAnswer = [];
   }
-  // panel de notificaciones
-  togglePanel() {
-    this.panelVisible = !this.panelVisible;
+  setConfigUI() {
+    //Llamada a la base de datos
+    this.getMedicaments();
+    this.getPrioridadIncidents();
+    this.getIncidents();
+    //
+  }
+  // Obtenemos todos los medicamentos
+  getMedicaments() {
+    this.medicamentsService
+      .getMedicaments()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].stock <= 10) {
+            this.medicamentsWithOutStock.push(data[i]);
+          }
+        }
+        this.isNotification = this.medicamentsWithOutStock.length != 0;
+        this.setupNotificationAnimationLoop();
+      });
+  }
+  // Obtenemos todas las incidencias
+  getIncidents() {
+    if (this.hasLoadedIncidents) return;
+    this.hasLoadedIncidents = true;
+    this.incidentsService
+      .getControlIncidencias()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.incidentsInRevision = [];
+        this.incidentsInPending = [];
+        this.incidentsInDone = [];
+        this.incidentsInFactWithoutAnswer = [];
+
+        this.dataIncident = data;
+        console.log('llamada incidencias');
+
+        for (let i = 0; i < data.length; i++) {
+          switch (data[i].status) {
+            case 'En revision':
+              this.incidentsInRevision.push(data[i]);
+              break;
+            case 'Pendiente':
+              this.incidentsInPending.push(data[i]);
+              break;
+            case 'Cerrado':
+              this.incidentsInDone.push(data[i]);
+              break;
+            case 'Cerrado sin contestación':
+              this.incidentsInFactWithoutAnswer.push(data[i]);
+              break;
+          }
+        }
+      });
+  }
+  // Obtenermos todos los motivos
+  getPrioridadIncidents() {
+    this.prioridatIncidents
+      .getControlIncidencias()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.prioridadIncidents = data;
+        this.prioridadIncidents.sort((a, b) => a.name.localeCompare(b.name));
+      });
   }
   // aniacion de camapana
   setupNotificationAnimationLoop() {
     if (this.isNotification) {
       this.triggerShake();
-  
+
       this.intervalId = setInterval(() => {
         if (this.isNotification) {
           this.triggerShake();
@@ -74,29 +161,39 @@ export class DashboardComponent {
     }, 2000);
   }
   // termina animacion de campana
+  // botones
+  toggle(
+    panel: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion'
+  ) {
+    this.isOpen = this.isOpen === panel ? null : panel;
+  }
+  // panel de notificaciones
+  togglePanel() {
+    this.panelVisible = !this.panelVisible;
+  }
   // cerrar sesion
   toggleLogOut() {
     this.alertLogOut();
   }
   alertLogOut() {
     Swal.fire({
-      icon: "info",
+      icon: 'info',
       html: '¿ Estas seguro que deseas cerrar sesión ?',
       showCloseButton: true,
       showCancelButton: true,
-      confirmButtonColor: "#0e2b53",
-      cancelButtonColor: "#fa0202",
+      confirmButtonColor: '#0e2b53',
+      cancelButtonColor: '#fa0202',
       focusConfirm: false,
       confirmButtonText: 'Cerrar sesión',
-      confirmButtonAriaLabel: "Thumbs up, great!",
+      confirmButtonAriaLabel: 'Thumbs up, great!',
       cancelButtonText: 'Cancelar',
-      cancelButtonAriaLabel: "Thumbs down"
+      cancelButtonAriaLabel: 'Thumbs down',
     }).then((result) => {
-      console.log("este es el result: ", result);
       if (result.isConfirmed) {
-        this.authService.logout()
+        this.resetArray();
+        this.authService.logout();
       }
-    }); 
+    });
   }
   // Go To Details
   goToDetails() {

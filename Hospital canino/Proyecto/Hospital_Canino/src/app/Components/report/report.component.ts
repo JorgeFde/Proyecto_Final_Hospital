@@ -10,8 +10,9 @@ import {
   getDocs,
   addDoc,
 } from '@angular/fire/firestore';
-import { ControlIncidenciasService } from '../../Services/getControlIncident.service'
-import { ControlIncidencia } from '../../Interfaces/ControlIncidenciaModel';
+import { GetControlIncidenciasService } from '../../Services/getControlIncident.service'
+import { ControlIncidenciaModel } from '../../Interfaces/ControlIncidenciaModel';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-report',
   imports: [FormsModule, NgIf, NgForOf],
@@ -19,7 +20,8 @@ import { ControlIncidencia } from '../../Interfaces/ControlIncidenciaModel';
   styleUrl: './report.component.css',
 })
 export class ReportComponent {
-  constructor(private firestore: Firestore, private controlService: ControlIncidenciasService) {}
+  constructor(private firestore: Firestore, private controlService: GetControlIncidenciasService) {}
+  private destroy$ = new Subject<void>();
   indexMotivo: number = -1;
   name: string = '';
   lastName: string = '';
@@ -27,12 +29,17 @@ export class ReportComponent {
   email: string = '';
   phoneNumber: string = '';
   isLoading: boolean = false;
-  incidencias: ControlIncidencia[] = [];
+  incidencias: ControlIncidenciaModel[] = [];
   ngOnInit() {
-    this.controlService.getControlIncidencias().subscribe(data => {
+    this.controlService.getControlIncidencias().pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       this.incidencias = data;
       this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
     });
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   // Funcion para enviar reporte
   // obtener la fecha
@@ -170,7 +177,8 @@ export class ReportComponent {
   }
   // resent form 
   resetForm() {
-    this.controlService.getControlIncidencias().subscribe(data => {
+    this.controlService.getControlIncidencias().pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       this.incidencias = data;
       this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
     });

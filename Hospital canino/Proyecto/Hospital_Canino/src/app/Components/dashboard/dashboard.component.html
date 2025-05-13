@@ -12,7 +12,7 @@
           <path
             d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 2 2zm6-6V9c0-3.07-1.63-5.64-4.5-6.32V2.5a1.5 1.5 0 00-3 0v.18C7.63 3.36 6 5.92 6 9v7l-2 2v1h16v-1l-2-2z" />
         </svg>
-        <span class="notification-count" *ngIf="notifications.length > 0"> {{ notifications.length > 9 ? '+9' : notifications.length }}</span>
+        <span class="notification-count" *ngIf="medicamentsWithOutStock.length > 0"> {{ medicamentsWithOutStock.length > 9 ? '+9' : medicamentsWithOutStock.length }}</span>
       </button>      
       <button class="insidents" (click)="toggIncident()">Mis Incidencias</button>
       <button class="logOUT" (click)="toggleLogOut()">Cerrar sesion</button>
@@ -46,33 +46,31 @@
           <label for="hora">Hora</label>
           <input type="time" id="hora">
           <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-          <label for="motivo">Motivo</label>
-          <select id="motivo">
-            <option value="agenda">Incluir todas las incidencias</option>
-            <option value="agenda">Filtrar por incidencia de agenda</option>
-            <option value="medicamentos">Filtrar por ncidencia de medicamentos</option>
+          <label for="motivo"> Tipo de urgencia</label>
+          <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
+            <option value=-1>Todas las urgencias</option>
+            <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
           </select>
         </div>
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
           <!--Inicio del ngFor-->
-          <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+          <div *ngFor="let incident of incidentsInRevision" class="contentDivGeneralTarjeta">
             <!-- Botón invisible que cubre toda la tarjeta -->
             <button (click)="goToDetails()" class="buttonGoDetails">
             </button>
             <!-- Contenido visual (tarjeta) -->
             <div class="tarjeta-incidencia">
-              <h2>Incidencia: Error de agenda</h2>
-              <div class="info"><strong>Status:</strong> Activa</div>
-              <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-              <div class="info"><strong>Hora:</strong> 14:30</div>
-              <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-              <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-              <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-              <div class="descripcion">
-                El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar y el
-                paciente expresó molestia por la confusión.
-              </div>
+              <h2>Incidencia: {{incident.motivo}}</h2>
+              <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+              <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+              <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+              <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+              <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+              <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+              <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+              <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+              <div class="descripcion">{{incident.description}}</div>
             </div>
           </div>
           <!--fin del ngFor-->
@@ -108,32 +106,30 @@
             <label for="hora">Hora</label>
             <input type="time" id="hora">
             <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <label for="motivo"> Tipo de urgencia</label>
+            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
+              <option value=-1>Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
             </select>
           </div>
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
             <!--Inicio del ngFor-->
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInPending" class="contentDivGeneralTarjeta">
               <!-- Botón invisible que cubre toda la tarjeta -->
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <!-- Contenido visual (tarjeta) -->
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Pendiente</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar y
-                  el paciente expresó molestia por la confusión.
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
             <!--fin del ngFor-->
@@ -169,28 +165,27 @@
             <label for="hora">Hora</label>
             <input type="time" id="hora">
             <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <label for="motivo"> Tipo de urgencia</label>
+            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
+              <option value=-1>Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
             </select>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInDone" class="contentDivGeneralTarjeta">
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Cerrado</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar...
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
           </div>
@@ -225,28 +220,27 @@
             <label for="hora">Hora</label>
             <input type="time" id="hora">
             <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <label for="motivo"> Tipo de urgencia</label>
+            <select id="indexMotivoSelect" [(ngModel)]="indexMotivoSelect" name="indexMotivoSelect">
+              <option value=-1>Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents; let i = index" [value]="i">{{ m.name }}
             </select>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInFactWithoutAnswer" class="contentDivGeneralTarjeta">
               <button (click)="goToDetails()" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Cerrado</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar...
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
           </div>

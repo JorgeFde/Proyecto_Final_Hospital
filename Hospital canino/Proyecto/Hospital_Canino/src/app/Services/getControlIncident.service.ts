@@ -2,14 +2,14 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { ControlIncidencia } from '../Interfaces/ControlIncidenciaModel';
+import { ControlIncidenciaModel } from '../Interfaces/ControlIncidenciaModel';
 @Injectable({
   providedIn: 'root'
 })
-export class ControlIncidenciasService {
+export class GetControlIncidenciasService {
   constructor(private firestore: Firestore) {}
-  getControlIncidencias(): Observable<ControlIncidencia[]> {
+  getControlIncidencias(): Observable<ControlIncidenciaModel[]> {
     const controlRef = collection(this.firestore, 'ControlIncidencias');
-    return collectionData(controlRef, { idField: 'id' }) as Observable<ControlIncidencia[]>;
+    return collectionData(controlRef, { idField: 'id' }) as Observable<ControlIncidenciaModel[]>;
   }
 }
