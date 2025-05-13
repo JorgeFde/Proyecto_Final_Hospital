@@ -84,7 +84,8 @@ export class ReportComponent {
     ) {
       // no estan vacios los campos
       const nombreCompleto = `${this.name.trim()} ${this.lastName.trim()}`;
-      const motivo = this.incidencias[this.indexMotivo].name
+      const status = 'Pendiente';
+      const motivo = this.incidencias[this.indexMotivo].name;
       const prioridad = this.incidencias[this.indexMotivo].prioridad;
       const email = this.email.trim().toLowerCase();
       const folio = this.generateFolio();
@@ -120,6 +121,7 @@ export class ReportComponent {
         const dateFormatted = this.formatDate(now);
         const timeFormatted = this.formatTime(now);
         await addDoc(incidenciasRef, {
+          status: status,
           motivo: motivo,
           prioridad: prioridad,
           folio: folio,
