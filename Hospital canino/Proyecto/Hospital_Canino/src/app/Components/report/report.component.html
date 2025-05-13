@@ -43,10 +43,6 @@
             </div>
           </div>          
         </div>
-        <div class="button-row">
-          <button class="create-btn" type="submit">Enviar Reporte</button>
-          <!--<button class="folio-btn">Ya tengo un folio</button>-->
-        </div>
       </form>
     </div>
   </div>
@@ -55,7 +51,6 @@
 <div *ngIf="isLoading" class="loader-overlay">
   <div class="spinner"></div>
 </div>
-
 <!-- Tu botón de enviar desactivado mientras carga -->
 <button [disabled]="isLoading" (click)="sendReport()">
   {{ isLoading ? 'Enviando...' : 'Enviar Reporte' }}
