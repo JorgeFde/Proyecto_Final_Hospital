@@ -73,6 +73,8 @@ export class ReasonsForIncidentListComponent {
       try {
         await this.controlService.addControlIncidencia(this.newIncidencia);
         this.createSuccessAlert('Éxito, Incidencia agregada correctamente');
+        this.newIncidencia.name = ''
+        this.newIncidencia.prioridad = '-1'
       } catch (error) {
         this.createErrorAlert('Error, No se pudo agregar la incidencia');
         console.error(error);
