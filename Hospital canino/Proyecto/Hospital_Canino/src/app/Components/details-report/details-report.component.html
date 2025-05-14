@@ -11,7 +11,7 @@
     <div class="details-container">
       <div class="section">
         <h2>Motivo de la Incidencia</h2>
-        <p>{{this.dataIcidencia?.motivo}}</p>
+        <p>{{this.dataIncidencia?.motivo}}</p>
       </div>
       <div class="section">
         <h2>Descripción de la Incidencia</h2>
@@ -40,9 +40,9 @@
           </form>
         </div>
       </div>
-      <div class="button-bar" *ngIf="!isDoneInicident">
-        <button class="btn btn-primary" (click)="changeStatusIncident()">Pasar a revisión</button>
-        <button class="btn btn-secondary" *ngIf="isInRevision" (click)="changeStatusIncident()">Cerrar sin contestación</button>
+      <div class="button-bar" *ngIf="statusIncident != 2">
+        <button class="btn btn-primary" (click)="changeStatusIncident(0)">{{statusIncident == 1 ? 'Finalizar incidencia' : 'Pasar a revisión'}}</button>
+        <button class="btn btn-secondary" *ngIf="statusIncident == 1" (click)="changeStatusIncident(1)">Cerrar sin contestación</button>
         <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
         <!--<button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>-->
       </div>      

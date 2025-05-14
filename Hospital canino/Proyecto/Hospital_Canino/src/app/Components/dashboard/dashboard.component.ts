@@ -112,6 +112,15 @@ export class DashboardComponent {
   }
   // Obtenemos todas las incidencias
   getIncidents() {
+    this.incidentsService.checkAndUpdateStatuses().then(() => {
+      this.getAllInicidets();
+    }).catch(error => {
+      console.error('Error al actualizar incidencias:', error);
+      this.createErrorAlert("Error al actualizar incidencias");
+      this.getAllInicidets();
+    });
+  }
+  getAllInicidets() {
     if (this.hasLoadedIncidents) return;
     this.hasLoadedIncidents = true;
     this.incidentsService
