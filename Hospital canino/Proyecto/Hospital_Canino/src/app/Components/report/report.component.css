@@ -190,7 +190,23 @@ select {
   gap: 10px;
   margin-top: 20px;
 }
-
+.selectorMotivo {
+  background-color: #ffffff;
+  color: #0e2b53;
+  border: 1px solid #0e2b53;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+  /* Añadir espacio para la flecha */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%230e2b53' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
 .button-row button {
   flex: 1;
   padding: 12px;

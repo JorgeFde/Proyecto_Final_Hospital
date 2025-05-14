@@ -15,7 +15,7 @@
           <h2>Reportar Algún Problema</h2>
           <div class="form-row column">
             <label for="motivo">Motivo de visita:</label>
-            <select id="indexMotivo" [(ngModel)]="indexMotivo" name="indexMotivo" required>
+            <select id="indexMotivo" [(ngModel)]="indexMotivo" name="indexMotivo" required class="selectorMotivo">
               <option value=-1>Seleccione un motivo</option>
               <option *ngFor="let m of incidencias; let i = index" [value]="i">{{ m.name }}
             </select>

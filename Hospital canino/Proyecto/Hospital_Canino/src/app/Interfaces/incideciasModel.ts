@@ -1,4 +1,5 @@
 export interface IncidentsModel {
+  id?: string;
   createdAt: string;
   date: string;
   description: string;

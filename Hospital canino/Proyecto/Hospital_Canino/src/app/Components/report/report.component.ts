@@ -31,15 +31,20 @@ export class ReportComponent {
   isLoading: boolean = false;
   incidencias: ControlIncidenciaModel[] = [];
   ngOnInit() {
-    this.controlService.getControlIncidencias().pipe(takeUntil(this.destroy$))
-    .subscribe(data => {
-      this.incidencias = data;
-      this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
-    });
+    this.getIncidencias()
   }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  getIncidencias() {
+    this.controlService
+      .getControlIncidencias()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.incidencias = data;
+        this.incidencias.sort((a, b) => a.name.localeCompare(b.name));
+      });
   }
   // Funcion para enviar reporte
   // obtener la fecha
@@ -74,9 +79,9 @@ export class ReportComponent {
   }
   // Obtener el folio de 5 digitos
   generateFolio(): string {
-    const timestamp = Date.now().toString();
-    const hash = Array.from(timestamp).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return (hash % 100000).toString().padStart(5, '0');
+    const timestamp = Date.now().toString().slice(-5); // últimos 5 dígitos del timestamp
+    const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0'); // 4 dígitos aleatorios
+    return `${timestamp}${random}`;
   }
   // Enviar Reporte 
   async sendReport() {
