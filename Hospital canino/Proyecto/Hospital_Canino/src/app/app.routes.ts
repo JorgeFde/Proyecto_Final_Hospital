@@ -7,15 +7,36 @@ import { ChatReportClientComponent } from './Components/chat-report-client/chat-
 import { DetailsReportComponent } from './Components/details-report/details-report.component';
 import { ChatReportAdminComponent } from './Components/chat-report-admin/chat-report-admin.component';
 import { ReasonsForIncidentListComponent } from './Components/reasons-for-incident-list/reasons-for-incident-list.component';
+import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
-    // se declaran las rutas
-    { path: 'Home', component: HomeComponent },
-    { path: 'Login', component: LoginComponent },
-    { path: 'Report', component: ReportComponent },
-    { path: 'ChatReport', component: ChatReportClientComponent },
-    { path: 'Dashboard', component: DashboardComponent },
-    { path: 'ReasonsForIncidentList', component: ReasonsForIncidentListComponent },
-    { path: 'DetailsReport', component: DetailsReportComponent },
-    { path: 'Chat', component: ChatReportAdminComponent },
-    { path: '', redirectTo: 'Home', pathMatch: 'full'}
+  // Rutas Libres
+  { path: 'Home', component: HomeComponent },
+  { path: 'Login', component: LoginComponent },
+  { path: 'Report', component: ReportComponent },
+  { path: 'ChatReport', component: ChatReportClientComponent },
+  // 🔒 Rutas Protegidas
+  {
+    path: 'Dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ReasonsForIncidentList',
+    component: ReasonsForIncidentListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'DetailsReport',
+    component: DetailsReportComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'Chat',
+    component: ChatReportAdminComponent,
+    canActivate: [AuthGuard],
+  },
+  // Redirección por defecto
+  { path: '', redirectTo: 'Home', pathMatch: 'full' },
+  // Ruta comodín por si no existe
+  { path: '**', redirectTo: 'Home' }
 ];

@@ -268,3 +268,69 @@
   border-radius: 20px;
 }
 /* Se termina CSS de Agradecimiento */
+/* ⚙️ Estilos para pantallas menores a 768px */
+@media screen and (max-width: 768px) {
+  .containerNavBar {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+  .logoNavBar {
+    width: 120px;
+    height: auto;
+  }
+  .buttonsOptions, .buttonReport {
+    width: 100%;
+    margin: 5px 0;
+    height: 45px;
+    font-size: 14px;
+  }
+  .bannerContainer {
+    flex-direction: column;
+    height: auto;
+  }
+  .bannerText, .imageContentBanner {
+    width: 100%;
+    text-align: center;
+  }
+  .subtitleBanner,
+  .textAnimationBanner {
+    font-size: 30px;
+    margin-left: 0;
+  }
+  .containerAcerca {
+    flex-direction: column;
+    height: auto;
+  }
+  .containerImageAcerca,
+  .containerTextAcerca {
+    width: 100%;
+    height: auto;
+  }
+  .containerSliderInfinito {
+    height: auto;
+  }
+  .slider .slide {
+    width: 300px;
+    height: 100px;
+  }
+  .containerAgradecimiento {
+    flex-direction: column;
+    height: auto;
+  }
+  .containerImage,
+  .containerTextAgradecimiento {
+    width: 100%;
+    height: auto;
+  }
+  .titleAgradecimiento,
+  .subTitleAgradecieminto,
+  .subTitleAgradecimientoFinal {
+    font-size: 20px;
+    margin-left: 0;
+  }
+  .textAgradecimiento {
+    font-size: 15px;
+    margin: 15px;
+  }
+}

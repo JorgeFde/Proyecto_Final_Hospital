@@ -12,8 +12,9 @@
           <path
             d="M12 22c1.1 0 1.99-.9 1.99-2H10c0 1.1.89 2 2 2zm6-6V9c0-3.07-1.63-5.64-4.5-6.32V2.5a1.5 1.5 0 00-3 0v.18C7.63 3.36 6 5.92 6 9v7l-2 2v1h16v-1l-2-2z" />
         </svg>
-        <span class="notification-count" *ngIf="notifications.length > 0"> {{ notifications.length > 9 ? '+9' : notifications.length }}</span>
-      </button>      
+        <span class="notification-count" *ngIf="medicamentsWithOutStock.length > 0"> {{ medicamentsWithOutStock.length >
+          9 ? '+9' : medicamentsWithOutStock.length }}</span>
+      </button>
       <button class="insidents" (click)="toggIncident()">Mis Incidencias</button>
       <button class="logOUT" (click)="toggleLogOut()">Cerrar sesion</button>
     </mat-toolbar>
@@ -34,52 +35,51 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('revision')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('revision')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'revision'" class="contentBugsActive">
         <!--Content incidencias activos-->
         <div class="filtro-barra">
-          <!--Barra de filtros-->
           <label>Filtrar por:</label>
           <label for="fecha">Fecha</label>
-          <input type="date" id="fecha">
-          <label for="hora">Hora</label>
-          <input type="time" id="hora">
-          <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-          <label for="motivo">Motivo</label>
-          <select id="motivo">
-            <option value="agenda">Incluir todas las incidencias</option>
-            <option value="agenda">Filtrar por incidencia de agenda</option>
-            <option value="medicamentos">Filtrar por ncidencia de medicamentos</option>
+          <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+            name="fecha" />
+          <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+            name="indexMotivoSelect" class="selectorMotivo">
+            <option value="">Todas las urgencias</option>
+            <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
           </select>
+          <button (click)="clearFilter()">Limpiar filtros</button>
+          <button (click)="tapGenerateReport()">Generar reporte</button>
         </div>
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
           <!--Inicio del ngFor-->
-          <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+          <div *ngFor="let incident of incidentsInRevisionFilter; let i = index" class="contentDivGeneralTarjeta">
             <!-- Botón invisible que cubre toda la tarjeta -->
-            <button (click)="goToDetails()" class="buttonGoDetails">
+            <button (click)="goToDetails(i)" class="buttonGoDetails">
             </button>
             <!-- Contenido visual (tarjeta) -->
             <div class="tarjeta-incidencia">
-              <h2>Incidencia: Error de agenda</h2>
-              <div class="info"><strong>Status:</strong> Activa</div>
-              <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-              <div class="info"><strong>Hora:</strong> 14:30</div>
-              <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-              <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-              <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-              <div class="descripcion">
-                El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar y el
-                paciente expresó molestia por la confusión.
-              </div>
+              <h2>Incidencia: {{incident.motivo}}</h2>
+              <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+              <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+              <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+              <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+              <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+              <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+              <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+              <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+              <div class="descripcion">{{incident.description}}</div>
             </div>
           </div>
           <!--fin del ngFor-->
         </div>
       </div>
     </div>
-     <!--Termina Activos-->
+    <!--Termina Activos-->
     <!-- PENDIENTES -->
     <div [style.flex]="isOpen === 'pendientes' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
@@ -95,45 +95,44 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('pendientes')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('pendientes')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'pendientes'" class="contentBugsActive">
         <!--Content incidencias activos-->
         <div class="detailsContent">
           <div class="filtro-barra">
-            <!--Barra de filtros-->
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="fecha" />
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="indexMotivoSelect" class="selectorMotivo">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
             <!--Inicio del ngFor-->
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInPendingFilter; let i = index" class="contentDivGeneralTarjeta">
               <!-- Botón invisible que cubre toda la tarjeta -->
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <!-- Contenido visual (tarjeta) -->
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Pendiente</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar y
-                  el paciente expresó molestia por la confusión.
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
             <!--fin del ngFor-->
@@ -141,7 +140,7 @@
         </div>
       </div>
     </div>
-     <!--Termina Pendientes-->
+    <!--Termina Pendientes-->
     <!-- Cerrados -->
     <div [style.flex]="isOpen === 'cerrados' ? '0.86' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
@@ -157,7 +156,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('cerrados')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('cerrados')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerrados'" class="contentBugsActive">
         <div class="detailsContent">
@@ -165,32 +164,33 @@
           <div class="filtro-barra">
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="fecha" />
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="indexMotivoSelect" class="selectorMotivo">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+            <div *ngFor="let incident of incidentsInDoneFilter; let i = index" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Cerrado</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar...
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggle('cerradosSinContestacion')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('cerradosSinContestacion')" class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerradosSinContestacion'" class="contentBugsActive">
         <div class="detailsContent">
@@ -221,32 +221,33 @@
           <div class="filtro-barra">
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
-            <input type="date" id="fecha">
-            <label for="hora">Hora</label>
-            <input type="time" id="hora">
-            <button onclick="document.getElementById('hora').value = ''">Limpiar Hora</button>
-            <label for="motivo">Motivo</label>
-            <select id="motivo">
-              <option value="agenda">Incluir todas las incidencias</option>
-              <option value="agenda">Filtrar por incidencia de agenda</option>
-              <option value="medicamentos">Filtrar por incidencia de medicamentos</option>
+            <input type="date" id="fecha" [(ngModel)]="filters.fecha"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="fecha" />
+            <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
+              name="indexMotivoSelect" class="selectorMotivo">
+              <option value="">Todas las urgencias</option>
+              <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
+            <button (click)="clearFilter()">Limpiar filtros</button>
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let persona of datos" class="contentDivGeneralTarjeta">
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter; let i = index" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
-                <h2>Incidencia: Error de agenda</h2>
-                <div class="info"><strong>Status:</strong> Cerrado</div>
-                <div class="info"><strong>Fecha:</strong> 07/05/2025</div>
-                <div class="info"><strong>Hora:</strong> 14:30</div>
-                <div class="info"><strong>Usuario:</strong> Juan Pérez</div>
-                <div class="info"><strong>Teléfono:</strong> +52 555 123 4567</div>
-                <div class="info"><strong>Correo:</strong> juan.perez&#64;ejemplo.com</div>
-                <div class="descripcion">
-                  El paciente llegó a consulta y no estaba registrada en la agenda del médico. Se tuvo que reagendar...
-                </div>
+                <h2>Incidencia: {{incident.motivo}}</h2>
+                <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
+                <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
+                <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
+                <div class="info"><strong>Hora: </strong>{{incident.time}}</div>
+                <div class="info"><strong>Usuario: </strong>{{incident.name}}</div>
+                <div class="info"><strong>Teléfono: </strong>{{incident.phoneNumber}}</div>
+                <div class="info"><strong>Correo: </strong>{{incident.email}}</div>
+                <div class="descripcion">{{incident.description}}</div>
               </div>
             </div>
           </div>
@@ -259,6 +260,6 @@
 <!-- Panel flotante a la derecha -->
 <div *ngIf="panelVisible" class="panelNotifications">
   <p class="titleNotifications">Centro de Notificaciones</p>
-  <app-notifications class="componentNotifications"></app-notifications>
+  <app-notifications class="componentNotifications" [notifications]="medicamentsWithOutStock" ></app-notifications>
   <button class="footer-button" mat-button color="accent" (click)="togglePanel()">Cerrar</button>
 </div>

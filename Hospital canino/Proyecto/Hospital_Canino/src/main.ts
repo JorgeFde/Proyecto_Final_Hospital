@@ -7,6 +7,7 @@ import { AppComponent } from './app/app.component';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
+import { provideAuth, getAuth } from '@angular/fire/auth'; // Firebase auth
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBkwI3XmGYNdolSMBoJFqNTGhfM4RTPd_Y",
@@ -24,5 +25,6 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAnalytics(() => getAnalytics()),
+    provideAuth(() => getAuth()) // firebase auth
   ]
 }).catch(err => console.error(err));

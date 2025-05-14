@@ -5,7 +5,6 @@
   height: 100vh;
   overflow: hidden;
 }
-
 .background-image {
   position: absolute;
   top: 0;
@@ -15,7 +14,6 @@
   object-fit: cover;
   z-index: -1; /*imagen detrás del contenido */
 }
-
 /* centrar el contenido */
 .register-wrapper {
   display: flex;
@@ -26,8 +24,6 @@
   width: 100vw;
   height: 100vh;
 }
-
-
 /* Contenedor principal */
 .register-container {
   width: 90%;
@@ -44,21 +40,18 @@
   overflow-y: auto;
   z-index: 1; /* Asegura que esté por encima de la imagen */
 }
-
 /* Logo PestHome */
 .logo {
   font-weight: bold;
   font-size: 1.6rem;
-  color: red;
+  color: white;
   margin-bottom: 10px;
   text-align: center;
 }
-
 h2 {
   margin: 0 0 20px 0;
   text-align: center;
 }
-
 /* Imagen circular */
 .avatar {
   width: 150px;
@@ -85,7 +78,25 @@ h2 {
   width: 100%;
   flex-wrap: wrap; /*se acomoda en pantallas pequeñas */
 }
+.textarea-container {
+  position: relative;
+  width: 100%;
+}
 
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  font-size: 12px;
+  color: #223e66;
+}
 /* Hace que label y select estén en columna */
 .form-row.column {
   flex-direction: column;
@@ -109,7 +120,11 @@ select {
   font-size: 1rem;
   min-width: 200px;
 }
-
+.textInput {
+  color: #223e66;
+  font-weight: normal;
+  font-size: medium;
+}
 /*descripccion*/
 textarea {
   width: 100%;
@@ -120,6 +135,9 @@ textarea {
   resize: none;
   vertical-align: top;
   margin-bottom: 15px;
+  color: #223e66;
+  font-weight: normal;
+  font-size: medium;
 }
 
 /* seleccionador de motivo*/
@@ -129,12 +147,11 @@ select {
   border-radius: 25px;
   border: none;
   font-size: 1rem;
-  background-color: red;
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: #223e66;
   cursor: pointer;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
-
 /* Estilo de botones */
 .create-btn,
 .folio-btn {
@@ -173,7 +190,23 @@ select {
   gap: 10px;
   margin-top: 20px;
 }
-
+.selectorMotivo {
+  background-color: #ffffff;
+  color: #0e2b53;
+  border: 1px solid #0e2b53;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+  /* Añadir espacio para la flecha */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%230e2b53' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
 .button-row button {
   flex: 1;
   padding: 12px;
@@ -181,4 +214,79 @@ select {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+}
+/*Spinner*/
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #223e66;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/*Responsivo*/
+@media (max-width: 1024px) {
+  .register-container {
+    width: 95%;
+    height: auto;
+    padding: 20px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .button-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .create-btn,
+  .folio-btn,
+  .button-row button {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .register-wrapper {
+    padding: 5px;
+  }
+  .register-container {
+    border-radius: 15px;
+    padding: 15px;
+  }
+  .logo {
+    font-size: 1.3rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  input[type="text"],
+  select,
+  textarea {
+    font-size: 0.9rem;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
 }
