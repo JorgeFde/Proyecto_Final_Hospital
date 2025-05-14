@@ -52,13 +52,14 @@
             <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
           </select>
           <button (click)="clearFilter()">Limpiar filtros</button>
+          <button (click)="tapGenerateReport()">Generar reporte</button>
         </div>
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
           <!--Inicio del ngFor-->
-          <div *ngFor="let incident of incidentsInRevisionFilter" class="contentDivGeneralTarjeta">
+          <div *ngFor="let incident of incidentsInRevisionFilter; let i = index" class="contentDivGeneralTarjeta">
             <!-- Botón invisible que cubre toda la tarjeta -->
-            <button (click)="goToDetails()" class="buttonGoDetails">
+            <button (click)="goToDetails(i)" class="buttonGoDetails">
             </button>
             <!-- Contenido visual (tarjeta) -->
             <div class="tarjeta-incidencia">
@@ -116,9 +117,9 @@
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
             <!--Inicio del ngFor-->
-            <div *ngFor="let incident of incidentsInPendingFilter" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInPendingFilter; let i = index" class="contentDivGeneralTarjeta">
               <!-- Botón invisible que cubre toda la tarjeta -->
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <!-- Contenido visual (tarjeta) -->
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
@@ -175,8 +176,8 @@
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let incident of incidentsInDoneFilter" class="contentDivGeneralTarjeta">
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+            <div *ngFor="let incident of incidentsInDoneFilter; let i = index" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
                 <div class="info"><strong>Status: </strong>{{incident.status}}</div>
@@ -231,8 +232,8 @@
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter" class="contentDivGeneralTarjeta">
-              <button (click)="goToDetails()" class="buttonGoDetails"></button>
+            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter; let i = index" class="contentDivGeneralTarjeta">
+              <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
                 <div class="info"><strong>Status: </strong>{{incident.status}}</div>

@@ -14,6 +14,8 @@ import { MedicamentsModel } from '../../Interfaces/MedicamentsModel';
 import { PrioridadesIncidentsModel } from '../../Interfaces/PrioridadesIncidentsModel';
 import { IncidentsModel } from '../../Interfaces/incideciasModel';
 import { Subject, takeUntil } from 'rxjs';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -67,6 +69,7 @@ export class DashboardComponent {
   incidentsInPendingFilter: IncidentsModel[] = [];
   incidentsInDoneFilter: IncidentsModel[] = [];
   incidentsInFactWithoutAnswerFilter: IncidentsModel[] = [];
+  isActivateFilter = false;
   ngOnInit() {
     this.setConfigUI();
   }
@@ -97,7 +100,7 @@ export class DashboardComponent {
       .getMedicaments()
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.medicamentsWithOutStock = []
+        this.medicamentsWithOutStock = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].stock <= 10) {
             this.medicamentsWithOutStock.push(data[i]);
@@ -152,7 +155,20 @@ export class DashboardComponent {
   // se convierte el formato de fecha al deseado
   formatearFecha(fechaISO: string): string {
     const [anio, mes, dia] = fechaISO.split('-');
-    const meses = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const meses = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     const mesTexto = meses[parseInt(mes, 10) - 1];
     return `${dia}/${mesTexto}/${anio}`;
   }
@@ -161,87 +177,140 @@ export class DashboardComponent {
     switch (this.isOpen) {
       case 'revision':
         if (fechaFormateada != '' && tipo != '') {
-          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideFecha && coincideTipo;
-          });
+          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideFecha && coincideTipo;
+            }
+          );
         } else if (fechaFormateada != '') {
-          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            return coincideFecha;
-          });
+          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              return coincideFecha;
+            }
+          );
         } else if (tipo != '') {
-          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(incidente => {
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideTipo;
-          });
+          this.incidentsInRevisionFilter = this.incidentsInRevision.filter(
+            (incidente) => {
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideTipo;
+            }
+          );
         } else {
-          this.incidentsInRevisionFilter = this.incidentsInRevision
+          this.incidentsInRevisionFilter = this.incidentsInRevision;
         }
         break;
       case 'pendientes':
         if (fechaFormateada != '' && tipo != '') {
-          this.incidentsInPendingFilter = this.incidentsInPending.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideFecha && coincideTipo;
-          });
+          this.incidentsInPendingFilter = this.incidentsInPending.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideFecha && coincideTipo;
+            }
+          );
         } else if (fechaFormateada != '') {
-          this.incidentsInPendingFilter = this.incidentsInPending.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            return coincideFecha;
-          });
+          this.incidentsInPendingFilter = this.incidentsInPending.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              return coincideFecha;
+            }
+          );
         } else if (fechaFormateada != '') {
-          this.incidentsInPendingFilter = this.incidentsInPending.filter(incidente => {
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideTipo;
-          });
+          this.incidentsInPendingFilter = this.incidentsInPending.filter(
+            (incidente) => {
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideTipo;
+            }
+          );
         } else {
-          this.incidentsInPendingFilter = this.incidentsInPending
+          this.incidentsInPendingFilter = this.incidentsInPending;
         }
         break;
       case 'cerrados':
         if (fechaFormateada != '' && tipo != '') {
-          this.incidentsInDoneFilter = this.incidentsInDone.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideFecha && coincideTipo;
-          });
+          this.incidentsInDoneFilter = this.incidentsInDone.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideFecha && coincideTipo;
+            }
+          );
         } else if (fechaFormateada != '') {
-          this.incidentsInDoneFilter = this.incidentsInDone.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            return coincideFecha;
-          });
+          this.incidentsInDoneFilter = this.incidentsInDone.filter(
+            (incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              return coincideFecha;
+            }
+          );
         } else if (tipo != '') {
-          this.incidentsInDoneFilter = this.incidentsInDone.filter(incidente => {
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideTipo;
-          });
+          this.incidentsInDoneFilter = this.incidentsInDone.filter(
+            (incidente) => {
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideTipo;
+            }
+          );
         } else {
-          this.incidentsInDoneFilter = this.incidentsInDone
+          this.incidentsInDoneFilter = this.incidentsInDone;
         }
         break;
       case 'cerradosSinContestacion':
         if (fechaFormateada != '' && tipo != '') {
-          this.incidentsInFactWithoutAnswerFilter = this.incidentsInFactWithoutAnswer.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideFecha && coincideTipo;
-          });
+          this.incidentsInFactWithoutAnswerFilter =
+            this.incidentsInFactWithoutAnswer.filter((incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideFecha && coincideTipo;
+            });
         } else if (fechaFormateada != '') {
-          this.incidentsInFactWithoutAnswerFilter = this.incidentsInFactWithoutAnswer.filter(incidente => {
-            const coincideFecha = this.filters.fecha ? incidente.date === fechaFormateada : true;
-            return coincideFecha;
-          });
+          this.incidentsInFactWithoutAnswerFilter =
+            this.incidentsInFactWithoutAnswer.filter((incidente) => {
+              const coincideFecha = this.filters.fecha
+                ? incidente.date === fechaFormateada
+                : true;
+              return coincideFecha;
+            });
         } else if (tipo != '') {
-          this.incidentsInFactWithoutAnswerFilter = this.incidentsInFactWithoutAnswer.filter(incidente => {
-            const coincideTipo = this.filters.tipo ? incidente.prioridad === this.filters.tipo : true;
-            return coincideTipo;
-          });
+          this.incidentsInFactWithoutAnswerFilter =
+            this.incidentsInFactWithoutAnswer.filter((incidente) => {
+              const coincideTipo = this.filters.tipo
+                ? incidente.prioridad === this.filters.tipo
+                : true;
+              return coincideTipo;
+            });
         } else {
-          console.log("Hola");
-          this.incidentsInFactWithoutAnswerFilter = this.incidentsInFactWithoutAnswer
+          this.incidentsInFactWithoutAnswerFilter =
+            this.incidentsInFactWithoutAnswer;
         }
         break;
     }
@@ -250,12 +319,12 @@ export class DashboardComponent {
     this.filters.fecha = '';
     this.filters.tipo = '';
     this.filterArray('', '');
+    this.isActivateFilter = false;
   }
   // animacion de campana
   setupNotificationAnimationLoop() {
     if (this.isNotification) {
       this.triggerShake();
-
       this.intervalId = setInterval(() => {
         if (this.isNotification) {
           this.triggerShake();
@@ -276,9 +345,10 @@ export class DashboardComponent {
   toggleOpenSeccions(
     panel: 'revision' | 'pendientes' | 'cerrados' | 'cerradosSinContestacion'
   ) {
+    this.isActivateFilter = false;
     this.clearFilter();
     this.isOpen = this.isOpen === panel ? null : panel;
-    this.filterArray('','')
+    this.filterArray('', '');
   }
   // panel de notificaciones
   togglePanel() {
@@ -309,10 +379,153 @@ export class DashboardComponent {
     });
   }
   // Go To Details
-  goToDetails() {
-    this.router.navigate(['DetailsReport']);
+  goToDetails(index: number) {
+    var dataSelect: IncidentsModel | undefined;
+    switch (this.isOpen) {
+      case 'revision':
+        dataSelect = this.incidentsInRevisionFilter[index];
+        break;
+      case 'pendientes':
+        dataSelect = this.incidentsInPendingFilter[index];
+        break;
+      case 'cerrados':
+        dataSelect = this.incidentsInDoneFilter[index];
+        break;
+      case 'cerradosSinContestacion':
+        dataSelect = this.incidentsInFactWithoutAnswerFilter[index];
+        break;
+    }
+    if (dataSelect == undefined) {
+      this.createErrorAlert("Error al obtener el detalle de la incidencia.")
+    } else {
+      this.router.navigate(['DetailsReport'], {
+        queryParams: {
+          incidencia: JSON.stringify(dataSelect)
+        }
+      });
+    }
   }
   toggIncident() {
     this.router.navigate(['ReasonsForIncidentList']);
   }
+  tapGenerateReport() {
+    if (this.filters.fecha != '' && this.filters.tipo != '') {
+      this.isActivateFilter = true
+    } else if (this.filters.fecha != '') {
+      this.isActivateFilter = true
+    } else if (this.filters.tipo != '') {
+      this.isActivateFilter = true 
+    } else {
+      this.isActivateFilter = false
+    }
+    switch (this.isOpen) {
+      case 'revision':
+       if (this.isActivateFilter) {
+        this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
+       } else {
+        this.exportarExcel(this.incidentsInRevision, 'EnRevisión');
+       }
+        break;
+      case 'pendientes':
+        if (this.isActivateFilter) {
+          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
+         } else {
+          this.exportarExcel(this.incidentsInPending, 'Pendientes');
+         }
+        break;
+      case 'cerrados':
+        if (this.isActivateFilter) {
+          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
+         } else {
+          this.exportarExcel(this.incidentsInDone, 'Cerrados');
+         }
+        break;
+      case 'cerradosSinContestacion':
+        if (this.isActivateFilter) {
+          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
+         } else {
+          this.exportarExcel(this.incidentsInFactWithoutAnswer, 'CerradosSinContestación');
+         }
+        break;
+    }
+  }
+  createSuccessAlert(message: string, ) {
+    Swal.fire({
+      icon: 'info',
+      html: message,
+      showCloseButton: true,
+      showCancelButton: this.isActivateFilter,
+      confirmButtonColor: '#0e2b53',
+      cancelButtonColor: '#0e2b53',
+      focusConfirm: false,
+      confirmButtonText: this.isActivateFilter ? 'Con filtro' : 'Generar reporte',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText: 'Sin filtro',
+      cancelButtonAriaLabel: 'Thumbs down'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        switch (this.isOpen) {
+          case 'revision':
+            this.exportarExcel(this.incidentsInRevisionFilter, 'EnRevisión');
+            break;
+          case 'pendientes':
+            this.exportarExcel(this.incidentsInPendingFilter, 'Pendientes');
+            break;
+          case 'cerrados':
+            this.exportarExcel(this.incidentsInDoneFilter, 'Cerrados');
+            break;
+          case 'cerradosSinContestacion':
+            this.exportarExcel(this.incidentsInFactWithoutAnswerFilter, 'CerradosSinContestación');
+            break;
+        }
+      } else if (result.isDenied) {
+        switch (this.isOpen) {
+          case 'revision':
+            this.exportarExcel(this.incidentsInRevision, 'EnRevisión');
+            break;
+          case 'pendientes':
+            this.exportarExcel(this.incidentsInPending, 'Pendientes');
+            break;
+          case 'cerrados':
+            this.exportarExcel(this.incidentsInDone, 'Cerrados');
+            break;
+          case 'cerradosSinContestacion':
+            this.exportarExcel(this.incidentsInFactWithoutAnswer, 'CerradosSinContestación');
+            break;
+        }
+      }
+    });
+  }
+  exportarExcel(data: IncidentsModel[], titleHojaExcel: string): void {
+    if (!data || data.length === 0) {
+      console.warn('No hay datos para exportar');
+      this.createErrorAlert('No hay datos para exportar')
+      return;
+    }
+    const datosSinCreatedAt = data.map(({ createdAt, ...resto }) => resto);
+    const hojaDeTrabajo = XLSX.utils.json_to_sheet(datosSinCreatedAt);
+    const libroDeTrabajo: XLSX.WorkBook = {
+      Sheets: { [titleHojaExcel]: hojaDeTrabajo },
+      SheetNames: [titleHojaExcel],
+    };
+    const excelBuffer: any = XLSX.write(libroDeTrabajo, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const fecha = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+    const nombreArchivo = `${titleHojaExcel}_${fecha}.xlsx`;
+    const blob: Blob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+    });
+    FileSaver.saveAs(blob, nombreArchivo);
+  }  
+  // alerta de error
+    createErrorAlert(message: string) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un error...',
+        text: message,
+        confirmButtonColor: "#0e2b53",
+      });
+    }
 }

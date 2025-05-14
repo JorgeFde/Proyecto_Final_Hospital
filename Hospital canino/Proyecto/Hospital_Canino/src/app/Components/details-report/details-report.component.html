@@ -11,7 +11,7 @@
     <div class="details-container">
       <div class="section">
         <h2>Motivo de la Incidencia</h2>
-        <p>El motivo</p>
+        <p>{{this.dataIcidencia?.motivo}}</p>
       </div>
       <div class="section">
         <h2>Descripción de la Incidencia</h2>
@@ -36,14 +36,15 @@
               <textarea id="mensaje" [(ngModel)]="mensaje" name="mensaje" required></textarea>
             </div>
             <button type="submit" class="btn btn-submit">Enviar</button>
+            <button class="btn btn-submit" (click)="tapSeendEmail()">Cancelar</button>
           </form>
         </div>
       </div>
-      <div class="button-bar">
-        <button class="btn btn-primary">Pasar a revisión</button>
-        <button class="btn btn-secondary">Cerrar sin contestación</button>
+      <div class="button-bar" *ngIf="!isDoneInicident">
+        <button class="btn btn-primary" (click)="changeStatusIncident()">Pasar a revisión</button>
+        <button class="btn btn-secondary" *ngIf="isInRevision" (click)="changeStatusIncident()">Cerrar sin contestación</button>
         <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
-        <!--<button class="btn btn-chat">Iniciar chat</button>-->
+        <!--<button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>-->
       </div>      
     </div>
 </div>
