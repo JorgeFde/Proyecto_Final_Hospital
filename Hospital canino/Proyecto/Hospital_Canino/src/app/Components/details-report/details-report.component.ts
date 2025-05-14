@@ -4,10 +4,11 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { EmailService } from '../../Services/email.service';  
 // Importa FormsModule
 import { FormsModule } from '@angular/forms';  
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-details-report',
-  imports: [MatToolbar,FormsModule],
+  imports: [MatToolbar,FormsModule, NgIf],
   templateUrl: './details-report.component.html',
   styleUrl: './details-report.component.css'
 })
@@ -16,9 +17,10 @@ export class DetailsReportComponent {
   email: string = '';
   mensaje: string = '';
   titleEmail: string = 'Falta de agregar el titulo';
+  isActiveSendEmail = false;
   constructor(private emailService: EmailService) {}
   // Funcion para enviar al formulario
-  enviarFormulario() {
+  sendEmail() {
     const datosFormulario = {
       nombre: this.nombre,
       titulo: this.titleEmail,
@@ -27,9 +29,13 @@ export class DetailsReportComponent {
     };
     this.emailService.enviarCorreo(datosFormulario).then(response => {
       alert('Correo enviado con éxito!');
+      this.tapSeendEmail();
     }).catch(error => {
       console.error('Error detallado:', error); // Esto te dirá qué está mal
       alert('Hubo un problema al enviar el correo.');
     });
+  }
+  tapSeendEmail() {
+    this.isActiveSendEmail = !this.isActiveSendEmail;
   }
 }
