@@ -70,7 +70,7 @@ body {
   width: 50%;
   background-color: #0E2B53;
   color: white;
-  padding: 50px 40px;
+  padding: 50px 40px; 
   display: flex;
   flex-direction: column;
   justify-content: center;
