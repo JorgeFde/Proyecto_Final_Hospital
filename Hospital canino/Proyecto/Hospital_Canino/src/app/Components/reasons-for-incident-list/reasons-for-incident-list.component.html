@@ -1,17 +1,55 @@
-<div>
-    <!--Nav Bar-->
-    <div class="containerNavBar">
-      <mat-toolbar class="matToolbarNav">
-        <img src="assets/logo.png" alt="Logo" class="logoNavBar">
-        <span class="titleHome">Detalles de incidencia</span>
-        <span class="options-spacer"></span>
-      </mat-toolbar>
+<div class="containerPrimary">
+  <!-- Nav Bar -->
+  <div class="containerNavBar">
+    <mat-toolbar class="matToolbarNav">
+      <img src="assets/logo.png" alt="Logo" class="logoNavBar">
+      <span class="titleHome">Detalles de incidencia</span>
+      <span class="options-spacer"></span>
+    </mat-toolbar>
+  </div>
+
+  <!-- Sección de creación de incidencia -->
+  <div class="top-bar">
+    <label for="nombreIncidencia">Crear una nueva incidencia:</label>
+    <input type="text" id="nombreIncidencia" placeholder="Ingresa el nombre de la incidencia" />
+
+    <label for="motivo">Prioridad:</label>
+    <select id="motivo" class="selectorMotivo">
+      <option disabled selected>Selecciona la prioridad</option>
+      <option value="critico">Crítico</option>
+      <option value="urgente">Urgente</option>
+      <option value="importante">Importánte</option>
+      <option value="bajo">Bajo</option>
+    </select>
+  </div>
+
+  <div class="crear-btn-container">
+    <button class="btnCrear btnRojo">Crear Incidencia</button>
+  </div>
+
+  <!-- Contenedor de detalles con scroll interno -->
+  <div class="details-container">
+    <div *ngFor="let incidencia of incidencias; let i = index" class="section">
+      <h2>Motivo de la Incidencia</h2>
+
+      <div class="prioridad-row">
+        <span class="prioridad-actual">Prioridad: Urgente</span>
+        <div class="cambiar-prioridad">
+          <label for="motivo{{ i }}">Cambiar prioridad:</label>
+          <select id="motivo{{ i }}" class="selectorMotivo">
+            <option disabled selected>Seleccionar una prioridad</option>
+            <option value="critico">Crítico</option>
+            <option value="urgente">Urgente</option>
+            <option value="importante">Importánte</option>
+            <option value="bajo">Bajo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="botones-acciones">
+        <button class="btn-actualizar">Actualizar el cambio de prioridad</button>
+        <button class="btn-eliminar">Eliminar</button>
+      </div>
     </div>
-    <!--Details contaner-->
-    <div class="details-container">
-      <div class="section">
-        <h2>Motivo de la Incidencia</h2>
-        <p>El motivo</p>
-      </div>    
-    </div>
+  </div>
 </div>
