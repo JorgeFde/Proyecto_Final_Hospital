@@ -7,24 +7,27 @@
         <span class="options-spacer"></span>
       </mat-toolbar>
     </div>
-    <!--Details contaner-->
+   <!--Details contaner-->
     <div class="details-container">
       <div class="section">
         <h2>Motivo de la Incidencia</h2>
-        <p>{{this.dataIncidencia?.motivo}}</p>
+        <p>Motivo: {{this.dataIncidencia?.motivo}}</p>
       </div>
       <div class="section">
         <h2>Descripción de la Incidencia</h2>
-        <p>Incidencia</p>
+        <p>Descripción: {{this.dataIncidencia?.description}}</p>
       </div>
       <div class="section">
         <h2>Datos del Usuario</h2>
-        <p>Nombre Apellidos</p>
+        <p>Nombre: {{this.dataIncidencia?.name}}</p>
+        <p>Folio: {{this.dataIncidencia?.folio}}</p>
+        <p>Fecha: {{this.dataIncidencia?.date}}</p>
+        <p>Hora: {{this.dataIncidencia?.time}}</p>
       </div>
       <div class="section">
         <h2>Datos de Contacto</h2>
-        <p>Número de Teléfono</p>
-        <p>Correo</p>
+        <p>Número de Teléfono: {{this.dataIncidencia?.phoneNumber}}</p>
+        <p>Correo: {{this.dataIncidencia?.email}}</p>
       </div>
       <!--Container email send-->
       <div  class="section" *ngIf="isActiveSendEmail">
