@@ -27,7 +27,7 @@
 /* Contenedor principal */
 .register-container {
   width: 90%;
-  height: 90vh;
+  height: auto;
   max-width: 1250px;
   background-color: #223e66;
   border-radius: 30px;
