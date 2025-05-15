@@ -6,10 +6,11 @@ import {
   doc,
   updateDoc,
   getDocs,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { IncidentsModel } from '../Interfaces/incideciasModel';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +22,22 @@ export class GetIncidetsServices {
     return collectionData(controlRef, { idField: 'id' }) as Observable<
       IncidentsModel[]
     >;
+  }
+  // se checa si el folio ingresado pertenece a una incidencia
+  async findIncidenciaByFolio(folio: string): Promise<IncidentsModel | null> {
+    const controlRef = collection(this.firestore, 'Incidencias');
+    const q = query(controlRef, where('folio', '==', folio));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      return null; // No se encontró ninguna incidencia con ese folio
+    }
+
+    // Suponiendo que los folios son únicos, obtenemos el primero
+    const docSnap = snapshot.docs[0];
+    const data = docSnap.data() as IncidentsModel;
+    data.id = docSnap.id; // Opcional, si quieres saber el ID del documento
+    return data;
   }
   // Actualizar el status por ID
   async updateStatus(id: string, newStatus: string): Promise<void> {

@@ -167,19 +167,22 @@ select {
 
 /* Botón de "Enviar Reporte" */
 .create-btn {
-  background-color: red;
-  color: white;
+ background-color: white;
+  color: #0e2b53;
   border: none;
 }
-
+.create-btn:hover {
+  background-color: red;
+  color: white;
+}
 .folio-btn {
   background-color: white;
-  color: rgb(37, 60, 178);
+  color: #0e2b53;
   border: none;
 }
 
 .folio-btn:hover {
-  background-color: red;
+  background-color: #326ec2;
   color: white;
 }
 

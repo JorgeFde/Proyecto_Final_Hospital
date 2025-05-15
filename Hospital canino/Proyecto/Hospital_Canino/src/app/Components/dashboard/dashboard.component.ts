@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { GetMedicamentsService } from '../../Services/getMedicaments.service';
 import { GetIncidetsServices } from '../../Services/getIncidents.service';
-import { GetPrioridadIncidents } from '../../Services/GetPrioridadesIncidents.service';
+import { GetPrioridadIncidents } from '../../Services/getPrioridadesIncidents.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { MedicamentsModel } from '../../Interfaces/MedicamentsModel';

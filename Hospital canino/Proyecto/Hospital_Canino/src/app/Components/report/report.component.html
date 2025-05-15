@@ -13,35 +13,42 @@
         <div class="register-content">
           <div class="logo">PetsHome</div>
           <h2>Reportar Algún Problema</h2>
-          <div class="form-row column">
-            <label for="motivo">Motivo de visita:</label>
-            <select id="indexMotivo" [(ngModel)]="indexMotivo" name="indexMotivo" required class="selectorMotivo">
-              <option value=-1>Seleccione un motivo</option>
-              <option *ngFor="let m of incidencias; let i = index" [value]="i">{{ m.name }}
-            </select>
-          </div>
-          <div class="form-row">
-            <input class="textInput" type="text" placeholder="Ingresa tu Nombre" id="name" [(ngModel)]="name" name="name" required/>
-            <input class="textInput" type="text" placeholder="Ingresa tus Apellidos" id="lastName" [(ngModel)]="lastName" name="lastName" required />
-          </div>
-          <div class="form-row">
-            <input class="textInput" type="text" placeholder="Ingresa tu correo" id="email" [(ngModel)]="email" name="email" required  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|mx)$"/>
-            <input class="textInput" type="text" placeholder="Ingresa tu numero de telefono" id="phoneNumber" [(ngModel)]="phoneNumber" name="phoneNumber" [attr.maxLength]="10" required pattern="^[0-9]{10}$"/>
-          </div>
-          <div class="form-row">
-            <div class="textarea-container">
-              <textarea
-                rows="4"
-                placeholder="Descripción"
-                id="description"
-                [(ngModel)]="description"
-                name="description"
-                [attr.maxLength]="300"
-                required
-              ></textarea>
-              <div class="char-counter">{{ description.length }}/300</div>
+          <div *ngIf="!isActiveFolio">
+            <div class="form-row column">
+              <label for="motivo">Motivo de visita:</label>
+              <select id="indexMotivo" [(ngModel)]="indexMotivo" name="indexMotivo" required class="selectorMotivo">
+                <option value=-1>Seleccione un motivo</option>
+                <option *ngFor="let m of incidencias; let i = index" [value]="i">{{ m.name }}
+              </select>
             </div>
-          </div>          
+            <div class="form-row">
+              <input class="textInput" type="text" placeholder="Ingresa tu Nombre" id="name" [(ngModel)]="name"
+                name="name" required />
+              <input class="textInput" type="text" placeholder="Ingresa tus Apellidos" id="lastName"
+                [(ngModel)]="lastName" name="lastName" required />
+            </div>
+            <div class="form-row">
+              <input class="textInput" type="text" placeholder="Ingresa tu correo" id="email" [(ngModel)]="email"
+                name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|mx)$" />
+              <input class="textInput" type="text" placeholder="Ingresa tu numero de telefono" id="phoneNumber"
+                [(ngModel)]="phoneNumber" name="phoneNumber" [attr.maxLength]="10" required pattern="^[0-9]{10}$" />
+            </div>
+            <div class="form-row">
+              <div class="textarea-container">
+                <textarea rows="4" placeholder="Descripción" id="description" [(ngModel)]="description" name="description"
+                  [attr.maxLength]="300" required></textarea>
+                <div class="char-counter">{{ description.length }}/300</div>
+              </div>
+            </div>  
+          </div>
+          <div style="margin-bottom: 20px;" *ngIf="isActiveFolio">
+            <div class="form-row">
+              <input class="textInput" type="text" placeholder="Ingresa tu Folio" id="folio" [(ngModel)]="folio"
+                name="folio" required />
+            </div>
+          </div>
+          <button class="create-btn">{{isActiveFolio ? 'Crear Reporte' : 'Enviar Reporte'}}</button>
+          <button class="folio-btn" type="button" (click)="folioSet()">{{isActiveFolio ? 'Iniciar Chat' : 'Ya tengo un folio'}}</button>
         </div>
       </form>
     </div>

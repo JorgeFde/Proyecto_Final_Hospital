@@ -14,7 +14,7 @@ import {
   addDoc,
 } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
-import { GetPrioridadIncidents } from '../../Services/GetPrioridadesIncidents.service';
+import { GetPrioridadIncidents } from '../../Services/getPrioridadesIncidents.service';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 @Component({
