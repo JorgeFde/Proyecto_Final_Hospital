@@ -40,6 +40,7 @@ export class DashboardComponent {
   private authService = inject(AuthService);
   private destroy$ = new Subject<void>();
   private hasLoadedIncidents = false;
+  isLoading: boolean = false;
   isOpen:
     | 'revision'
     | 'pendientes'
@@ -71,6 +72,7 @@ export class DashboardComponent {
   incidentsInFactWithoutAnswerFilter: IncidentsModel[] = [];
   isActivateFilter = false;
   ngOnInit() {
+    this.isLoading = true;
     this.setConfigUI();
   }
   ngOnDestroy() {
@@ -92,6 +94,7 @@ export class DashboardComponent {
     this.getMedicaments();
     this.getPrioridadIncidents();
     this.getIncidents();
+    this.isLoading = false;
     //
   }
   // Obtenemos todos los medicamentos

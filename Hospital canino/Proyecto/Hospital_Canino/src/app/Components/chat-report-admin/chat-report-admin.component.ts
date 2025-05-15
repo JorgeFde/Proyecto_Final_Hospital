@@ -17,23 +17,35 @@ export class ChatReportAdminComponent {
   messages: MessageModel[] = [];
   newMessage = '';
   folioChat = '';
+  nameCliente = '';
   sender = 'admin';
+  isLoading: boolean = false;
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
+    this.isLoading = true;
     setTimeout(() => {
       this.loaded = true;
     }, 1);
     this.route.queryParams.subscribe((params) => {
       const folioString = params['folio'];
+      const nombreString = params['nombre'];
       let folio: string | undefined;
+      let name: string | undefined;
       if (folioString) {
         try {
           folio = JSON.parse(folioString) as string;
         } catch (e) {
           console.error('Error al cargar chat:', e);
+        }
+      }
+      if (nombreString) {
+        try {
+          name = JSON.parse(nombreString) as string;
+        } catch (error) {
+          console.error('Error al cargar chat:', error);
         }
       }
       if (folio != undefined) {
@@ -42,9 +54,14 @@ export class ChatReportAdminComponent {
           this.messages = msgs;
         });
       }
+      if (name != undefined) {
+        this.nameCliente = name;
+      }
+      this.isLoading = false;
     });
   }
   async sendMessage() {
+    this.isLoading = true;
     if (!this.newMessage.trim()) return;
     const msg: MessageModel = {
       text: this.newMessage,
@@ -53,5 +70,6 @@ export class ChatReportAdminComponent {
     };
     await this.chatService.sendMessage(this.folioChat, msg);
     this.newMessage = '';
+    this.isLoading = false;
   }
 }

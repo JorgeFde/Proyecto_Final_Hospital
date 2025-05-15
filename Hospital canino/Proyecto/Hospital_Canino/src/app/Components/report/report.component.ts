@@ -39,7 +39,7 @@ export class ReportComponent {
   isLoading: boolean = false;
   incidencias: ControlIncidenciaModel[] = [];
   folio: string = '';
-  isActiveFolio: boolean = true;
+  isActiveFolio: boolean = false;
   ngOnInit() {
     this.getIncidencias();
   }

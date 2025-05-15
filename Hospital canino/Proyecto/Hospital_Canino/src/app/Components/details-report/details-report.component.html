@@ -11,11 +11,11 @@
     <div class="details-container">
       <div class="section">
         <h2>Motivo de la Incidencia</h2>
-        <p>Motivo: {{this.dataIncidencia?.motivo}}</p>
+        <p>{{this.dataIncidencia?.motivo}}</p>
       </div>
       <div class="section">
         <h2>Descripción de la Incidencia</h2>
-        <p>Descripción: {{this.dataIncidencia?.description}}</p>
+        <p>{{this.dataIncidencia?.description}}</p>
       </div>
       <div class="section">
         <h2>Datos del Usuario</h2>
@@ -47,7 +47,11 @@
         <button class="btn btn-primary" (click)="changeStatusIncident(0)">{{statusIncident == 1 ? 'Finalizar incidencia' : 'Pasar a revisión'}}</button>
         <button class="btn btn-secondary" *ngIf="statusIncident == 1" (click)="changeStatusIncident(1)">Cerrar sin contestación</button>
         <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
-        <!--<button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>-->
+        <button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>
       </div>      
     </div>
+</div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
 </div>

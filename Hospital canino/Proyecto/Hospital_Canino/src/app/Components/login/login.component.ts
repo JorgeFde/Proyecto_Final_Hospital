@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import Swal from 'sweetalert2';
+import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -24,8 +25,10 @@ export class LoginComponent {
   // variables 
   email: string = '';
   password: string = '';
+  isLoading: boolean = false;
   // Funciones
   login() {
+    this.isLoading = true;
     const correoValido = /^[^\s@]+@[^\s@]+\.(com|mx)$/;
     if (!this.email || !this.password) {
       this.createErrorAlert('Por favor, ingresa tu correo y contraseña.')
@@ -43,6 +46,7 @@ export class LoginComponent {
       console.log("Error al iniciar sesion: ", error) 
       this.createErrorAlert('Correo o contraseña incorrectos.');
     });
+    this.isLoading = false;
   }
   // alerta de success
     createSuccessAlert(message: string) {

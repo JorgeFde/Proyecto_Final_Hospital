@@ -1,7 +1,7 @@
 <div class="chat-container" [class.loaded]="loaded">
     <div class="chat-header">
         <img src="assets/logo.png" alt="User" class="avatar">
-        <span class="username">Cliente</span>
+        <span class="username">Chat con: {{nameCliente}}</span>
     </div>
     <div class="chat-messages">
         <div *ngFor="let msg of messages" class="message" [ngClass]="msg.sender === sender ? 'right' : 'left'">
@@ -12,4 +12,8 @@
         <input type="text" [(ngModel)]="newMessage" placeholder="Escribe un mensaje..." />
         <button class="send-btn" (click)="sendMessage()">➤</button>
       </div>
+</div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
 </div>

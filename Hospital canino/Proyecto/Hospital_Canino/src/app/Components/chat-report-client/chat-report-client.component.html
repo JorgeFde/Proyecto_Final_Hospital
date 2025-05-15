@@ -13,3 +13,7 @@
         <button class="send-btn" (click)="sendMessage()">➤</button>
       </div>
 </div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>

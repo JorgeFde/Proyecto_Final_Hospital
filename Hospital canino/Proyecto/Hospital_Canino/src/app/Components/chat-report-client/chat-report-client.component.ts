@@ -20,11 +20,13 @@ export class ChatReportClientComponent {
   newMessage = '';
   folioChat = '';
   sender = 'cliente';
+  isLoading: boolean = false;
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
+    this.isLoading = true;
     setTimeout(() => {
       this.loaded = true;
     }, 1);
@@ -46,9 +48,11 @@ export class ChatReportClientComponent {
       } else {
         this.router.navigate(['Report']);
       }
+      this.isLoading = false;
     });
   }
   async sendMessage() {
+    this.isLoading = true;
     if (!this.newMessage.trim()) return;
     const msg: MessageModel = {
       text: this.newMessage,
@@ -57,5 +61,6 @@ export class ChatReportClientComponent {
     };
     await this.chatService.sendMessage(this.folioChat, msg);
     this.newMessage = '';
+    this.isLoading = false;
   }
 }

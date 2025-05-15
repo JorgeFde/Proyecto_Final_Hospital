@@ -263,3 +263,7 @@
   <app-notifications class="componentNotifications" [notifications]="medicamentsWithOutStock" ></app-notifications>
   <button class="footer-button" mat-button color="accent" (click)="togglePanel()">Cerrar</button>
 </div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
