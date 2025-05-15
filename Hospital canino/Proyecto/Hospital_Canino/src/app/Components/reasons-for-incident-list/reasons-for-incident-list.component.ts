@@ -1,7 +1,7 @@
 // todas nuestras dependencias
 import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { PrioridadesIncidentsModel } from '../../Interfaces/PrioridadesIncidentsModel';
 import { ControlIncidenciaModel } from '../../Interfaces/ControlIncidenciaModel';
 import { GetControlIncidenciasService } from '../../Services/getControlIncident.service';
@@ -14,13 +14,13 @@ import {
   addDoc,
 } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
-import { GetPrioridadIncidents } from '../../Services/GetPrioridadesIncidents.service';
+import { GetPrioridadIncidents } from '../../Services/getPrioridadesIncidents.service';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 @Component({
   // todas las dependecias que se ocupan en el componenete
   selector: 'app-reasons-for-incident-list',
-  imports: [MatToolbar, NgFor, FormsModule],
+  imports: [MatToolbar, NgFor, FormsModule, NgIf],
   templateUrl: './reasons-for-incident-list.component.html',
   styleUrl: './reasons-for-incident-list.component.css',
 })
@@ -35,9 +35,12 @@ export class ReasonsForIncidentListComponent {
   prioridadIncidents: PrioridadesIncidentsModel[] = [];
   indexSelectPrioridadChange: number = -1;
   newIncidencia: ControlIncidenciaModel = { name: '', prioridad: '-1' };
+  isLoading: boolean = false;
   ngOnInit() {
+    this.isLoading = true;
     this.getIncidencias();
     this.getPrioridadIncidents();
+    this.isLoading = false;
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -69,6 +72,7 @@ export class ReasonsForIncidentListComponent {
       });
   }
   async createIncidencia() {
+    this.isLoading = true;
     if (this.newIncidencia.name != '' && this.newIncidencia.prioridad != '-1') {
       try {
         await this.controlService.addControlIncidencia(this.newIncidencia);
@@ -82,9 +86,11 @@ export class ReasonsForIncidentListComponent {
     } else {
       this.createErrorAlert('Ambos campos son reuqeridos.');
     }
+    this.isLoading = false;
   }
   // Actualizacion de prioridad
   async updatePrioridad(index: number) {
+    this.isLoading = true;
     const incidencia = this.incidencias[index];
     const id = incidencia.id;
     if (id !=  undefined) {
@@ -106,6 +112,7 @@ export class ReasonsForIncidentListComponent {
     } else {
       this.createErrorAlert('Error, con la informacion de incidencias');
     }
+    this.isLoading = false;
   }  
   // Eliminar incidencia
   async deleteIncidencia(index: number) {
@@ -150,10 +157,12 @@ export class ReasonsForIncidentListComponent {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          this.isLoading = true;
           await this.controlService.eliminarIncidencia(id);
           this.createSuccessAlert(
             'Eliminado, Incidencia eliminada correctamente'
           );
+          this.isLoading = false;
         } catch (error) {
           this.createErrorAlert('Error, No se pudo eliminar la incidencia');
           console.error(error);

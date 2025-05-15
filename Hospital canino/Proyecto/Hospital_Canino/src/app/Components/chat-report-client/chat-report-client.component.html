@@ -1,31 +1,19 @@
-<p>chat-report-client works!</p>
 <div class="chat-container" [class.loaded]="loaded">
     <div class="chat-header">
         <img src="assets/logo.png" alt="User" class="avatar">
-        <span class="username">Doc. Dianne Jhonson</span>
+        <span class="username">Doctor</span>
     </div>
     <div class="chat-messages">
-        <div class="message left">
-            <p>Hi David, have you got the project report pdf?</p>
+        <div *ngFor="let msg of messages" class="message" [ngClass]="msg.sender === sender ? 'right' : 'left'">
+          <p>{{ msg.text }}</p>
         </div>
-        <div class="message right">
-            <p>NO. I did not get it</p>
-        </div>
-        <div class="message left">
-            <p>Ok, I will just sent it here. Plz be sure to fill the details by today end of the day.</p>
-        </div>
-        <div class="message right">
-            <p>Ok. Should I send it over email as well after filling the details.</p>
-        </div>
-        <div class="message left">
-            <p>Ya. I’ll be adding more team members to it.</p>
-        </div>
-        <div class="message right">
-            <p>OK</p>
-        </div>
-    </div>
-    <div class="chat-input">
-        <input type="text" placeholder="Write Something...">
-        <button class="send-btn">➤</button>
-    </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="newMessage" placeholder="Escribe un mensaje..." />
+        <button class="send-btn" (click)="sendMessage()">➤</button>
+      </div>
+</div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
 </div>

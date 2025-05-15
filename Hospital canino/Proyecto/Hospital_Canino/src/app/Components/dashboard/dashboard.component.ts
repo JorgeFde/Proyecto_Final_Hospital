@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { GetMedicamentsService } from '../../Services/getMedicaments.service';
 import { GetIncidetsServices } from '../../Services/getIncidents.service';
-import { GetPrioridadIncidents } from '../../Services/GetPrioridadesIncidents.service';
+import { GetPrioridadIncidents } from '../../Services/getPrioridadesIncidents.service';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { MedicamentsModel } from '../../Interfaces/MedicamentsModel';
@@ -40,6 +40,7 @@ export class DashboardComponent {
   private authService = inject(AuthService);
   private destroy$ = new Subject<void>();
   private hasLoadedIncidents = false;
+  isLoading: boolean = false;
   isOpen:
     | 'revision'
     | 'pendientes'
@@ -71,6 +72,7 @@ export class DashboardComponent {
   incidentsInFactWithoutAnswerFilter: IncidentsModel[] = [];
   isActivateFilter = false;
   ngOnInit() {
+    this.isLoading = true;
     this.setConfigUI();
   }
   ngOnDestroy() {
@@ -92,6 +94,7 @@ export class DashboardComponent {
     this.getMedicaments();
     this.getPrioridadIncidents();
     this.getIncidents();
+    this.isLoading = false;
     //
   }
   // Obtenemos todos los medicamentos
