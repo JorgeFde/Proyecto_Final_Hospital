@@ -11,4 +11,5 @@ export interface IncidentsModel {
   prioridad: string;
   status: string;
   time: string;
+  dateInReview: string;
 }
