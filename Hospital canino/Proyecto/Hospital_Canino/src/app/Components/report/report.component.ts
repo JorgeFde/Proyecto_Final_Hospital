@@ -145,6 +145,7 @@ export class ReportComponent {
           const now = new Date();
           const dateFormatted = this.formatDate(now);
           const timeFormatted = this.formatTime(now);
+          // date in review es para cuando se pase a revision se pone una fecha despues de que pasen 3 dias se debe de pasar a cerrado sin contestacion
           await addDoc(incidenciasRef, {
             status: status,
             motivo: motivo,
@@ -157,6 +158,7 @@ export class ReportComponent {
             createdAt: now,
             date: dateFormatted,
             time: timeFormatted,
+            dateInReview: ''
           });
           this.createSuccessAlert(folio);
           this.resetForm();
