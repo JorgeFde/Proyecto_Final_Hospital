@@ -1,11 +1,30 @@
-// Se modifica el main ts para agregar la anumacuones del provideAnimations
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations'; // ✅ IMPORTANTE
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-const appConfig = {
-  providers: [provideAnimations(), provideRouter(routes)] // ✅ AÑADIDO
+// ✅ AngularFire imports
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
+import { provideAuth, getAuth } from '@angular/fire/auth'; // Firebase auth
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBkwI3XmGYNdolSMBoJFqNTGhfM4RTPd_Y",
+  authDomain: "hospital-canino-frontend.firebaseapp.com",
+  projectId: "hospital-canino-frontend",
+  storageBucket: "hospital-canino-frontend.firebasestorage.app",
+  messagingSenderId: "440021040783",
+  appId: "1:440021040783:web:cd55cd3f4787f8ece13afa"
 };
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+// Configuración para bootstrapApplication
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAnimations(),
+    provideRouter(routes),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore()),
+    provideAnalytics(() => getAnalytics()),
+    provideAuth(() => getAuth()) // firebase auth
+  ]
+}).catch(err => console.error(err));

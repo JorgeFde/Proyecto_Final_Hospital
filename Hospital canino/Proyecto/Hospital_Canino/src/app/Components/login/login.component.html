@@ -9,11 +9,10 @@
         <h1 class="brand-title">PetsHome</h1>
         <img src="assets/logo.png" alt="Logo App" class="logo" />
       </div>
-
       <div class="right-panel">
         <h2>¡Bienvenido!</h2>
         <p class="subtitle">Acceso</p>
-        <form (ngSubmit)="submit()">
+        <form (ngSubmit)="login()">
           <input type="email" placeholder="Correo" [(ngModel)]="email" name="email" required />
           <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
           <button type="submit" class="login-btn">Iniciar sesión</button>
@@ -21,4 +20,8 @@
       </div>
     </div>
   </div>
+</div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
 </div>

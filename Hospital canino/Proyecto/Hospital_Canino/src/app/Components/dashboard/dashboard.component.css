@@ -51,6 +51,23 @@ html, body {
   user-select: none;
   background-color: transparent;
 }
+.selectorMotivo {
+  background-color: #ffffff;
+  color: #0e2b53;
+  border: 1px solid #0e2b53;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 270px;
+  appearance: none;
+  cursor: pointer;
+  /* Añadir espacio para la flecha */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%230e2b53' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
 .buttonsOptions:hover {
   transform: scale(1.1); /* Aumenta el tamaño al 110% */
 }
@@ -58,9 +75,28 @@ html, body {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  position: relative;
 }
 .buttonNotification:hover {
   transform: scale(1.3);
+}
+.notification-count {
+  position: absolute;
+  top: 0px;
+  right: 2px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  min-width: 18px;       /* Asegura un ancho mínimo */
+  height: 18px;           /* Altura fija para círculo */
+  display: flex;          /* Centra el texto */
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;         /* Ligero padding horizontal */
+  line-height: 1;
+  box-sizing: border-box; /* Incluye padding en el tamaño */
 }
 .contentIncidencias {
   height: 100vh;
@@ -199,8 +235,24 @@ span {
   margin-left: 10px;
   font-weight: bolder;
   font-size: 70%;
+  cursor: pointer;
 }
 .logOUT:hover {
+  transform: scale(1.2);
+}
+.insidents {
+  background-color: transparent;
+  color: #0e2b53;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-left: 10px;
+  font-weight: bolder;
+  font-size: 70%;
+  cursor: pointer;
+}
+.insidents:hover {
   transform: scale(1.2);
 }
 /*Filtro de busqueda */
@@ -285,4 +337,101 @@ span {
 }
 .buttonGoDetails {
   position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;
+}
+/*Responsivo*/
+@media (max-width: 1024px) {
+  .panelNotifications {
+    width: 60%;
+  }
+  .buttonsOptions {
+    width: 100px;
+    font-size: small;
+  }
+  .filtro-barra {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    font-size: 13px;
+  }
+  .filtro-barra input,
+  .filtro-barra select {
+    min-width: 100px;
+  }
+  .tarjeta-incidencia {
+    width: 98%;
+    padding: 15px;
+  }
+  .info strong {
+    width: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .containerNavBar {
+    height: auto;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+  .logoNavBar {
+    width: 80px;
+  }
+  .titleHome {
+    font-size: medium;
+    margin-left: 10px;
+  }
+  .buttonsOptions {
+    width: auto;
+    font-size: 13px;
+    padding: 8px;
+  }
+  .panelNotifications {
+    width: 80%;
+  }
+  .logOUT,
+  .insidents {
+    font-size: 60%;
+    height: 35px;
+    margin: 5px;
+  }
+  .filtro-barra {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+  .tarjeta-incidencia h2 {
+    font-size: 18px;
+  }
+  .info strong {
+    width: auto;
+  }
+}
+@media (max-width: 480px) {
+  .buttonsOptions,
+  .logOUT,
+  .insidents {
+    font-size: 11px;
+    height: auto;
+    width: auto;
+    padding: 5px;
+    margin: 2px;
+  }
+  .logoNavBar {
+    width: 60px;
+  }
+  .titleHome {
+    font-size: 14px;
+  }
+  .panelNotifications {
+    width: 100%;
+  }
+  .tarjeta-incidencia {
+    width: 95%;
+    padding: 10px;
+  }
+  .descripcion {
+    font-size: 13px;
+  }
+  .footer-button {
+    font-size: 80%;
+    height: 28px;
+  }
 }
