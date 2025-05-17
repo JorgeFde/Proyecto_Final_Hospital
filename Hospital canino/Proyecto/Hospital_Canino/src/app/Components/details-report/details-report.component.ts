@@ -22,9 +22,10 @@ export class DetailsReportComponent {
   isLoading: boolean = false;
   mensaje: string = '';
   isActiveSendEmail = false;
-  statusIncident: number = 0;
+  statusIncident: number = 2;
   dataIncidencia: IncidentsModel | undefined;
   isLoader = false;
+  folioIncident = '';
   constructor(
     private emailService: EmailService,
     private route: ActivatedRoute,
@@ -41,8 +42,13 @@ export class DetailsReportComponent {
           console.error('Error al parsear incidencia:', e);
         }
       }
-      this.dataIncidencia = incidencia;
-      this.setUI();
+      if (incidencia?.folio != undefined) {
+        this.folioIncident = incidencia?.folio
+        this.getDataIncident();
+      } else {
+        this.createErrorAlert('Error al obtener el folio de la incidencia');
+      }
+      
     });
   }
   setUI() {
@@ -77,8 +83,10 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'En revision';
                 this.setUI();
-                this.updateDataIncident()
+                this.updateDataIncident();
                 this.createSuccessAlert('Se movio a revisión');
+                this.isActiveSendEmail = false;
+                this.isLoading = false;
               }
             });
           } else {
@@ -91,10 +99,12 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'Cerrado';
                 this.setUI();
-                this.updateDataIncident()
+                this.updateDataIncident();
                 this.createSuccessAlert(
                   'Se cerro la incidencia correctamente.'
                 );
+                this.isActiveSendEmail = false;
+                this.isLoading = false;
               }
             });
           } else {
@@ -107,8 +117,10 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'En revision';
                 this.setUI();
-                this.updateDataIncident()
+                this.updateDataIncident();
                 this.createSuccessAlert('Se movio a revisión');
+                this.isActiveSendEmail = false;
+                this.isLoading = false;
               }
             });
           } else {
@@ -127,8 +139,10 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'Cerrado sin contestación';
                 this.setUI();
-                this.updateDataIncident()
+                this.updateDataIncident();
                 this.createSuccessAlert('Se movio a cerrado sin contestación');
+                this.isActiveSendEmail = false;
+                this.isLoading = false;
               }
             });
         } else {
@@ -136,21 +150,35 @@ export class DetailsReportComponent {
         }
       }
     }
-    this.isActiveSendEmail = false;
-    this.isLoading = false;
   }
   updateDataIncident() {
-     // Vuelve a serializar el objeto para la URL
-     const incidenciaActualizada = JSON.stringify(this.dataIncidencia);
-     console.log("data: ", incidenciaActualizada)
-     // Actualiza la URL con los nuevos queryParams
-     this.router.navigate([], {
-       relativeTo: this.route,
-       queryParams: {
-         incidencia: incidenciaActualizada,
-       },
-       queryParamsHandling: 'merge',
-     });
+    this.getDataIncident();
+  }
+  getDataIncident() {
+    this.isLoader = true;
+    const folio = this.folioIncident;
+    if (folio != undefined) {
+      this.incidentsService
+        .getIncidenciaByFolio(folio)
+        .then((inc) => {
+          if (inc) {
+            this.dataIncidencia = inc;
+            this.setUI();
+          } else {
+            this.createErrorAlert(
+              'No se encontró ninguna incidencia con ese folio.'
+            );
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.createErrorAlert('Error al consultar la incidencia.');
+        });
+    } else {
+      // Error al obtener el folio
+      this.createErrorAlert('Error al obtener el folio de la incidencia');
+    }
+    this.isLoader = false;
   }
   // Funcion para enviar al formulario
   sendEmail() {
