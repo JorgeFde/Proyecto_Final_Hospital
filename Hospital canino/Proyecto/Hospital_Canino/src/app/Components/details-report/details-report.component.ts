@@ -77,6 +77,7 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'En revision';
                 this.setUI();
+                this.updateDataIncident()
                 this.createSuccessAlert('Se movio a revisión');
               }
             });
@@ -90,6 +91,7 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'Cerrado';
                 this.setUI();
+                this.updateDataIncident()
                 this.createSuccessAlert(
                   'Se cerro la incidencia correctamente.'
                 );
@@ -105,6 +107,7 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'En revision';
                 this.setUI();
+                this.updateDataIncident()
                 this.createSuccessAlert('Se movio a revisión');
               }
             });
@@ -124,6 +127,7 @@ export class DetailsReportComponent {
               if (this.dataIncidencia != undefined) {
                 this.dataIncidencia.status = 'Cerrado sin contestación';
                 this.setUI();
+                this.updateDataIncident()
                 this.createSuccessAlert('Se movio a cerrado sin contestación');
               }
             });
@@ -134,6 +138,19 @@ export class DetailsReportComponent {
     }
     this.isActiveSendEmail = false;
     this.isLoading = false;
+  }
+  updateDataIncident() {
+     // Vuelve a serializar el objeto para la URL
+     const incidenciaActualizada = JSON.stringify(this.dataIncidencia);
+     console.log("data: ", incidenciaActualizada)
+     // Actualiza la URL con los nuevos queryParams
+     this.router.navigate([], {
+       relativeTo: this.route,
+       queryParams: {
+         incidencia: incidenciaActualizada,
+       },
+       queryParamsHandling: 'merge',
+     });
   }
   // Funcion para enviar al formulario
   sendEmail() {
@@ -179,7 +196,7 @@ export class DetailsReportComponent {
           this.router.navigate(['Chat'], {
             queryParams: {
               folio: JSON.stringify(this.dataIncidencia.folio),
-              nombre: JSON.stringify(this.dataIncidencia.name)
+              nombre: JSON.stringify(this.dataIncidencia.name),
             },
           });
         } else {

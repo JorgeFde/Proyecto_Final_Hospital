@@ -43,16 +43,14 @@
           <label>Filtrar por:</label>
           <label for="fecha">Fecha</label>
           <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-            name="fecha" />
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="fecha" />
           <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-            (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-            name="indexMotivoSelect" class="selectorMotivo">
+            (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="indexMotivoSelect" class="selectorMotivo">
             <option value="">Todas las urgencias</option>
             <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
           </select>
           <button (click)="clearFilter()">Limpiar filtros</button>
-          <!--<button (click)="tapGenerateReport()">Generar reporte</button>-->
+          <button (click)="tapGenerateReport()">Generar reporte</button>
         </div>
         <!--Items de detalle incidencias-->
         <div class="detailsContent">
@@ -104,16 +102,15 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="fecha" />
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="fecha" />
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="indexMotivoSelect" class="selectorMotivo">
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="indexMotivoSelect"
+              class="selectorMotivo">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
             <button (click)="clearFilter()">Limpiar filtros</button>
-            <!--<button (click)="tapGenerateReport()">Generar reporte</button>-->
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!--Items de detalle incidencias-->
           <div class="detailsContent">
@@ -165,16 +162,15 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="fecha" />
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="fecha" />
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="indexMotivoSelect" class="selectorMotivo">
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="indexMotivoSelect"
+              class="selectorMotivo">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
             <button (click)="clearFilter()">Limpiar filtros</button>
-            <!--<button (click)="tapGenerateReport()">Generar reporte</button>-->
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
@@ -213,7 +209,8 @@
           <path d="M7 10l5 5 5-5z" />
         </svg>
         <!-- Botón invisible sobre todo el div -->
-        <button mat-icon-button (click)="toggleOpenSeccions('cerradosSinContestacion')" class="buttonBugActive"></button>
+        <button mat-icon-button (click)="toggleOpenSeccions('cerradosSinContestacion')"
+          class="buttonBugActive"></button>
       </div>
       <div *ngIf="isOpen === 'cerradosSinContestacion'" class="contentBugsActive">
         <div class="detailsContent">
@@ -222,20 +219,20 @@
             <label>Filtrar por:</label>
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" [(ngModel)]="filters.fecha"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="fecha" />
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="fecha" />
             <select id="indexMotivoSelect" [(ngModel)]="filters.tipo"
-              (ngModelChange)="filterArray(filters.fecha, filters.tipo)"
-              name="indexMotivoSelect" class="selectorMotivo">
+              (ngModelChange)="filterArray(filters.fecha, filters.tipo)" name="indexMotivoSelect"
+              class="selectorMotivo">
               <option value="">Todas las urgencias</option>
               <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
             </select>
             <button (click)="clearFilter()">Limpiar filtros</button>
-            <!--<button (click)="tapGenerateReport()">Generar reporte</button>-->
+            <button (click)="tapGenerateReport()">Generar reporte</button>
           </div>
           <!-- Lista scrollable -->
           <div class="detailsContent">
-            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter; let i = index" class="contentDivGeneralTarjeta">
+            <div *ngFor="let incident of incidentsInFactWithoutAnswerFilter; let i = index"
+              class="contentDivGeneralTarjeta">
               <button (click)="goToDetails(i)" class="buttonGoDetails"></button>
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
@@ -260,7 +257,7 @@
 <!-- Panel flotante a la derecha -->
 <div *ngIf="panelVisible" class="panelNotifications">
   <p class="titleNotifications">Centro de Notificaciones</p>
-  <app-notifications class="componentNotifications" [notifications]="medicamentsWithOutStock" ></app-notifications>
+  <app-notifications class="componentNotifications" [notifications]="medicamentsWithOutStock"></app-notifications>
   <button class="footer-button" mat-button color="accent" (click)="togglePanel()">Cerrar</button>
 </div>
 <!-- Loader visible mientras isLoading sea true -->
