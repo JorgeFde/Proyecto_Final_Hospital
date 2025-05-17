@@ -23,6 +23,19 @@ export class GetIncidetsServices {
       IncidentsModel[]
     >;
   }
+  /** Devuelve la incidencia para un folio dado, o null si no existe */
+  async getIncidenciaByFolio(folio: string): Promise<IncidentsModel | null> {
+    const controlRef = collection(this.firestore, 'Incidencias');
+    const q = query(controlRef, where('folio', '==', folio));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) {
+      return null;
+    }
+    const docSnap = snapshot.docs[0];
+    const data = docSnap.data() as IncidentsModel;
+    data.id = docSnap.id;
+    return data;
+  }
   // se checa si el folio ingresado pertenece a una incidencia
   async findIncidenciaByFolio(folio: string): Promise<IncidentsModel | null> {
     const controlRef = collection(this.firestore, 'Incidencias');
@@ -83,7 +96,7 @@ export class GetIncidetsServices {
         const diffMs   = now.getTime() - fechaIncidencia.getTime();
         const diffDays = diffMs / (1000 * 60 * 60 * 24);
         //console.log(`Incidencia ${id}: diffDays = ${diffDays}`);
-        if (diffDays >= 3) {
+        if (diffDays >= 20) {
           //console.log('Se actualizan las incidencias');
           await this.updateStatus(id, 'Cerrado sin contestación');
         } else {
