@@ -24,7 +24,6 @@ export class DetailsReportComponent {
   isActiveSendEmail = false;
   statusIncident: number = 2;
   dataIncidencia: IncidentsModel | undefined;
-  isLoader = false;
   folioIncident = '';
   constructor(
     private emailService: EmailService,
@@ -32,6 +31,7 @@ export class DetailsReportComponent {
     private incidentsService: GetIncidetsServices
   ) {}
   ngOnInit() {
+    this.isLoading = true;
     this.route.queryParams.subscribe((params) => {
       const incidenciaString = params['incidencia'];
       let incidencia: IncidentsModel | undefined;
@@ -48,7 +48,6 @@ export class DetailsReportComponent {
       } else {
         this.createErrorAlert('Error al obtener el folio de la incidencia');
       }
-      
     });
   }
   setUI() {
@@ -155,7 +154,6 @@ export class DetailsReportComponent {
     this.getDataIncident();
   }
   getDataIncident() {
-    this.isLoader = true;
     const folio = this.folioIncident;
     if (folio != undefined) {
       this.incidentsService
@@ -164,21 +162,25 @@ export class DetailsReportComponent {
           if (inc) {
             this.dataIncidencia = inc;
             this.setUI();
+            this.isLoading = false;
           } else {
             this.createErrorAlert(
               'No se encontró ninguna incidencia con ese folio.'
             );
+            this.isLoading = false;
           }
         })
         .catch((err) => {
           console.error(err);
           this.createErrorAlert('Error al consultar la incidencia.');
+         this.isLoading = false;
         });
     } else {
       // Error al obtener el folio
       this.createErrorAlert('Error al obtener el folio de la incidencia');
+      this.isLoading = false;
     }
-    this.isLoader = false;
+    console.log("loader:", this.isLoading)
   }
   // Funcion para enviar al formulario
   sendEmail() {

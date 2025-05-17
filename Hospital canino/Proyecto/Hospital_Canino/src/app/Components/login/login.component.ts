@@ -22,7 +22,7 @@ export class LoginComponent {
       }
     });
   }
-  // variables 
+  // variables
   email: string = '';
   password: string = '';
   isLoading: boolean = false;
@@ -31,46 +31,50 @@ export class LoginComponent {
     this.isLoading = true;
     const correoValido = /^[^\s@]+@[^\s@]+\.(com|mx)$/;
     if (!this.email || !this.password) {
-      this.createErrorAlert('Por favor, ingresa tu correo y contraseña.')
+      this.createErrorAlert('Por favor, ingresa tu correo y contraseña.');
       return;
     }
     if (!correoValido.test(this.email)) {
-      this.createErrorAlert('Correo no valido, Ingresa un correo válido (ejemplo@dominio.com)')
+      this.createErrorAlert(
+        'Correo no valido, Ingresa un correo válido (ejemplo@dominio.com)'
+      );
       return;
     }
-    this.authService.login(this.email, this.password)
-    .then(() => {
-      this.createSuccessAlert("Inicio de sesión exitoso")
-    })
-    .catch((error) => {
-      console.log("Error al iniciar sesion: ", error) 
-      this.createErrorAlert('Correo o contraseña incorrectos.');
-    });
-    this.isLoading = false;
+    this.authService
+      .login(this.email, this.password)
+      .then(() => {
+        //this.createSuccessAlert('Inicio de sesión exitoso');
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        console.log('Error al iniciar sesion: ', error);
+        this.createErrorAlert('Correo o contraseña incorrectos.');
+        this.isLoading = false;
+      });
   }
   // alerta de success
-    createSuccessAlert(message: string) {
-      Swal.fire({
-        title: message,
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }).then (() => {
-        this.router.navigate(['/Dashboard']);
-      });
-    }
-    // alerta de error
-    createErrorAlert(message: string) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ocurrio un error...',
-        text: message,
-        confirmButtonColor: "#0e2b53",
-      });
-    }
-    // resent form 
-    resetForm() {
-     this.email = '';
-     this.password = '';
-    }
+  createSuccessAlert(message: string) {
+    Swal.fire({
+      title: message,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      this.router.navigate(['/Dashboard']);
+    });
+  }
+  // alerta de error
+  createErrorAlert(message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Ocurrio un error...',
+      text: message,
+      confirmButtonColor: '#0e2b53',
+    });
+  }
+  // resent form
+  resetForm() {
+    this.email = '';
+    this.password = '';
+  }
 }
