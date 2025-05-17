@@ -47,7 +47,7 @@
         <button class="btn btn-primary" (click)="changeStatusIncident(0)">{{statusIncident == 1 ? 'Finalizar incidencia' : 'Pasar a revisión'}}</button>
         <button class="btn btn-secondary" *ngIf="statusIncident == 1" (click)="changeStatusIncident(1)">Cerrar sin contestación</button>
         <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
-        <button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>
+        <!--<button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>-->
       </div>      
     </div>
 </div>
