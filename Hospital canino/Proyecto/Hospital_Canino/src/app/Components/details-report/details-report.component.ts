@@ -46,7 +46,7 @@ export class DetailsReportComponent {
         this.folioIncident = incidencia?.folio
         this.getDataIncident();
       } else {
-        this.createErrorAlert('Error al obtener el folio de la incidencia');
+        this.createErrorAlert('Error al obtener el folio de la incidencia', true);
       }
     });
   }
@@ -54,7 +54,7 @@ export class DetailsReportComponent {
     if (this.dataIncidencia != undefined) {
       if (this.dataIncidencia.motivo == '') {
         this.createErrorAlert(
-          'Error al obtener los detalles de la incidencia.'
+          'Error al obtener los detalles de la incidencia.', true
         );
       } else {
         if (this.dataIncidencia.status == 'Pendiente') {
@@ -89,7 +89,7 @@ export class DetailsReportComponent {
               }
             });
           } else {
-            this.createErrorAlert('Error con los datos de la incidencia.');
+            this.createErrorAlert('Error con los datos de la incidencia.', true);
           }
         } else if (this.dataIncidencia.status == 'En revision') {
           const id = this.dataIncidencia.id;
@@ -107,7 +107,7 @@ export class DetailsReportComponent {
               }
             });
           } else {
-            this.createErrorAlert('Error con los datos de la incidencia.');
+            this.createErrorAlert('Error con los datos de la incidencia.', true);
           }
         } else if (this.dataIncidencia.status == 'Cerrado sin contestación') {
           const id = this.dataIncidencia.id;
@@ -123,7 +123,7 @@ export class DetailsReportComponent {
               }
             });
           } else {
-            this.createErrorAlert('Error con los datos de la incidencia.');
+            this.createErrorAlert('Error con los datos de la incidencia.', true);
           }
         }
       }
@@ -145,7 +145,7 @@ export class DetailsReportComponent {
               }
             });
         } else {
-          this.createErrorAlert('Error con los datos de la incidencia.');
+          this.createErrorAlert('Error con los datos de la incidencia.', true);
         }
       }
     }
@@ -165,56 +165,104 @@ export class DetailsReportComponent {
             this.isLoading = false;
           } else {
             this.createErrorAlert(
-              'No se encontró ninguna incidencia con ese folio.'
+              'No se encontró ninguna incidencia con ese folio.', true
             );
             this.isLoading = false;
           }
         })
         .catch((err) => {
           console.error(err);
-          this.createErrorAlert('Error al consultar la incidencia.');
+          this.createErrorAlert('Error al consultar la incidencia.', true);
          this.isLoading = false;
         });
     } else {
       // Error al obtener el folio
-      this.createErrorAlert('Error al obtener el folio de la incidencia');
+      this.createErrorAlert('Error al obtener el folio de la incidencia', true);
       this.isLoading = false;
     }
     console.log("loader:", this.isLoading)
   }
+   // Funciones para el estado de incidencias solo aplica para las pendientes
+   parseCustomDate(fechaStr: string): Date {
+    // Mapa para traducir meses abreviados a números
+    const MONTHS_MAP: { [key: string]: number } = {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11,
+    };
+    const [dia, mesAbrev, anio] = fechaStr.split('/');
+    const mes = MONTHS_MAP[mesAbrev];
+    return new Date(Number(anio), mes, Number(dia));
+  }
+  getDaysElapsed(incident: IncidentsModel): number {
+    const fechaInc = this.parseCustomDate(incident.date);
+    const hoy = new Date();
+    // Limpia la hora para que la comparación sea solo por fecha
+    hoy.setHours(0, 0, 0, 0);
+    fechaInc.setHours(0, 0, 0, 0);
+    const diffMs = hoy.getTime() - fechaInc.getTime();
+    return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  }
+  getDotColor(incident: any): string {
+    const dias = this.getDaysElapsed(incident);
+    if (dias <= 5) return 'green';
+    if (dias <= 9) return 'orange';
+    return 'red';
+  }
+  getDiasLabel(incident: any): string {
+    const dias = this.getDaysElapsed(incident);
+    if (dias <= 5) return `${dias} día${dias !== 1 ? 's' : ''}`;
+    if (dias <= 9) return `${dias} día${dias !== 1 ? 's' : ''}`;
+    return `${dias} día${dias !== 1 ? 's' : ''}`;
+  }
+  //
   // Funcion para enviar al formulario
   sendEmail() {
-    this.isLoading = true;
-    if (this.dataIncidencia != undefined) {
-      if (this.dataIncidencia.status == 'En revision') {
-        if (this.dataIncidencia != undefined) {
-          const datosFormulario = {
-            nombre: this.dataIncidencia.name,
-            titulo: this.dataIncidencia.motivo,
-            email: this.dataIncidencia.email,
-            mensaje: this.mensaje,
-          };
-          this.emailService
-            .enviarCorreo(datosFormulario)
-            .then((response) => {
-              this.createSuccessAlertEmail('Correo enviado con éxito!');
-            })
-            .catch((error) => {
-              console.error('Error detallado:', error); // Esto te dirá qué está mal
-              this.createErrorAlert(
-                'Hubo un problema al enviar el correo, contacte a soporte.'
-              );
-            });
+    if (this.mensaje != '') {
+      this.isLoading = true;
+      if (this.dataIncidencia != undefined) {
+        if (this.dataIncidencia.status == 'En revision') {
+          if (this.dataIncidencia != undefined) {
+            const datosFormulario = {
+              nombre: this.dataIncidencia.name,
+              titulo: this.dataIncidencia.motivo,
+              email: this.dataIncidencia.email,
+              mensaje: this.mensaje,
+            };
+            this.emailService
+              .enviarCorreo(datosFormulario)
+              .then((response) => {
+                this.createSuccessAlertEmail('Correo enviado con éxito!');
+              })
+              .catch((error) => {
+                console.error('Error detallado:', error); // Esto te dirá qué está mal
+                this.createErrorAlert(
+                  'Hubo un problema al enviar el correo, contacte a soporte.', true
+                );
+              });
+          }
+        } else {
+          this.createErrorAlert(
+            'Debes de pasar primero la incidencia a revision para poder mandar el correo.', false
+          );
         }
       } else {
-        this.createErrorAlert(
-          'Debes de pasar primero la incidencia a revision para poder mandar el correo.'
-        );
+        this.createErrorAlert('Error al obtener el detalle de la incidencia.', true);
       }
+      this.isLoading = false;
     } else {
-      this.createErrorAlert('Error al obtener el detalle de la incidencia.');
+      this.createErrorAlert('Debes de agregar el mensaje para enviar el correo.', false);
     }
-    this.isLoading = false;
+    
   }
   tapSeendEmail() {
     this.isActiveSendEmail = !this.isActiveSendEmail;
@@ -230,15 +278,15 @@ export class DetailsReportComponent {
             },
           });
         } else {
-          this.createErrorAlert('Error al obtener el folio.');
+          this.createErrorAlert('Error al obtener el folio.', true);
         }
       } else {
         this.createErrorAlert(
-          'Debes de pasar primero la incidencia a revision para poder inciar el chat.'
+          'Debes de pasar primero la incidencia a revision para poder inciar el chat.', false 
         );
       }
     } else {
-      this.createErrorAlert('Error al obtener el detalle de la incidencia.');
+      this.createErrorAlert('Error al obtener el detalle de la incidencia.', true);
     }
   }
   // alerta de success
@@ -261,9 +309,9 @@ export class DetailsReportComponent {
     });
   }
   // alerta de error
-  createErrorAlert(message: string) {
+  createErrorAlert(message: string, isTypeError: boolean) {
     Swal.fire({
-      icon: 'error',
+      icon: isTypeError ? 'error' : 'warning',
       title: 'Ocurrio un error...',
       text: message,
       confirmButtonColor: '#0e2b53',

@@ -15,13 +15,14 @@
         <span class="notification-count" *ngIf="medicamentsWithOutStock.length > 0"> {{ medicamentsWithOutStock.length >
           9 ? '+9' : medicamentsWithOutStock.length }}</span>
       </button>
+      <button class="insidents" (click)="toggMedicaments()">Mis Medicamentos</button>
       <button class="insidents" (click)="toggIncident()">Mis Incidencias</button>
       <button class="logOUT" (click)="toggleLogOut()">Cerrar sesion</button>
     </mat-toolbar>
   </div>
   <div class="contentIncidencias">
     <!-- ACTIVO -->
-    <div [style.flex]="isOpen === 'revision' ? '0.86' : '0 0 auto'" class="bugsActive">
+    <div [style.flex]="isOpen === 'revision' ? '0.80' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
         <span>Incidencias en revisión</span>
         <svg class="arrow" *ngIf="isOpen === 'revision'" xmlns="http://www.w3.org/2000/svg" height="40"
@@ -79,7 +80,7 @@
     </div>
     <!--Termina Activos-->
     <!-- PENDIENTES -->
-    <div [style.flex]="isOpen === 'pendientes' ? '0.86' : '0 0 auto'" class="bugsActive">
+    <div [style.flex]="isOpen === 'pendientes' ? '0.80' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
         <span>Incidencias pendientes</span>
         <svg class="arrow" *ngIf="isOpen === 'pendientes'" xmlns="http://www.w3.org/2000/svg" height="40"
@@ -122,6 +123,15 @@
               <div class="tarjeta-incidencia">
                 <h2>Incidencia: {{incident.motivo}}</h2>
                 <div class="info"><strong>Status: </strong>{{incident.status}}</div>
+                <div class="info">
+                  <strong>Incidencia creada hace:</strong>
+                  <div style="margin: 10px 0; display: flex;">
+                    <div [style.backgroundColor]="getDotColor(incident)" style="height: 20px; width: 20px; border-radius: 50%;"></div>
+                    <label style="margin-left: 10px;">
+                      {{ getDiasLabel(incident) }}
+                    </label>
+                  </div>
+                </div>
                 <div class="info"><strong>Folio: </strong>{{incident.folio}}</div>
                 <div class="info"><strong>Prioridad: </strong>{{incident.prioridad}}</div>
                 <div class="info"><strong>Fecha: </strong>{{incident.date}}</div>
@@ -139,7 +149,7 @@
     </div>
     <!--Termina Pendientes-->
     <!-- Cerrados -->
-    <div [style.flex]="isOpen === 'cerrados' ? '0.86' : '0 0 auto'" class="bugsActive">
+    <div [style.flex]="isOpen === 'cerrados' ? '0.80' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
         <span>Incidencias cerrados</span>
         <svg class="arrow" *ngIf="isOpen === 'cerrados'" xmlns="http://www.w3.org/2000/svg" height="40"
@@ -195,7 +205,7 @@
     </div>
     <!--Termina Cerrados-->
     <!-- Cerrados sin contestacion -->
-    <div [style.flex]="isOpen === 'cerradosSinContestacion' ? '0.86' : '0 0 auto'" class="bugsActive">
+    <div [style.flex]="isOpen === 'cerradosSinContestacion' ? '0.80' : '0 0 auto'" class="bugsActive">
       <div class="headerBugsActive">
         <span>Incidencias cerrados sin contestación</span>
         <svg class="arrow" *ngIf="isOpen === 'cerradosSinContestacion'" xmlns="http://www.w3.org/2000/svg" height="40"

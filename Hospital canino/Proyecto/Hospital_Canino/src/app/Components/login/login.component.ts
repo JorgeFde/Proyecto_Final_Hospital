@@ -31,12 +31,12 @@ export class LoginComponent {
     this.isLoading = true;
     const correoValido = /^[^\s@]+@[^\s@]+\.(com|mx)$/;
     if (!this.email || !this.password) {
-      this.createErrorAlert('Por favor, ingresa tu correo y contraseña.');
+      this.createErrorAlert('Por favor, ingresa tu correo y contraseña.', false);
       return;
     }
     if (!correoValido.test(this.email)) {
       this.createErrorAlert(
-        'Correo no valido, Ingresa un correo válido (ejemplo@dominio.com)'
+        'Correo no valido, Ingresa un correo válido (ejemplo@dominio.com)', true
       );
       return;
     }
@@ -48,7 +48,7 @@ export class LoginComponent {
       })
       .catch((error) => {
         console.log('Error al iniciar sesion: ', error);
-        this.createErrorAlert('Correo o contraseña incorrectos.');
+        this.createErrorAlert('Correo o contraseña incorrectos.', true);
         this.isLoading = false;
       });
   }
@@ -64,9 +64,9 @@ export class LoginComponent {
     });
   }
   // alerta de error
-  createErrorAlert(message: string) {
+  createErrorAlert(message: string, isTypeError: boolean) {
     Swal.fire({
-      icon: 'error',
+      icon: isTypeError ? 'error' : 'warning',
       title: 'Ocurrio un error...',
       text: message,
       confirmButtonColor: '#0e2b53',

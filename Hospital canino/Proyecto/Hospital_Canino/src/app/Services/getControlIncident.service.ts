@@ -22,19 +22,16 @@ export class GetControlIncidenciasService {
     const controlRef = collection(this.firestore, 'ControlIncidencias');
     return collectionData(controlRef, { idField: 'id' }) as Observable<ControlIncidenciaModel[]>;
   }
-
   // Agregar una nueva incidencia
   async addControlIncidencia(data: ControlIncidenciaModel): Promise<void> {
     const controlRef = collection(this.firestore, 'ControlIncidencias');
     await addDoc(controlRef, data);
   }
-
   // Actualizar la prioridad de una incidencia
   async updatePrioridad(id: string, nuevaPrioridad: string): Promise<void> {
     const docRef = doc(this.firestore, 'ControlIncidencias', id);
     await updateDoc(docRef, { prioridad: nuevaPrioridad });
   }
-
   // Eliminar una incidencia
   async eliminarIncidencia(id: string): Promise<void> {
     const docRef = doc(this.firestore, 'ControlIncidencias', id);
