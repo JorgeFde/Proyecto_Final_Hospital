@@ -115,15 +115,61 @@ export class DashboardComponent {
   }
   // Obtenemos todas las incidencias
   getIncidents() {
-    console.log("se obtienen las incidencias");
-      this.incidentsService.checkAndUpdateStatuses().then(() => {
-      this.getAllInicidets();
-    }).catch(error => {
-      console.error('Error al actualizar incidencias:', error);
-      this.createErrorAlert("Error al actualizar incidencias");
-      this.getAllInicidets();
-    });
+    console.log('se obtienen las incidencias');
+    this.incidentsService
+      .checkAndUpdateStatuses()
+      .then(() => {
+        this.getAllInicidets();
+      })
+      .catch((error) => {
+        console.error('Error al actualizar incidencias:', error);
+        this.createErrorAlert('Error al actualizar incidencias');
+        this.getAllInicidets();
+      });
   }
+  // Funciones para el estado de incidencias solo aplica para las pendientes
+  parseCustomDate(fechaStr: string): Date {
+    // Mapa para traducir meses abreviados a números
+    const MONTHS_MAP: { [key: string]: number } = {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11,
+    };
+    const [dia, mesAbrev, anio] = fechaStr.split('/');
+    const mes = MONTHS_MAP[mesAbrev];
+    return new Date(Number(anio), mes, Number(dia));
+  }
+  getDaysElapsed(incident: IncidentsModel): number {
+    const fechaInc = this.parseCustomDate(incident.date);
+    const hoy = new Date();
+    // Limpia la hora para que la comparación sea solo por fecha
+    hoy.setHours(0, 0, 0, 0);
+    fechaInc.setHours(0, 0, 0, 0);
+    const diffMs = hoy.getTime() - fechaInc.getTime();
+    return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  }
+  getDotColor(incident: any): string {
+    const dias = this.getDaysElapsed(incident);
+    if (dias <= 5) return 'green';
+    if (dias <= 9) return 'orange';
+    return 'red';
+  }
+  getDiasLabel(incident: any): string {
+    const dias = this.getDaysElapsed(incident);
+    if (dias <= 5) return `${dias} día${dias !== 1 ? 's' : ''}`;
+    if (dias <= 9) return `${dias} día${dias !== 1 ? 's' : ''}`;
+    return `${dias} día${dias !== 1 ? 's' : ''}`;
+  }
+  //
   getAllInicidets() {
     if (this.hasLoadedIncidents) return;
     this.hasLoadedIncidents = true;
@@ -409,60 +455,74 @@ export class DashboardComponent {
         break;
     }
     if (dataSelect == undefined) {
-      this.createErrorAlert("Error al obtener el detalle de la incidencia.")
+      this.createErrorAlert('Error al obtener el detalle de la incidencia.');
     } else {
       this.router.navigate(['DetailsReport'], {
         queryParams: {
-          incidencia: JSON.stringify(dataSelect)
-        }
+          incidencia: JSON.stringify(dataSelect),
+        },
       });
     }
   }
   toggIncident() {
     this.router.navigate(['ReasonsForIncidentList']);
   }
+  toggMedicaments() {
+    // aqui va la navegacion de los medicamentos
+  }
   tapGenerateReport() {
     if (this.filters.fecha != '' && this.filters.tipo != '') {
-      this.isActivateFilter = true
+      this.isActivateFilter = true;
     } else if (this.filters.fecha != '') {
-      this.isActivateFilter = true
+      this.isActivateFilter = true;
     } else if (this.filters.tipo != '') {
-      this.isActivateFilter = true 
+      this.isActivateFilter = true;
     } else {
-      this.isActivateFilter = false
+      this.isActivateFilter = false;
     }
     switch (this.isOpen) {
       case 'revision':
-       if (this.isActivateFilter) {
-        this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
-       } else {
-        this.exportarExcel(this.incidentsInRevision, 'EnRevisión');
-       }
+        if (this.isActivateFilter) {
+          this.createSuccessAlert(
+            '¿Quieres generar el excel con el filtro o sin filtro?'
+          );
+        } else {
+          this.exportarExcel(this.incidentsInRevision, 'EnRevisión');
+        }
         break;
       case 'pendientes':
         if (this.isActivateFilter) {
-          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
-         } else {
+          this.createSuccessAlert(
+            '¿Quieres generar el excel con el filtro o sin filtro?'
+          );
+        } else {
           this.exportarExcel(this.incidentsInPending, 'Pendientes');
-         }
+        }
         break;
       case 'cerrados':
         if (this.isActivateFilter) {
-          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
-         } else {
+          this.createSuccessAlert(
+            '¿Quieres generar el excel con el filtro o sin filtro?'
+          );
+        } else {
           this.exportarExcel(this.incidentsInDone, 'Cerrados');
-         }
+        }
         break;
       case 'cerradosSinContestacion':
         if (this.isActivateFilter) {
-          this.createSuccessAlert('¿Quieres generar el excel con el filtro o sin filtro?')
-         } else {
-          this.exportarExcel(this.incidentsInFactWithoutAnswer, 'CerradosSinContestación');
-         }
+          this.createSuccessAlert(
+            '¿Quieres generar el excel con el filtro o sin filtro?'
+          );
+        } else {
+          this.exportarExcel(
+            this.incidentsInFactWithoutAnswer,
+            'CerradosSinContestación'
+          );
+        }
         break;
     }
   }
-  createSuccessAlert(message: string, ) {
+  createSuccessAlert(message: string) {
     Swal.fire({
       icon: 'info',
       html: message,
@@ -471,10 +531,12 @@ export class DashboardComponent {
       confirmButtonColor: '#0e2b53',
       cancelButtonColor: '#0e2b53',
       focusConfirm: false,
-      confirmButtonText: this.isActivateFilter ? 'Con filtro' : 'Generar reporte',
+      confirmButtonText: this.isActivateFilter
+        ? 'Con filtro'
+        : 'Generar reporte',
       confirmButtonAriaLabel: 'Thumbs up, great!',
       cancelButtonText: 'Sin filtro',
-      cancelButtonAriaLabel: 'Thumbs down'
+      cancelButtonAriaLabel: 'Thumbs down',
     }).then((result) => {
       if (result.isConfirmed) {
         switch (this.isOpen) {
@@ -488,7 +550,10 @@ export class DashboardComponent {
             this.exportarExcel(this.incidentsInDoneFilter, 'Cerrados');
             break;
           case 'cerradosSinContestacion':
-            this.exportarExcel(this.incidentsInFactWithoutAnswerFilter, 'CerradosSinContestación');
+            this.exportarExcel(
+              this.incidentsInFactWithoutAnswerFilter,
+              'CerradosSinContestación'
+            );
             break;
         }
       } else if (result.isDenied) {
@@ -503,7 +568,10 @@ export class DashboardComponent {
             this.exportarExcel(this.incidentsInDone, 'Cerrados');
             break;
           case 'cerradosSinContestacion':
-            this.exportarExcel(this.incidentsInFactWithoutAnswer, 'CerradosSinContestación');
+            this.exportarExcel(
+              this.incidentsInFactWithoutAnswer,
+              'CerradosSinContestación'
+            );
             break;
         }
       }
@@ -512,7 +580,7 @@ export class DashboardComponent {
   exportarExcel(data: IncidentsModel[], titleHojaExcel: string): void {
     if (!data || data.length === 0) {
       console.warn('No hay datos para exportar');
-      this.createErrorAlert('No hay datos para exportar')
+      this.createErrorAlert('No hay datos para exportar');
       return;
     }
     const datosSinCreatedAt = data.map(({ createdAt, ...resto }) => resto);
@@ -531,14 +599,14 @@ export class DashboardComponent {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
     });
     FileSaver.saveAs(blob, nombreArchivo);
-  }  
+  }
   // alerta de error
-    createErrorAlert(message: string) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ocurrio un error...',
-        text: message,
-        confirmButtonColor: "#0e2b53",
-      });
-    }
+  createErrorAlert(message: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Ocurrio un error...',
+      text: message,
+      confirmButtonColor: '#0e2b53',
+    });
+  }
 }

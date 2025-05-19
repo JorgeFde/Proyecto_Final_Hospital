@@ -231,7 +231,6 @@ select {
   justify-content: center;
   z-index: 1000;
 }
-
 .spinner {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #223e66;

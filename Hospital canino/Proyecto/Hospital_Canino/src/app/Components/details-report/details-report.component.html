@@ -1,55 +1,69 @@
 <div>
-    <!--Nav Bar-->
-    <div class="containerNavBar">
-      <mat-toolbar class="matToolbarNav">
-        <img src="assets/logo.png" alt="Logo" class="logoNavBar">
-        <span class="titleHome">Detalles de incidencia</span>
-        <span class="options-spacer"></span>
-      </mat-toolbar>
-    </div>
-   <!--Details contaner-->
-    <div class="details-container">
-      <div class="section">
-        <h2>Motivo de la Incidencia</h2>
-        <p>{{this.dataIncidencia?.motivo}}</p>
-      </div>
-      <div class="section">
-        <h2>Descripción de la Incidencia</h2>
-        <p>{{this.dataIncidencia?.description}}</p>
-      </div>
-      <div class="section">
-        <h2>Datos del Usuario</h2>
-        <p>Nombre: {{this.dataIncidencia?.name}}</p>
-        <p>Folio: {{this.dataIncidencia?.folio}}</p>
-        <p>Fecha: {{this.dataIncidencia?.date}}</p>
-        <p>Hora: {{this.dataIncidencia?.time}}</p>
-      </div>
-      <div class="section">
-        <h2>Datos de Contacto</h2>
-        <p>Número de Teléfono: {{this.dataIncidencia?.phoneNumber}}</p>
-        <p>Correo: {{this.dataIncidencia?.email}}</p>
-      </div>
-      <!--Container email send-->
-      <div  class="section" *ngIf="isActiveSendEmail">
-        <h2>Enviar correo</h2>
-        <div class="formulario">
-          <form (ngSubmit)="sendEmail()">
-            <div class="form-group">
-              <label for="mensaje">Mensaje</label>
-              <textarea id="mensaje" [(ngModel)]="mensaje" name="mensaje" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-submit">Enviar</button>
-            <button class="btn btn-submit" (click)="tapSeendEmail()">Cancelar</button>
-          </form>
+  <!--Nav Bar-->
+  <div class="containerNavBar">
+    <mat-toolbar class="matToolbarNav">
+      <img src="assets/logo.png" alt="Logo" class="logoNavBar">
+      <span class="titleHome">Detalles de incidencia</span>
+      <span class="options-spacer"></span>
+    </mat-toolbar>
+  </div>
+  <!--Details contaner-->
+  <div class="details-container">
+    <div class="section">
+      <h2>Motivo de la Incidencia</h2>
+      <p>{{this.dataIncidencia?.motivo}}</p>
+      <!--Estado de la incidencia-->
+      <div *ngIf="this.dataIncidencia?.status == 'Pendiente'">
+        <strong>Incidencia creada hace:</strong>
+        <div style="margin: 10px 0; display: flex;">
+          <div [style.backgroundColor]="getDotColor(this.dataIncidencia)"
+            style="height: 20px; width: 20px; border-radius: 50%;">
+          </div>
+          <label style="margin-left: 10px;">
+            {{ getDiasLabel(this.dataIncidencia)}}
+          </label>
         </div>
       </div>
-      <div class="button-bar" *ngIf="statusIncident != 2">
-        <button class="btn btn-primary" (click)="changeStatusIncident(0)">{{statusIncident == 1 ? 'Finalizar incidencia' : 'Pasar a revisión'}}</button>
-        <button class="btn btn-secondary" *ngIf="statusIncident == 1" (click)="changeStatusIncident(1)">Cerrar sin contestación</button>
-        <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
-        <button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>
-      </div>      
     </div>
+    <div class="section">
+      <h2>Descripción de la Incidencia</h2>
+      <p>{{this.dataIncidencia?.description}}</p>
+    </div>
+    <div class="section">
+      <h2>Datos del Usuario</h2>
+      <p>Nombre: {{this.dataIncidencia?.name}}</p>
+      <p>Folio: {{this.dataIncidencia?.folio}}</p>
+      <p>Fecha: {{this.dataIncidencia?.date}}</p>
+      <p>Hora: {{this.dataIncidencia?.time}}</p>
+    </div>
+    <div class="section">
+      <h2>Datos de Contacto</h2>
+      <p>Número de Teléfono: {{this.dataIncidencia?.phoneNumber}}</p>
+      <p>Correo: {{this.dataIncidencia?.email}}</p>
+    </div>
+    <!--Container email send-->
+    <div class="section" *ngIf="isActiveSendEmail">
+      <h2>Enviar correo</h2>
+      <div class="formulario">
+        <form (ngSubmit)="sendEmail()">
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" [(ngModel)]="mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-submit">Enviar</button>
+          <button class="btn btn-submit" (click)="tapSeendEmail()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <div class="button-bar" *ngIf="statusIncident != 2">
+      <button class="btn btn-primary" (click)="changeStatusIncident(0)">{{statusIncident == 1 ? 'Finalizar incidencia' :
+        'Pasar a revisión'}}</button>
+      <button class="btn btn-secondary" *ngIf="statusIncident == 1" (click)="changeStatusIncident(1)">Cerrar sin
+        contestación</button>
+      <button class="btn btn-email" *ngIf="!isActiveSendEmail" (click)='tapSeendEmail()'>Enviar correo</button>
+      <button class="btn btn-chat" (click)='tapInitChat()'>Iniciar chat</button>
+    </div>
+  </div>
 </div>
 <!-- Loader visible mientras isLoading sea true -->
 <div *ngIf="isLoading" class="loader-overlay">

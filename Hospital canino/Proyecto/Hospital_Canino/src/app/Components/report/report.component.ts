@@ -118,12 +118,12 @@ export class ReportComponent {
         const emailRegex = /^[^\s@]+@[^\s@]+\.(com|mx)$/;
         const phoneRegex = /^\d{10}$/;
         if (!emailRegex.test(email)) {
-          this.createErrorAlert('Correo no válido');
+          this.createErrorAlert('Correo no válido', false);
           this.isLoading = false;
           return;
         }
         if (!phoneRegex.test(phone)) {
-          this.createErrorAlert('Teléfono no válido');
+          this.createErrorAlert('Teléfono no válido', false);
           this.isLoading = false;
           return;
         }
@@ -138,7 +138,7 @@ export class ReportComponent {
           );
           const querySnapshot = await getDocs(q);
           if (!querySnapshot.empty) {
-            this.createErrorAlert('Ya existe un reporte con esos datos.');
+            this.createErrorAlert('Ya existe un reporte con esos datos.', false);
             this.isLoading = false;
             return;
           }
@@ -165,14 +165,14 @@ export class ReportComponent {
         } catch (error) {
           console.error('Error al enviar reporte:', error);
           this.createErrorAlert(
-            'No se pudo enviar el reporte. Intenta nuevamente.'
+            'No se pudo enviar el reporte. Intenta nuevamente.', true
           );
         }
         this.isLoading = false;
       } else {
         // Estan vacios algunos campos
         this.createErrorAlert(
-          'No se pueden dejar vacios los campos ya que son requeridos.'
+          'No se pueden dejar vacios los campos ya que son requeridos.', false
         );
         this.isLoading = false;
       }
@@ -190,9 +190,9 @@ export class ReportComponent {
     });
   }
   // alerta de error
-  createErrorAlert(message: string) {
+  createErrorAlert(message: string, isTypeError: boolean) {
     Swal.fire({
-      icon: 'error',
+      icon: isTypeError ? 'error' : 'warning',
       title: 'Ocurrio un error...',
       text: message,
       confirmButtonColor: '#0e2b53',
@@ -220,19 +220,19 @@ export class ReportComponent {
           });
         } else if (incidencia.status === 'Cerrado') {
           this.createErrorAlert(
-            'Tu incidencia ya fue cerrada, para activar el chat debes de generar una nueva incidencia y esperar a que alguno de nuestro colaboradores se ponga en contacto.'
+            'Tu incidencia ya fue cerrada, para activar el chat debes de generar una nueva incidencia y esperar a que alguno de nuestro colaboradores se ponga en contacto.', false
           );
           this.isLoading = false;
         } else {
           // la incidencia esta en pediente
           this.createErrorAlert(
-            'Tu incidencia fue creada correctamente por favor espera a que uno de nuestro colaboradores se ponga en contanto contigo por correo o intenta mas tarde con tu numero de folio.'
+            'Tu incidencia fue creada correctamente por favor espera a que uno de nuestro colaboradores se ponga en contanto contigo por correo o intenta mas tarde con tu numero de folio.', false
           );
           this.isLoading = false;
         }
       } else {
         this.createErrorAlert(
-          'Debes de ingresar un folio para iniciar el chat'
+          'Debes de ingresar un folio para iniciar el chat', false
         );
         this.isLoading = false;
       }
