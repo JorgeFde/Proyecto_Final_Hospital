@@ -1,31 +1,41 @@
 html, body {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* Evita scroll general */
+  overflow-x: hidden; /* evita scroll lateral */
+  overflow-y: auto;   /* permite scroll vertical */
 }
+
 /* Container principal */
 .containerPrimary {
   width: 100%;
-  height: 100%;
-  overflow-y: hidden;
+  min-height: 100vh; /* Mejor para pantallas móviles */
+  overflow-y: auto;
 }
-/* Nav Bar*/
+
+/* Nav Bar */
 .containerNavBar {
   width: 100%;
   height: 90px;
+  display: flex;         /* NUEVO */
+  flex-wrap: wrap;       /* NUEVO */
+  align-items: center;   /* NUEVO */
+  justify-content: space-between; /* NUEVO */
   overflow-x: auto;
 }
+
 .matToolbarNav {
   background-color: white;
   padding: 0;
   margin: 0;
   height: 100%;
 }
+
 .logoNavBar {
   width: 100px;
   height: 100%;
   object-fit: contain;
 }
+
 .titleHome {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -35,10 +45,11 @@ html, body {
   user-select: none;
   cursor: default;
 }
-/* options-spacer es para la nav bar */
+
 .options-spacer {
   flex: 1 1 auto;
 }
+
 .buttonsOptions {
   color: #0e2b53;
   font-weight: bold;
@@ -50,7 +61,9 @@ html, body {
   cursor: pointer;
   user-select: none;
   background-color: transparent;
+  white-space: nowrap; /* NUEVO */
 }
+
 .selectorMotivo {
   background-color: #ffffff;
   color: #0e2b53;
@@ -61,25 +74,28 @@ html, body {
   width: 270px;
   appearance: none;
   cursor: pointer;
-  /* Añadir espacio para la flecha */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%230e2b53' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 15px center;
   background-size: 16px;
   padding-right: 40px;
 }
+
 .buttonsOptions:hover {
-  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+  transform: scale(1.1);
 }
+
 .buttonNotification {
   background-color: transparent;
   border: none;
   cursor: pointer;
   position: relative;
 }
+
 .buttonNotification:hover {
   transform: scale(1.3);
 }
+
 .notification-count {
   position: absolute;
   top: 0px;
@@ -89,49 +105,46 @@ html, body {
   font-size: 12px;
   font-weight: bold;
   border-radius: 50%;
-  min-width: 18px;       /* Asegura un ancho mínimo */
-  height: 18px;           /* Altura fija para círculo */
-  display: flex;          /* Centra el texto */
+  min-width: 18px;
+  height: 18px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;         /* Ligero padding horizontal */
+  padding: 0 4px;
   line-height: 1;
-  box-sizing: border-box; /* Incluye padding en el tamaño */
+  box-sizing: border-box;
 }
+
 .contentIncidencias {
-  height: 100vh;
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* CAMBIADO */
+}
+
+.bugsActive, .bugsDone {
+  width: 99.4%;
+  display: flex;
+  flex-direction: column;
+  transition: flex 0.3s;
+  background-color: #0e2b53;
+  margin-left: 5px;
+  border-radius: 10px;
   overflow-y: hidden;
 }
-/*Bugs active*/
+
 .bugsActive {
-  width: 99.4%;
-  display: flex;
-  flex-direction: column;
-  transition: flex 0.3s;
-  background-color: #0e2b53;
-  margin-left: 5px;
   margin-bottom: 3px;
-  border-radius: 10px;
-  overflow-y: hidden;
 }
-.bugsDone {
-  width: 99.4%;
-  display: flex;
-  flex-direction: column;
-  transition: flex 0.3s;
-  background-color: #0e2b53;
-  margin-left: 5px;
-  border-radius: 10px;
-}
+
 .headerBugsActive {
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .buttonBugActive {
   position: absolute;
   width: 100%;
@@ -140,29 +153,34 @@ html, body {
   cursor: pointer;
   background-color: transparent;
 }
+
 .contentBugsActive {
   background-color: transparent;
   flex: 1;
-  overflow: hidden; /* evita scroll externo */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
+
 .detailsContent {
   width: 100%;
   height: 100%;
   overflow-y: auto;
   background-color: white;
 }
+
 .arrow {
   margin-right: 20px;
 }
+
 span {
   margin-left: 20px;
   font-weight: bold;
   font-size: larger;
   color: white;
 }
-/*Spinner*/
+
+/* Spinner */
 .loader-overlay {
   position: fixed;
   top: 0;
@@ -175,6 +193,7 @@ span {
   justify-content: center;
   z-index: 1000;
 }
+
 .spinner {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #223e66;
@@ -183,36 +202,28 @@ span {
   height: 60px;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-/*Animacion de campana*/
+
+/* Animación de campana */
 @keyframes bell-shake {
-  0% {
-    transform: rotate(0);
-  }
-  20% {
-    transform: rotate(-15deg);
-  }
-  40% {
-    transform: rotate(10deg);
-  }
-  60% {
-    transform: rotate(-10deg);
-  }
-  80% {
-    transform: rotate(5deg);
-  }
-  100% {
-    transform: rotate(0);
-  }
+  0% { transform: rotate(0); }
+  20% { transform: rotate(-15deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-10deg); }
+  80% { transform: rotate(5deg); }
+  100% { transform: rotate(0); }
 }
+
 .bell-shaking {
   animation: bell-shake 0.8s ease-in-out infinite;
   transform-origin: top center;
 }
-/*Panel de notificaciones*/
+
+/* Panel de notificaciones */
 .panelNotifications {
   position: fixed;
   top: 0;
@@ -224,6 +235,7 @@ span {
   z-index: 1000;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
 }
+
 .footer-button {
   position: absolute;
   width: 97%;
@@ -238,35 +250,23 @@ span {
   left: 10px;
   cursor: pointer;
 }
+
 .titleNotifications {
   font-weight: bold;
   font-size: larger;
   margin: 10px;
 }
+
 .footer-button:hover {
   background-color: red;
 }
+
 .componentNotifications {
   width: 100%;
   height: 100%;
 }
-/*Cierre de sesion*/
-.logOUT {
-  background-color: red;
-  color: white;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-  margin-right: 20px;
-  margin-left: 10px;
-  font-weight: bolder;
-  font-size: 70%;
-  cursor: pointer;
-}
-.logOUT:hover {
-  transform: scale(1.2);
-}
-.insidents {
+
+.logOUT, .insidents {
   background-color: transparent;
   color: #0e2b53;
   height: 40px;
@@ -278,17 +278,26 @@ span {
   font-size: 70%;
   cursor: pointer;
 }
+
+.logOUT {
+  background-color: red;
+  color: white;
+}
+
+.logOUT:hover,
 .insidents:hover {
   transform: scale(1.2);
 }
-/*Filtro de busqueda */
+
+/* Filtro de búsqueda */
 .filtro-barra {
   background-color: #0e2b53;
-  height: 60px;
+  height: auto;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 20px;
   color: white;
   gap: 15px;
   font-family: Arial, sans-serif;
@@ -298,9 +307,11 @@ span {
   z-index: 10;
   border-bottom: 1px solid #fff5;
 }
+
 .filtro-barra label {
   font-weight: bold;
 }
+
 .filtro-barra input,
 .filtro-barra select,
 .filtro-barra button {
@@ -309,11 +320,13 @@ span {
   border: none;
   font-size: 14px;
 }
+
 .filtro-barra input,
 .filtro-barra select {
   min-width: 140px;
-  cursor: pointer;  
+  cursor: pointer;
 }
+
 .filtro-barra button {
   background-color: transparent;
   color: white;
@@ -322,10 +335,12 @@ span {
   font-weight: bold;
   border: none;
 }
+
 .filtro-barra button:hover {
   background-color: red;
 }
-/*Tarjetas de incidencias*/
+
+/* Tarjetas de incidencias */
 .tarjeta-incidencia {
   background-color: white;
   width: 96%;
@@ -335,22 +350,27 @@ span {
   border-radius: 20px;
   font-family: Arial, sans-serif;
   box-shadow: 0 4px 10px rgba(7, 52, 149, 0.348);
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
 }
+
 .tarjeta-incidencia h2 {
   margin-top: 0;
   font-size: 20px;
   border-bottom: 1px solid #0e2b53;
   padding-bottom: 5px;
 }
+
 .info {
   margin-bottom: 10px;
 }
+
 .info strong {
   display: inline-block;
   width: 120px;
   font-weight: bold;
 }
+
 .descripcion {
   background-color: #1449923d;
   padding: 10px;
@@ -358,104 +378,114 @@ span {
   margin-top: 15px;
   white-space: pre-line;
 }
+
 .contentDivGeneralTarjeta {
-  width: 99%; position: relative; margin: 10px auto;
+  width: 99%;
+  position: relative;
+  margin: 10px auto;
 }
+
 .buttonGoDetails {
-  position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
-/*Responsivo*/
+
+/* Media queries responsivas */
 @media (max-width: 1024px) {
   .panelNotifications {
     width: 60%;
   }
+
   .buttonsOptions {
     width: 100px;
     font-size: small;
   }
-  .filtro-barra {
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-    font-size: 13px;
-  }
-  .filtro-barra input,
-  .filtro-barra select {
-    min-width: 100px;
-  }
+
   .tarjeta-incidencia {
     width: 98%;
     padding: 15px;
   }
+
   .info strong {
     width: 100px;
   }
 }
+
 @media (max-width: 768px) {
-  .containerNavBar {
-    height: auto;
-    padding: 10px 0;
-    flex-wrap: wrap;
-  }
   .logoNavBar {
     width: 80px;
   }
+
   .titleHome {
     font-size: medium;
     margin-left: 10px;
   }
+
   .buttonsOptions {
-    width: auto;
     font-size: 13px;
     padding: 8px;
+    min-width: 90px;
   }
+
   .panelNotifications {
     width: 80%;
   }
-  .logOUT,
-  .insidents {
+
+  .logOUT, .insidents {
     font-size: 60%;
     height: 35px;
     margin: 5px;
   }
-  .filtro-barra {
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 13px;
-  }
+
   .tarjeta-incidencia h2 {
     font-size: 18px;
   }
+
   .info strong {
     width: auto;
   }
+
+  .selectorMotivo {
+    width: 100%;
+  }
 }
+
 @media (max-width: 480px) {
-  .buttonsOptions,
-  .logOUT,
-  .insidents {
+  .buttonsOptions, .logOUT, .insidents {
     font-size: 11px;
     height: auto;
     width: auto;
     padding: 5px;
     margin: 2px;
   }
+
   .logoNavBar {
     width: 60px;
   }
+
   .titleHome {
     font-size: 14px;
   }
+
   .panelNotifications {
     width: 100%;
   }
+
   .tarjeta-incidencia {
     width: 95%;
     padding: 10px;
   }
+
   .descripcion {
     font-size: 13px;
   }
+
   .footer-button {
     font-size: 80%;
     height: 28px;
