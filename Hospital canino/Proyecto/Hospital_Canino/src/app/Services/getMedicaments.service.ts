@@ -28,7 +28,7 @@ export class GetMedicamentsService {
     await addDoc(controlRef, data);
   }
   // Actualizar medicamento
-  async updateMedicamento(id: string, newStock: string): Promise<void> {
+  async updateMedicamento(id: string, newStock: number): Promise<void> {
     const docRef = doc(this.firestore, 'Medicamentos', id);
     await updateDoc(docRef, { stock: newStock });
   }

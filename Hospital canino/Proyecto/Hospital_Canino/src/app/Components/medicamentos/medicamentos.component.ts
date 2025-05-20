@@ -29,7 +29,11 @@ constructor(
   private destroy$ = new Subject<void>();
   medicamentos: MedicamentsModel[] = [];
   isLoading: boolean = false;
-   newMedicamento: MedicamentsModel = { stock: 0};
+   newMedicamento: MedicamentsModel = {
+     stock: 0,
+     name: '',
+     descripcion: ''
+   };
   ngOnInit() {
     this.isLoading = true;
     this.getMedicamentos();
@@ -56,7 +60,7 @@ constructor(
     this.isLoading = true;
     if (this.newMedicamento.stock != 0 ) {
       try {
-        await this.medicamentosService.addControlIncidencia(this.newMedicamento);
+        await this.medicamentosService.addControlMedicamento(this.newMedicamento);
         this.createSuccessAlert('Éxito, Incidencia agregada correctamente');
         this.newMedicamento.name = ''
         this.newMedicamento.stock = 0
@@ -75,29 +79,28 @@ constructor(
     const medicamento = this.medicamentos[index];
     const id = medicamento.id;
     if (id !=  undefined) {
-      const nuevaPrioridad = medicamento.stock;
-      if (!nuevaPrioridad || medicamento === 0) {
-        this.createErrorAlert('Selecciona una prioridad válida.');
+      const nuevoStock: number = medicamento.stock;
+      if (nuevoStock === 0) {
+        this.createErrorAlert('Ingresa una cantidad valida de Stock.');
         return;
       }
       try {
-        await this.medicamentosService.updatePrioridad(id, nuevaPrioridad);
-        this.createSuccessAlert('Actualizado, Prioridad actualizada correctamente');
+        await this.medicamentosService.updateMedicamento(id, medicamento.stock);
+        this.createSuccessAlert('Actualizado, medicamento actualizado correctamente');
         // Actualizamos visualmente la incidencia
-        incidencia.prioridad = nuevaPrioridad;
-        incidencia.nuevaPrioridad = '-1'; // opcional: limpiar después de actualizar
+        medicamento.stock = 0;
       } catch (error) {
-        this.createErrorAlert('Error, No se pudo actualizar la prioridad');
+        this.createErrorAlert('Error, no se pudo actualizar el medicamento');
         console.error(error);
       }
     } else {
-      this.createErrorAlert('Error, con la informacion de incidencias');
+      this.createErrorAlert('Error, datos invalidos para actualizar el medicamento');
     }
     this.isLoading = false;
   }  
   // Eliminar medicamento
   async deleteMedicamentos(index: number) {
-    const id = this.incidencias[index].id;
+    const id = this.medicamentos[index].id;
     if (id != undefined) {
       this.alertDelete(id);
     } else {
@@ -139,7 +142,7 @@ constructor(
       if (result.isConfirmed) {
         try {
           this.isLoading = true;
-          await this.controlService.eliminarIncidencia(id);
+          await this.medicamentosService.eliminarMedicamento(id);
           this.createSuccessAlert(
             'Eliminado, Incidencia eliminada correctamente'
           );
