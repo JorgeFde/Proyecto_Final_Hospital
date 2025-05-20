@@ -22,18 +22,18 @@ export class GetMedicamentsService {
       MedicamentsModel[]
     >;
   }
-  // Agregar una nueva incidencia
-  async addControlIncidencia(data: MedicamentsModel): Promise<void> {
+  // Agregar una nueva medicamento
+  async addControlMedicamento(data: MedicamentsModel): Promise<void> {
     const controlRef = collection(this.firestore, 'Medicamentos');
     await addDoc(controlRef, data);
   }
-  // Actualizar la prioridad de una incidencia
-  async updatePrioridad(id: string, newStock: string): Promise<void> {
+  // Actualizar medicamento
+  async updateMedicamento(id: string, newStock: string): Promise<void> {
     const docRef = doc(this.firestore, 'Medicamentos', id);
     await updateDoc(docRef, { stock: newStock });
   }
-  // Eliminar una incidencia
-  async eliminarIncidencia(id: string): Promise<void> {
+  // Eliminar un medicamento
+  async eliminarMedicamento(id: string): Promise<void> {
     const docRef = doc(this.firestore, 'Medicamentos', id);
     await deleteDoc(docRef);
   }

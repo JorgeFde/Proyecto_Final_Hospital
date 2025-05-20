@@ -8,6 +8,7 @@ import { DetailsReportComponent } from './Components/details-report/details-repo
 import { ChatReportAdminComponent } from './Components/chat-report-admin/chat-report-admin.component';
 import { ReasonsForIncidentListComponent } from './Components/reasons-for-incident-list/reasons-for-incident-list.component';
 import { AuthGuard } from './guards/auth.guard';
+import { MedicamentosComponent } from './Components/medicamentos/medicamentos.component';
 export const routes: Routes = [
   // Rutas Libres
   { path: 'Home', component: HomeComponent },
@@ -33,6 +34,11 @@ export const routes: Routes = [
   {
     path: 'Chat',
     component: ChatReportAdminComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'Medicamentos',
+    component: MedicamentosComponent,
     canActivate: [AuthGuard],
   },
   // Redirección por defecto
