@@ -105,8 +105,11 @@ export class DashboardComponent {
       .subscribe((data) => {
         this.medicamentsWithOutStock = [];
         for (let i = 0; i < data.length; i++) {
-          if (data[i].stock <= 10) {
-            this.medicamentsWithOutStock.push(data[i]);
+          if (data[i].stock !== undefined) {
+            const stockMed = data[i].stock as number;
+            if (stockMed <= 10) {
+              this.medicamentsWithOutStock.push(data[i]);
+            }
           }
         }
         this.isNotification = this.medicamentsWithOutStock.length != 0;

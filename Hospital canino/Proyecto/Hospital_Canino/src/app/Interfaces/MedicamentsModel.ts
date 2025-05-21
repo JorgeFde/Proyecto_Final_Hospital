@@ -1,6 +1,6 @@
 export interface MedicamentsModel {
   id?: string;
   name: string;
-  stock: number;
+  stock?: number;
   descripcion: string;
 }
