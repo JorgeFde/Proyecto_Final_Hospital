@@ -7,31 +7,26 @@
       <span class="options-spacer"></span>
     </mat-toolbar>
   </div>
-  <div>
-    <!-- Sección de creación de incidencia -->
-    <div class="top-bar">
-      <!-- Aquí se agregan los inputs -->
+  <!-- Sección de creación de Medicamentos -->
+  <div class="top-bar">
+    <!-- Aquí se agregan los inputs -->
     <div class="form-horizontal">
-  <div class="form-inline-field">
-    <label for="nombre">Nombre del medicamento:</label>
-    <input id="nombre" type="text" [(ngModel)]="newMedicamento.name" />
-  </div>
-
-  <div class="form-inline-field">
-    <label for="existencia">Existencia:</label>
-    <input id="existencia" type="number" [(ngModel)]="newMedicamento.stock" />
-  </div>
-
       <div class="form-inline-field">
-       <label for="descripcion">Descripción:</label>
-       <input id="descripcion" type="text" [(ngModel)]="newMedicamento.descripcion" />
+        <label for="nombre">Nombre del medicamento:</label>
+        <input id="nombre" type="text" [(ngModel)]="newMedicamento.name" placeholder="Nombre del medicamento"/>
       </div>
-     </div>
+      <div class="form-inline-field">
+        <label for="existencia">Existencia:</label>
+        <input id="existencia" type="number"  min="0" [(ngModel)]="newMedicamento.stock" placeholder="Exitencia"/>
+      </div>
+      <div class="form-inline-field">
+        <label for="descripcion">Descripción:</label>
+        <input id="descripcion" type="text" [(ngModel)]="newMedicamento.descripcion" placeholder="Descripción del medicamento"/>
+      </div>
     </div>
-    </div>
-    <div class="crear-btn-container">
-      <button class="btnCrear btnRojo" (click)="createMedicamentos()">Crear Medicamento</button>
-    </div>
+  </div>
+  <div class="crear-btn-container">
+    <button class="btnCrear btnRojo" (click)="createMedicamentos()">Crear Medicamento</button>
   </div>
   <!-- Contenedor de detalles con scroll interno -->
   <div class="details-container">
@@ -39,8 +34,10 @@
       <h2>Nombre del medicamento: {{medicamento.name}}</h2>
       <div class="prioridad-row">
         <span class="prioridad-actual">Descripccion: {{medicamento.descripcion}}</span>
-        <div class="cambiar-prioridad">
-          agregar input para poner el nuevo stock
+        <span class="prioridad-actual">Exitencias: {{medicamento.stock}}</span>
+        <div class="form-inline-field">
+          <label for="existenciaMed">Nueva Existencia:</label>
+          <input id="existenciaMed" type="number"  min="0" [(ngModel)]="newStocksMeds[i]" placeholder="Nueva existencia"/>
         </div>
       </div>
       <div class="botones-acciones">
@@ -49,6 +46,7 @@
       </div>
     </div>
   </div>
+</div>
 <!-- Loader visible mientras isLoading sea true -->
 <div *ngIf="isLoading" class="loader-overlay">
   <div class="spinner"></div>

@@ -2,14 +2,7 @@
 import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgFor, NgIf } from '@angular/common';
-import {
-  Firestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-} from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -19,33 +12,34 @@ import { GetMedicamentsService } from '../../Services/getMedicaments.service';
   selector: 'app-medicamentos',
   imports: [MatToolbar, NgFor, FormsModule, NgIf],
   templateUrl: './medicamentos.component.html',
-  styleUrl: './medicamentos.component.css'
+  styleUrl: './medicamentos.component.css',
 })
 export class MedicamentosComponent {
-constructor(
+  constructor(
     private firestore: Firestore,
-    private medicamentosService: GetMedicamentsService,
+    private medicamentosService: GetMedicamentsService
   ) {}
   private destroy$ = new Subject<void>();
   medicamentos: MedicamentsModel[] = [];
+  newStocksMeds: number[] = [];
   isLoading: boolean = false;
-   newMedicamento: MedicamentsModel = {
-     stock: 0,
-     name: '',
-     descripcion: ''
-   };
+  newMedicamento: MedicamentsModel = {
+    stock: undefined,
+    name: '',
+    descripcion: '',
+  };
   ngOnInit() {
-    this.isLoading = true;
     this.getMedicamentos();
-    this.getMedicamentos();
-    this.isLoading = false;
   }
   ngOnDestroy() {
+    console.log("destroyd")
     this.destroy$.next();
     this.destroy$.complete();
   }
   // se obtienen los medicamentos
   getMedicamentos() {
+    this.isLoading = true;
+    this.newStocksMeds = [];
     this.medicamentos = [];
     this.medicamentosService
       .getMedicaments()
@@ -53,23 +47,29 @@ constructor(
       .subscribe((data) => {
         this.medicamentos = data;
         this.medicamentos.sort((a, b) => a.name.localeCompare(b.name));
+        this.isLoading = false;
       });
-  }  
+  }
   // creacion del medicamento
   async createMedicamentos() {
     this.isLoading = true;
-    if (this.newMedicamento.stock != 0 ) {
+    if (this.newMedicamento.name != '' && this.newMedicamento.stock != undefined && this.newMedicamento.descripcion != '') {
       try {
-        await this.medicamentosService.addControlMedicamento(this.newMedicamento);
+        await this.medicamentosService.addControlMedicamento(
+          this.newMedicamento
+        );
         this.createSuccessAlert('Éxito, Incidencia agregada correctamente');
-        this.newMedicamento.name = ''
-        this.newMedicamento.stock = 0
+        this.newMedicamento.name = '';
+        this.newMedicamento.stock = 0;
+        this.newMedicamento.descripcion = '';
       } catch (error) {
-        this.createErrorAlert('Error, No se pudo agregar el medicamento');
+        this.createErrorAlert('Error, No se pudo agregar el medicamento', true);
         console.error(error);
       }
     } else {
-      this.createErrorAlert('Ambos campos son reuqeridos para agregar el medicamento.');
+      this.createErrorAlert(
+        'Ambos campos son reuqeridos para agregar el medicamento.', false
+      );
     }
     this.isLoading = false;
   }
@@ -78,33 +78,34 @@ constructor(
     this.isLoading = true;
     const medicamento = this.medicamentos[index];
     const id = medicamento.id;
-    if (id !=  undefined) {
-      const nuevoStock: number = medicamento.stock;
-      if (nuevoStock === 0) {
-        this.createErrorAlert('Ingresa una cantidad valida de Stock.');
-        return;
-      }
+    if (id != undefined) {
+      const nuevoStock: number = this.newStocksMeds[index];
       try {
-        await this.medicamentosService.updateMedicamento(id, medicamento.stock);
-        this.createSuccessAlert('Actualizado, medicamento actualizado correctamente');
+        await this.medicamentosService.updateMedicamento(id, nuevoStock);
+        this.createSuccessAlert(
+          'Actualizado, medicamento actualizado correctamente'
+        );
         // Actualizamos visualmente la incidencia
-        medicamento.stock = 0;
+        this.newStocksMeds = [];
+        this.getMedicamentos();
       } catch (error) {
-        this.createErrorAlert('Error, no se pudo actualizar el medicamento');
+        this.createErrorAlert('Error, no se pudo actualizar el medicamento', true);
         console.error(error);
       }
     } else {
-      this.createErrorAlert('Error, datos invalidos para actualizar el medicamento');
+      this.createErrorAlert(
+        'Error, datos invalidos para actualizar el medicamento', false
+      );
     }
     this.isLoading = false;
-  }  
+  }
   // Eliminar medicamento
   async deleteMedicamentos(index: number) {
     const id = this.medicamentos[index].id;
     if (id != undefined) {
       this.alertDelete(id);
     } else {
-      this.createErrorAlert('Error en la informacion de la incidencia.');
+      this.createErrorAlert('Error en la informacion de la incidencia.', true);
     }
   }
   // alerta de success
@@ -117,9 +118,9 @@ constructor(
     });
   }
   // alerta de error
-  createErrorAlert(message: string) {
+  createErrorAlert(message: string, isTypeError: boolean) {
     Swal.fire({
-      icon: 'error',
+      icon: isTypeError ? 'error' : 'warning',
       title: 'Ocurrio un error...',
       text: message,
       confirmButtonColor: '#0e2b53',
@@ -148,7 +149,7 @@ constructor(
           );
           this.isLoading = false;
         } catch (error) {
-          this.createErrorAlert('Error, No se pudo eliminar la incidencia');
+          this.createErrorAlert('Error, No se pudo eliminar la incidencia', true);
           console.error(error);
         }
       }
