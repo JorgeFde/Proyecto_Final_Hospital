@@ -468,7 +468,7 @@ export class DashboardComponent {
     this.router.navigate(['ReasonsForIncidentList']);
   }
   toggMedicaments() {
-    // aqui va la navegacion de los medicamentos
+    this.router.navigate(['Medicamentos']);
   }
   tapGenerateReport() {
     if (this.filters.fecha != '' && this.filters.tipo != '') {

@@ -1,0 +1,55 @@
+<div class="containerPrimary">
+  <!-- Nav Bar -->
+  <div class="containerNavBar">
+    <mat-toolbar class="matToolbarNav">
+      <img src="assets/logo.png" alt="Logo" class="logoNavBar">
+      <span class="titleHome">Control de incidencias</span>
+      <span class="options-spacer"></span>
+    </mat-toolbar>
+  </div>
+  <div>
+    <!-- Sección de creación de incidencia -->
+    <div class="top-bar">
+      <!-- Aquí se agregan los inputs -->
+    <div class="form-horizontal">
+  <div class="form-inline-field">
+    <label for="nombre">Nombre del medicamento:</label>
+    <input id="nombre" type="text" [(ngModel)]="newMedicamento.name" />
+  </div>
+
+  <div class="form-inline-field">
+    <label for="existencia">Existencia:</label>
+    <input id="existencia" type="number" [(ngModel)]="newMedicamento.stock" />
+  </div>
+
+      <div class="form-inline-field">
+       <label for="descripcion">Descripción:</label>
+       <input id="descripcion" type="text" [(ngModel)]="newMedicamento.descripcion" />
+      </div>
+     </div>
+    </div>
+    </div>
+    <div class="crear-btn-container">
+      <button class="btnCrear btnRojo" (click)="createMedicamentos()">Crear Medicamento</button>
+    </div>
+  </div>
+  <!-- Contenedor de detalles con scroll interno -->
+  <div class="details-container">
+    <div *ngFor="let medicamento of medicamentos; let i = index" class="section">
+      <h2>Nombre del medicamento: {{medicamento.name}}</h2>
+      <div class="prioridad-row">
+        <span class="prioridad-actual">Descripccion: {{medicamento.descripcion}}</span>
+        <div class="cambiar-prioridad">
+          agregar input para poner el nuevo stock
+        </div>
+      </div>
+      <div class="botones-acciones">
+        <button class="btn-actualizar" (click)="updateMedicamentos(i)">Actualizar nueva existencia</button>
+        <button class="btn-eliminar" (click)="deleteMedicamentos(i)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+<!-- Loader visible mientras isLoading sea true -->
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
