@@ -10,18 +10,27 @@
   <div>
     <!-- Sección de creación de incidencia -->
     <div class="top-bar">
-      <!--
-      <label for="nombreIncidencia" class="title">Crear una nueva incidencia:</label>
-      <input type="text" id="nombreIncidencia" [(ngModel)]="newIncidencia.name" placeholder="Ingresa el nombre de la incidencia" />
-      <label class="title" for="motivo">Prioridad:</label>
-      <select id="indexSelectNew" name="indexSelectNew" [(ngModel)]="newIncidencia.prioridad" class="selectorMotivo">
-        <option value=-1>Selecciona la prioridad</option>
-        <option *ngFor="let m of prioridadIncidents" [value]="m.name">{{ m.name }}</option>
-      </select>
-      -->
+      <!-- Aquí se agregan los inputs -->
+    <div class="form-horizontal">
+  <div class="form-inline-field">
+    <label for="nombre">Nombre del medicamento:</label>
+    <input id="nombre" type="text" [(ngModel)]="newMedicamento.name" />
+  </div>
+
+  <div class="form-inline-field">
+    <label for="existencia">Existencia:</label>
+    <input id="existencia" type="number" [(ngModel)]="newMedicamento.stock" />
+  </div>
+
+      <div class="form-inline-field">
+       <label for="descripcion">Descripción:</label>
+       <input id="descripcion" type="text" [(ngModel)]="newMedicamento.descripcion" />
+      </div>
+     </div>
+    </div>
     </div>
     <div class="crear-btn-container">
-      <button class="btnCrear btnRojo" (click)="createMedicamentos()">Crear Incidencia</button>
+      <button class="btnCrear btnRojo" (click)="createMedicamentos()">Crear Medicamento</button>
     </div>
   </div>
   <!-- Contenedor de detalles con scroll interno -->
@@ -40,7 +49,6 @@
       </div>
     </div>
   </div>
-</div>
 <!-- Loader visible mientras isLoading sea true -->
 <div *ngIf="isLoading" class="loader-overlay">
   <div class="spinner"></div>

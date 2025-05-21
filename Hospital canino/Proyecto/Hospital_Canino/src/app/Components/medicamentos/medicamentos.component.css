@@ -41,7 +41,35 @@
   flex: 1;
 }
 
-/* Sección crear incidencia */
+/*inputs*/
+.form-horizontal {
+  display: flex;
+  gap: 24px;
+  align-items: center; 
+  flex-wrap: wrap; 
+  margin-bottom: 20px;
+}
+
+.form-inline-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-inline-field label {
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.form-inline-field input {
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+/* Sección crear medicamento */
 .top-bar {
   display: flex;
   flex-wrap: wrap;
